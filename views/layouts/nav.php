@@ -485,7 +485,7 @@
                     <span>Add account</span>
                   </span>
                 </a>
-                <a href="#" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>login" class="dropdown-item">
                   <span class="d-flex align-items-center">
                     <i class="ph-duotone ph-power"></i>
                     <span>Logout</span>
