@@ -11,7 +11,7 @@
         <div class="m-header">
           <a href="index.html" class="b-brand text-primary">
             <!-- ========   Change your logo from here   ============ -->
-            <img src="<?= BASE_PATH ?>assets/images/logo-dark.svg" alt="logo image" class="logo-lg" />
+            <img src="<?= BASE_PATH ?>assets/images/logo-dark.svg" alt="SAT" class="" />
             <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version">v1.2.0</span>
           </a>
         </div>
@@ -501,7 +501,7 @@
               </ul>
             </li>
             <li class="pc-item pc-hasmenu">
-              <a href="#!" class="pc-link">
+              <a href="" class="pc-link">
                 <span class="pc-micon">
                   <i class="ph-duotone ph-cloud-arrow-up"></i>
                 </span>
@@ -737,7 +737,7 @@
                   <div class="dropdown-menu">
                     <ul>
                       <li>
-                        <a class="pc-user-links">
+                        <a class="pc-user-links" href="<?= BASE_PATH ?>profile">
                           <i class="ph-duotone ph-user"></i>
                           <span>My Account</span>
                         </a>
@@ -755,7 +755,7 @@
                         </a>
                       </li>
                       <li>
-                        <a class="pc-user-links">
+                        <a class="pc-user-links" href="<?= BASE_PATH ?>login">
                           <i class="ph-duotone ph-power"></i>
                           <span>Logout</span>
                         </a>

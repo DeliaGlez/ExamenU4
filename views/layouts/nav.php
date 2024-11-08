@@ -1,3 +1,8 @@
+ 
+ <?php 
+  include_once "../app/config.php";
+
+?>
  <!-- [ Header Topbar ] start -->
 <header class="pc-header">
   <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
@@ -156,11 +161,11 @@
           <i class="ph-duotone ph-lifebuoy"></i>
           <span>Support</span>
         </a>
-        <a href="#!" class="dropdown-item">
+        <a href="" class="dropdown-item">
           <i class="ph-duotone ph-lock-key"></i>
           <span>Lock Screen</span>
         </a>
-        <a href="#!" class="dropdown-item">
+        <a href="" class="dropdown-item">
           <i class="ph-duotone ph-power"></i>
           <span>Logout</span>
         </a>
@@ -170,7 +175,7 @@
       <a
         class="pc-head-link dropdown-toggle arrow-none me-0"
         data-bs-toggle="dropdown"
-        href="#"
+        href=""
         role="button"
         aria-haspopup="false"
         aria-expanded="false"
@@ -500,5 +505,6 @@
   </ul>
 </div>
  </div>
+ 
 </header>
 <!-- [ Header ] end -->

@@ -1,18 +1,15 @@
 <?php 
   include_once "../app/config.php";
-
 ?>
 <!doctype html>
 <html lang="en">
   <!-- [Head] start -->
 
   <head>
-     <?php 
-
+    <title>Home Page | </title>
+    <?php 
       include "layouts/head.php";
-
     ?>
-
   </head>
   <!-- [Head] end -->
   <!-- [Body] Start -->
@@ -20,17 +17,12 @@
   <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
     
     <?php 
-
       include "layouts/sidebar.php";
-
     ?>
 
     <?php 
-
       include "layouts/nav.php";
-
     ?>
-
 
     <!-- [ Main Content ] start -->
     <div class="pc-container">
@@ -517,15 +509,6 @@
 
     ?>
 
-
-    <!-- [Page Specific JS] start -->
-    <script src="<?= BASE_PATH ?>assets/js/plugins/apexcharts.min.js"></script>
-    <script src="<?= BASE_PATH ?>assets/js/plugins/jsvectormap.min.js"></script>
-    <script src="<?= BASE_PATH ?>assets/js/plugins/world.js"></script>
-    <script src="<?= BASE_PATH ?>assets/js/plugins/world-merc.js"></script>
-    <script src="<?= BASE_PATH ?>assets/js/pages/dashboard-default.js"></script>
-    <!-- [Page Specific JS] end -->
-    
     <?php 
 
       include "layouts/scripts.php";

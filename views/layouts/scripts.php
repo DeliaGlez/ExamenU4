@@ -6,6 +6,15 @@
     <script src="<?= BASE_PATH ?>assets/js/pcoded.js"></script>
     <script src="<?= BASE_PATH ?>assets/js/plugins/feather.min.js"></script>
 
+    <!-- [Page Specific JS] start -->
+    <script src="<?= BASE_PATH ?>assets/js/plugins/apexcharts.min.js"></script>
+    <script src="<?= BASE_PATH ?>assets/js/plugins/jsvectormap.min.js"></script>
+    <script src="<?= BASE_PATH ?>assets/js/plugins/world.js"></script>
+    <script src="<?= BASE_PATH ?>assets/js/plugins/world-merc.js"></script>
+    <script src="<?= BASE_PATH ?>assets/js/pages/dashboard-default.js"></script>
+    <!-- [Page Specific JS] end -->
+    
+
        
     <script>
       layout_change('light');
