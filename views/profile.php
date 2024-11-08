@@ -95,19 +95,6 @@
                     >
                       <span class="f-w-500"><i class="ph-duotone ph-clipboard-text m-r-10"></i>Actualizar datos</span>
                     </a>
-                    
-                    <a
-                      class="nav-link list-group-item list-group-item-action"
-                      id="user-set-passwort-tab"
-                      data-bs-toggle="pill"
-                      href="#user-set-passwort"
-                      role="tab"
-                      aria-controls="user-set-passwort"
-                      aria-selected="false"
-                    >
-                      <span class="f-w-500"><i class="ph-duotone ph-key m-r-10"></i>Cambiar Contraseña</span>
-                    </a>
-                    
                   </div>
                 </div>
                 
@@ -152,6 +139,46 @@
                               </div>
                             </div>
                           </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Creado por</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-0">Jose Lopez</p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Rol</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-0">Administrador</p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Fecha de Creación</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-0">2024-10-30</p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="list-group-item px-0">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <p class="mb-1 text-muted">Última modificación</p>
+                              </div>
+                              <div class="col-md-6">
+                                <p class="mb-0">2024-10-30</p>
+                              </div>
+                            </div>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -184,9 +211,15 @@
                               </div>
                             </div>
                             <div class="col-sm-12">
-                            <div class="mb-3">
-                                <label class="form-label">Correo </span></label>
-                                <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email"/>
+                              <div class="mb-3">
+                                  <label class="form-label">Correo </span></label>
+                                  <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email"/>
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="mb-3">
+                                  <label class="form-label">Contraseña </span></label>
+                                  <input type="password" class="form-control" value="1234" name="password"/>
                               </div>
                             </div>
                           </div>
@@ -197,69 +230,6 @@
                         <div class="btn btn-primary">UActualizar perfil</div>
                       </div>
                     </form>
-                  </div>
-                  
-                  <div class="tab-pane fade" id="user-set-passwort" role="tabpanel" aria-labelledby="user-set-passwort-tab">
-                    <div class="card alert alert-warning p-0">
-                      <div class="card-body">
-                        <div class="d-flex align-items-center">
-                          <div class="flex-grow-1 me-3">
-                            <h4 class="alert-heading">Ten cuidado!</h4>
-                            <p class="mb-2">Para más seguridad te recomendamos cambiar tu contraseña cada 3 meses.</p>
-                            <a href="" class="alert-link"><u>No compartas tu contraseña</u></a>
-                          </div>
-                          <div class="flex-shrink-0">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-accout-password-alert.png" alt="img" class="img-fluid wid-80" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="card-header">
-                        <h5>Cambiar contraseña</h5>
-                      </div>
-                      <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item pt-0 px-0">
-                            <div class="row mb-0">
-                              <label class="col-form-label col-md-4 col-sm-12 text-md-end"
-                                >Contraseña Actual <span class="text-danger">*</span>
-                              </label>
-                              <div class="col-md-8 col-sm-12">
-                                <input type="password" class="form-control" name="password"/>
-                                <div class="form-text"> Olvidaste tu contraseña? <a href="" class="link-primary">Presiona Aquí</a> </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="list-group-item px-0">
-                            <div class="row mb-0">
-                              <label class="col-form-label col-md-4 col-sm-12 text-md-end"
-                                >Nueva Contraseña <span class="text-danger">*</span></label
-                              >
-                              <div class="col-md-8 col-sm-12">
-                                <input type="password" class="form-control" name="new_password"/>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="list-group-item pb-0 px-0">
-                            <div class="row mb-0">
-                              <label class="col-form-label col-md-4 col-sm-12 text-md-end"
-                                >Confirmar Contraseña <span class="text-danger">*</span></label
-                              >
-                              <div class="col-md-8 col-sm-12">
-                                <input type="password" class="form-control" name="new_password_confirmation"/>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="card-body text-end">
-                        <div class="btn btn-outline-secondary me-2">Cancelar</div>
-                        <div class="btn btn-primary">Cambiar Contraseña</div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
