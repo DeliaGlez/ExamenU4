@@ -149,7 +149,7 @@
         <i class="ph-duotone ph-diamonds-four"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
-        <a href="#!" class="dropdown-item">
+        <a href="<?= BASE_PATH ?>profile" class="dropdown-item">
           <i class="ph-duotone ph-user"></i>
           <span>My Account</span>
         </a>
@@ -165,7 +165,7 @@
           <i class="ph-duotone ph-lock-key"></i>
           <span>Lock Screen</span>
         </a>
-        <a href="" class="dropdown-item">
+        <a href="<?= BASE_PATH ?>" class="dropdown-item">
           <i class="ph-duotone ph-power"></i>
           <span>Logout</span>
         </a>
@@ -490,7 +490,7 @@
                     <span>Add account</span>
                   </span>
                 </a>
-                <a href="<?= BASE_PATH ?>login" class="dropdown-item">
+                <a href="<?= BASE_PATH ?>" class="dropdown-item">
                   <span class="d-flex align-items-center">
                     <i class="ph-duotone ph-power"></i>
                     <span>Logout</span>

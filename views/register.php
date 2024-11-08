@@ -30,7 +30,7 @@
                         <hr class="mb-3 mt-4" />
                         <div class="row">
                             <div class="col my-1">
-                                <p class="m-0">Hecho con ♥ por <a href="" target="_blank"> SAT (Sobres A Tomar)</a></p>
+                                <p class="m-0">Hecho con ♥ por <a href="">SAT (Sobres A Tomar)</a></p>
                             </div>
                             <div class="col-auto my-1">
                                 <ul class="list-inline footer-link mb-0">
@@ -46,7 +46,7 @@
                     <div class="card my-5 mx-3">
                         <div class="card-body">
                             <h4 class="f-w-500 mb-1">Regístrate con tu correo</h4>
-                            <p class="mb-3">Ya tienes una cuenta? <a href="<?= BASE_PATH ?>login" class="link-primary">Inicia sesión</a></p>
+                            <p class="mb-3">Ya tienes una cuenta? <a href="<?= BASE_PATH ?>" class="link-primary">Inicia sesión</a></p>
                             <!-- FORMULARIO DE REGISTRO DE CUENTA -->
                              <form action="">
                                  <div class="row">

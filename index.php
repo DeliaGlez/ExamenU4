@@ -55,7 +55,7 @@
             <hr class="mb-3 mt-4" />
             <div class="row">
               <div class="col my-1">
-                <p class="m-0">Hecho con ♥ por <a href="" target="_blank"> SAT (Sobres A Tomar)</a></p>
+                <p class="m-0">Hecho con ♥ por <a href="">SAT (Sobres A Tomar)</a></p>
               </div>
               <div class="col-auto my-1">
                 <ul class="list-inline footer-link mb-0">

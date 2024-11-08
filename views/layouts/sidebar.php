@@ -9,7 +9,7 @@
     <nav class="pc-sidebar">
       <div class="navbar-wrapper">
         <div class="m-header">
-          <a href="index.html" class="b-brand text-primary">
+          <a href="<?= BASE_PATH ?>home" class="b-brand text-primary">
             <!-- ========   Change your logo from here   ============ -->
             <img src="<?= BASE_PATH ?>assets/images/logo-dark.svg" alt="SAT" class="" />
             <span class="badge bg-brand-color-2 rounded-pill ms-2 theme-version">v1.2.0</span>
@@ -755,7 +755,7 @@
                         </a>
                       </li>
                       <li>
-                        <a class="pc-user-links" href="<?= BASE_PATH ?>login">
+                        <a class="pc-user-links" href="<?= BASE_PATH ?>">
                           <i class="ph-duotone ph-power"></i>
                           <span>Logout</span>
                         </a>
