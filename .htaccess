@@ -9,3 +9,6 @@ RewriteRule ^profile/?$ views/profile.php
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/([^/]+)/?$ views/products/details.php
+
+#Controladores
+RewriteRule ^auth?$ app/AuthController.php

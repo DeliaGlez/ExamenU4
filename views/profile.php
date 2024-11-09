@@ -218,7 +218,7 @@
                             </div>
                             <div class="col-sm-12">
                               <div class="mb-3">
-                                  <label class="form-label">Contraseña </span></label>
+                                  <label class="form-label">Nueva Contraseña </span></label>
                                   <input type="password" class="form-control" value="1234" name="password"/>
                               </div>
                             </div>
