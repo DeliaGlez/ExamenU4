@@ -4,27 +4,29 @@ include_once "config.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
-        $action = $_POST['action'];
 
-        $authController = new AuthController();
-        
+        if(isset($_SESSION['global_token'])=== $_POST['global_token']){
 
-        switch ($action) {
-            case 'login':
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-                $authController->login($email, $password);
-                break;
+            $action = $_POST['action'];
+            $authController = new AuthController();
+            
+            switch ($action) {
+                case 'login':
+                    $email = $_POST['email'];
+                    $password = $_POST['password'];
+                    $authController->login($email, $password);
+                    break;
 
-            case 'logout':
-                $email = $_POST['email'];
-                $authController->logout($email);
-                break;
+                case 'logout':
+                    $email = $_POST['email'];
+                    $authController->logout($email);
+                    break;
 
-            default:
-                echo "Accion desconocida";
-                break;
-        }
+                default:
+                    echo "Accion desconocida";
+                    break;
+            }
+        } 
     }
 }
 
@@ -63,13 +65,10 @@ class AuthController
             $_SESSION['token'] = $data['data']['token'];
             $_SESSION['user_id'] = $data['data']['id'];  
             $_SESSION['user_data'] = $data['data'];
-            // if (!isset($_SESSION['global_token'])) {
-            //      $_SESSION['global_token'] = bin2hex(random_bytes(32));
-            // }
 			header('Location: ' . BASE_PATH . 'home');
 		} 
 		else {
-			header('Location: ' . BASE_PATH . 'login');
+			header('Location: ' . BASE_PATH );
         }
 
 
@@ -130,10 +129,14 @@ class AuthController
         curl_close($curl);
         $result = json_decode($response, true);
 
-        if (isset($result['data'])) {
-            return $result['data'];
+        if (isset($result['code']) && $result['code'] === 4) { // Formato de respuesta exitosa 
+            return [ 'success' => true, 
+            'data' => $result['data'],
+            'message' => $result['message'] ];
+         } else { // Formato de error en la respuesta 
+            return [ 'success' => false, 
+            'message' => isset($result['message']) ? $result['message'] : 'Error desconocido' ]; 
         }
-        return [];
 	
     }
 
