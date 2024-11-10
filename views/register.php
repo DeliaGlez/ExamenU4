@@ -52,35 +52,35 @@
                                  <div class="row">
                                      <div class="col-sm-6">
                                          <div class="mb-3">
-                                             <input type="text" class="form-control" placeholder="Nombre" required name="name"/>
+                                             <input type="text" class="form-control" placeholder="Nombre" required name="name" id="name"/>
                                          </div>
                                      </div>
                                      <div class="col-sm-6">
                                          <div class="mb-3">
-                                             <input type="text" class="form-control" placeholder="Apellido" required name="lastname"/>
+                                             <input type="text" class="form-control" placeholder="Apellido" required name="lastname" id="lastname"/>
                                          </div>
                                      </div>
                                  </div>
                                  <div class="mb-3">
-                                     <input type="email" class="form-control" placeholder="Correo electrónico" required name="email"/>
+                                     <input type="email" class="form-control" placeholder="Correo electrónico" required name="email" id="email"/>
                                  </div>
                                  <div class="mb-3">
-                                     <input type="number" class="form-control" placeholder="Número de teléfono" required name="number"/>
+                                     <input type="number" class="form-control" placeholder="Número de teléfono" required name="number" id="number"/>
                                  </div>
                                  <div class="mb-3">
-                                     <input type="password" class="form-control" placeholder="Contraseña" required name="password"/>
+                                     <input type="password" class="form-control" placeholder="Contraseña" required name="password" id="password"/>
                                  </div>
                                  <div class="mb-3">
-                                     <input type="password" class="form-control" placeholder="Confirmar contraseña" required name="passwordconfirmation"/>
+                                     <input type="password" class="form-control" placeholder="Confirmar contraseña" required name="passwordconfirmation" id="confirmPassword"/>
                                  </div>
                                  <div class="d-flex mt-1 justify-content-between">
                                      <div class="form-check">
-                                         <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" required/>
-                                         <label class="form-check-label text-muted" for="customCheckc1">Acepto los términos & condiciones</label>
+                                         <input class="form-check-input input-primary" type="checkbox" id="terms" required/>
+                                         <label class="form-check-label text-muted" for="terms">Acepto los términos & condiciones</label>
                                      </div>
                                  </div>
                                  <div class="d-grid mt-4">
-                                     <button type="button" class="btn btn-primary" onclick="window.location.href='<?= BASE_PATH ?>login'">Crear cuenta</button>
+                                     <button type="button" class="btn btn-primary" onclick="validarFormulario()">Crear cuenta</button>
                                  </div>
                              </form>
                             <div class="saprator my-3">
@@ -111,6 +111,23 @@
             </div>
         </div>
         <!-- [ Main Content ] end -->
+        <script>
+            function validarFormulario() {
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const name = document.getElementById("name").value;
+                const lastname = document.getElementById("lastname").value;
+                const number = document.getElementById("number").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+                const terms = document.getElementById("terms").checked;
+
+                if (email === "" || password === "" || name === "" || lastname === "" || number === "" || confirmPassword === "" || !terms) {
+                alert("Por favor, completa todos los campos.");
+                } else {
+                window.location.href = '<?= BASE_PATH ?>home';
+                }
+            }
+        </script>
         <!-- Required Js -->
         <script src="<?= BASE_PATH ?>assets/js/plugins/popper.min.js"></script>
         <script src="<?= BASE_PATH ?>assets/js/plugins/simplebar.min.js"></script>

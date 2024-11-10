@@ -72,25 +72,25 @@
             <div class="card-body">
               <h4 class="f-w-500 mb-1">Inicia sesión con tu correo</h4>
               <p class="mb-3">No tienes cuenta? <a href="<?= BASE_PATH ?>register" class="link-primary ms-1">Regístrate aquí</a></p>
-              <!-- FORMULARIO DE INICIO DE SESIÓN -->
+              <!-- [FORMULARIO DE INICIO DE SESIÓN] -->
               <form action="">
                 <div class="mb-3">
                   <input type="email" class="form-control" id="floatingInput" placeholder="Correo electrónico" required name="email" />
                 </div>
                 <div class="mb-3">
-                  <input type="password" class="form-control" id="floatingInput1" placeholder="Contraseña" required name="password"/>
+                  <input type="password" class="form-control" id="floatingInput1" placeholder="Contraseña" required name="password" />
                 </div>
                 <div class="d-flex mt-1 justify-content-between align-items-center">
                   <div class="form-check">
-                    <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" required/>
-                    <label class="form-check-label text-muted" for="customCheckc1">Recordarme</label>
+                    <input class="form-check-input input-primary" type="checkbox" id="remember" required />
+                    <label class="form-check-label text-muted" for="remember">Recordarme</label>
                   </div>
                   <a href="">
                     <h6 class="text-secondary f-w-400 mb-0">Olvidaste tu contraseña?</h6>
                   </a>
                 </div>
                 <div class="d-grid mt-4">
-                  <button type="button" class="btn btn-primary" onclick="window.location.href='<?= BASE_PATH ?>home'">Iniciar sesión</button>
+                  <button type="button" class="btn btn-primary" onclick="validarFormulario()">Iniciar sesión</button>
                 </div>
               </form>
               <div class="saprator my-3">
@@ -121,6 +121,18 @@
       </div>
     </div>
     <!-- [ Main Content ] end -->
+    <script>
+      function validarFormulario() {
+          const email = document.getElementById("floatingInput").value;
+          const password = document.getElementById("floatingInput1").value;
+
+          if (email === "" || password === "") {
+          alert("Por favor, completa todos los campos.");
+          } else {
+          window.location.href = '<?= BASE_PATH ?>login';
+          }
+      }
+    </script>
     <!-- Required Js -->
     <script src="<?= BASE_PATH ?>assets/js/plugins/popper.min.js"></script>
     <script src="<?= BASE_PATH ?>assets/js/plugins/simplebar.min.js"></script>
@@ -128,7 +140,6 @@
     <script src="<?= BASE_PATH ?>assets/js/fonts/custom-font.js"></script>
     <script src="<?= BASE_PATH ?>assets/js/pcoded.js"></script>
     <script src="<?= BASE_PATH ?>assets/js/plugins/feather.min.js"></script>
-
    
   </body>
 </html>
