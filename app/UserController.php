@@ -5,8 +5,7 @@ include_once "config.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
 
-        if(isset($_SESSION['global_token'])=== $_POST['global_token']){
-
+        if (isset($_SESSION['global_token']) && $_SESSION['global_token'] === $_POST['global_token']){
             $action = $_POST['action'];
             $authController = new UserController();
             
@@ -101,7 +100,7 @@ class UserController
     }
 
     public function storeUser(){
-       
+
     }
 
 
