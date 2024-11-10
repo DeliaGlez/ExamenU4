@@ -185,51 +185,57 @@
                   </div>
 
                   <div class="tab-pane fade" id="user-set-information" role="tabpanel" aria-labelledby="user-set-information-tab">
-                    <form action="">
-                      <div class="card">
-                        <div class="card-header">
-                          <h5>Actualizar datos</h5>
-                        </div>
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" value="Anshan" name="name"/>
-                              </div>
+                  <form action="" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>Actualizar datos</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Nombre</label>
+                              <input type="text" class="form-control" value="Anshan" name="name" id="name" />
                             </div>
-                            <div class="col-sm-12">
-                              <div class="mb-3">
-                                <label class="form-label">Apellido</label>
-                                <input type="text" class="form-control" value="Handgun" name="lastname"/>
-                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Apellido</label>
+                              <input type="text" class="form-control" value="Handgun" name="lastname" id="lastname" />
                             </div>
-                            <div class="col-sm-12">
-                              <div class="mb-3">
-                                <label class="form-label">Número de contacto</label>
-                                <input type="text" class="form-control" value="(+99) 9999 999 999" name="number"/>
-                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Número de contacto</label>
+                              <input type="text" class="form-control" value="(+99) 9999 999 999" name="number" id="number" />
                             </div>
-                            <div class="col-sm-12">
-                              <div class="mb-3">
-                                  <label class="form-label">Correo </span></label>
-                                  <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email"/>
-                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Correo</label>
+                              <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
                             </div>
-                            <div class="col-sm-12">
-                              <div class="mb-3">
-                                  <label class="form-label">Nueva Contraseña </span></label>
-                                  <input type="password" class="form-control" value="1234" name="password"/>
-                              </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Nueva Contraseña</label>
+                              <input type="password" class="form-control" value="1234" name="password" id="password" />
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label class="form-label">Subir Imagen de Perfil</label>
+                              <input type="file" class="form-control" name="profile_image" id="profile_image" accept="image/*" />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="text-end btn-page">
-                        <div class="btn btn-outline-secondary">Cancelar</div>
-                        <div class="btn btn-primary">UActualizar perfil</div>
-                      </div>
-                    </form>
+                    </div>
+                    <div class="text-end btn-page mt-3">
+                      <button type="button" class="btn btn-outline-secondary">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Actualizar perfil</button>
+                    </div>
+                  </form>
                   </div>
                 </div>
               </div>
@@ -241,6 +247,22 @@
       </div>
     </div>
     <!-- [ Main Content ] end -->
+    <script>
+      function validarFormulario() {
+        const name = document.getElementById("name").value.trim();
+        const lastname = document.getElementById("lastname").value.trim();
+        const number = document.getElementById("number").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const profileImage = document.getElementById("profile_image").files.length;
+
+        if (!name || !lastname || !number || !email || !password || profileImage === 0) {
+          alert("Por favor, completa todos los campos antes de continuar.");
+          return false; // Evita el envío del formulario
+        }
+        return true; // Permite el envío del formulario
+      }
+    </script>
     <?php 
 
       include "layouts/footer.php";
