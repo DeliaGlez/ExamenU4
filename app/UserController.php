@@ -27,14 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $lastname = $_POST['lastname'];
                     $email = $_POST['email'];
                     $phone = $_POST['phone_number'];
-                    $createdBy =$_POST['created_by'];
-                    $role= $_POST['role'];
                     $password = $_POST['password'];
-
-                    $authController->updateUser($id,$name,$lastname,$email,$phone,$createdBy,$role,$password);
-                    break;
-
-                 case 'updateProfileImage':
+                    $photo = isset($_FILES['profile_photo_file']['tmp_name']) ? $_FILES['profile_photo_file']['tmp_name'] : null;
+                    
+                    $authController->updateUser($id, $name, $lastname, $email, $phone, $password, $photo);
+                 case 'updateProfileImage': // En caso de actualizar solo la foto
                     $id= $_POST['id'];
                     $photo = $_FILES['profile_photo_file']['tmp_name'];
 
@@ -168,8 +165,18 @@ class UserController
         return $this->returnToFront($result, 4);  
     }
 
-    public function updateUser($id, $name, $lastname, $email, $phone, $createdBy, $role, $password) {
+    public function updateUser($id, $name, $lastname, $email, $phone, $password, $photo=null) {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+        $curl = curl_init();
+
+        $postFields = array('id' => $id);
+
+        if (!empty($name)) $postFields['name'] = $name; 
+        if (!empty($lastname)) $postFields['lastname'] = $lastname; 
+        if (!empty($email)) $postFields['email'] = $email; 
+        if (!empty($phone)) $postFields['phone_number'] = $phone; 
+        if (!empty($password)) $postFields['password'] = $password;
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users',
             CURLOPT_RETURNTRANSFER => true,
@@ -179,15 +186,7 @@ class UserController
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => 
-                'id=' . urlencode($id) . 
-                '&name=' . urlencode($name) . 
-                '&lastname=' . urlencode($lastname) . 
-                '&email=' . urlencode($email) . 
-                '&phone_number=' . urlencode($phone) . 
-                '&created_by=' . urlencode($createdBy) . 
-                '&role=' . urlencode($role) . 
-                '&password=' . urlencode($password),
+            CURLOPT_POSTFIELDS => http_build_query($postFields),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
                 'Authorization: Bearer ' . $token
@@ -198,7 +197,28 @@ class UserController
         curl_close($curl);
     
         $result = json_decode($response, true);
-        return $this->returnToFront($result, 4);
+        $resultUpdateData= $this->returnToFront($result, 4);
+
+        if ($resultUpdateData['success'] && $photo) { 
+            $curl = curl_init(); 
+            curl_setopt_array($curl, array( CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users/avatar', 
+            CURLOPT_RETURNTRANSFER => true, 
+            CURLOPT_ENCODING => '', 
+            CURLOPT_MAXREDIRS => 10, 
+            CURLOPT_TIMEOUT => 0, 
+            CURLOPT_FOLLOWLOCATION => true, 
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1, 
+            CURLOPT_CUSTOMREQUEST => 'POST', 
+            CURLOPT_POSTFIELDS => array('id' => $id, 'profile_photo_file' => new CURLFILE($photo)), 
+            CURLOPT_HTTPHEADER => array( 'Authorization: Bearer ' . $token ), )); 
+            
+            $response = curl_exec($curl); 
+            curl_close($curl); 
+            $resultProfileUpdate = json_decode($response, true);
+            return $this->returnToFront($resultProfileUpdate, 4);
+             
+        } 
+            return $this->returnToFront($result, 4);
     }
     
     public function updateProfileImage($id,$photo){
