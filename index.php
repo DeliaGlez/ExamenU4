@@ -73,7 +73,7 @@
               <h4 class="f-w-500 mb-1">Inicia sesión con tu correo</h4>
               <p class="mb-3">No tienes cuenta? <a href="<?= BASE_PATH ?>register" class="link-primary ms-1">Regístrate aquí</a></p>
               <!-- [FORMULARIO DE INICIO DE SESIÓN] -->
-              <form action="">
+              <form action="auth" method="POST">
                 <div class="mb-3">
                   <input type="email" class="form-control" id="floatingInput" placeholder="Correo electrónico" required name="email" />
                 </div>
@@ -90,8 +90,10 @@
                   </a>
                 </div>
                 <div class="d-grid mt-4">
-                  <button type="button" class="btn btn-primary" onclick="validarFormulario()">Iniciar sesión</button>
+                  <button type="submit" class="btn btn-primary">Iniciar sesión</button>
                 </div>
+                <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>" />
+                <input type="hidden" name="action" value="login">
               </form>
               <div class="saprator my-3">
                 <span>O inicia sesión con</span>
