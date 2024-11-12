@@ -100,7 +100,7 @@ class AuthController
         curl_close($curl);
         session_unset();
         session_destroy();
-        header('Location: ' . BASE_PATH . 'login');
+        header('Location: ' . BASE_PATH);
         
     }
 
