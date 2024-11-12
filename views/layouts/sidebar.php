@@ -29,6 +29,14 @@
                 <span class="pc-mtext">Prefil de Usuario</span>
               </a>
             </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>users" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Lista de Usuarios</span>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="card pc-user-card">

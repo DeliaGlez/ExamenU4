@@ -6,6 +6,9 @@ RewriteEngine on
 RewriteRule ^home/?$ views/home.php
 RewriteRule ^register/?$ views/register.php
 RewriteRule ^profile/?$ views/profile.php
+RewriteRule ^users/?$ views/users.php
+RewriteRule ^users_info/?$ views/users_info.php
+RewriteRule ^users_edit/?$ views/users_edit.php
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/([^/]+)/?$ views/products/details.php
