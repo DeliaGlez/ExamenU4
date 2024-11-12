@@ -98,12 +98,16 @@
                   </span>
                 </a>
               
-                <a href="<?= BASE_PATH ?>" class="dropdown-item">
-                  <span class="d-flex align-items-center">
-                    <i class="ph-duotone ph-power"></i>
-                    <span>Cerrar sesión</span>
-                  </span>
-                </a>
+                <form action="auth" method="POST">
+                  <input type="hidden" name="action" value="logout">
+                  <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?? '' ?>">
+                  <button class="dropdown-item" type="submit">
+                    <span class="d-flex align-items-center">
+                      <i class="ph-duotone ph-power"></i>
+                      <span>Cerrar sesión</span>
+                    </span>
+                  </button>
+                </form>
               </li>
             </ul>
           </div>
