@@ -24,7 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $email = $_POST['email'];
                     $authController->logout($email);
                     break;
-
+                case 'updateProfile':
+                    $name = $_POST['name'];
+                    $lastname = $_POST['lastname'];
+                    $email = $_POST['email'];
+                    $phone = $_POST['phone_number'];
+                    $password = $_POST['password'];
+                    $photo = isset($_FILES['profile_photo_file']['tmp_name']) ? $_FILES['profile_photo_file']['tmp_name'] : null;
+                    
+                    $authController->updateProfile( $name, $lastname, $email, $phone, $password, $photo);
+                    break;
                 default:
                     echo "Accion desconocida";
                     break;
@@ -109,7 +118,7 @@ class AuthController
             session_destroy();
             header('Location: ' . BASE_PATH);
 
-         } 
+        } 
 
         
     }
@@ -149,6 +158,89 @@ class AuthController
         }
 	
     }
+
+    public function updateProfile($name, $lastname, $email, $phone, $password, $photo=null) {
+        $id = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+        $flag = false; 
+        $curl = curl_init();
+
+        $postFields = array('id' => $id);
+
+        if (!empty($name)) $postFields['name'] = $name; 
+        if (!empty($lastname)) $postFields['lastname'] = $lastname; 
+        if (!empty($email)) $postFields['email'] = $email; 
+        if (!empty($phone)) $postFields['phone_number'] = $phone; 
+        if (!empty($password)) $postFields['password'] = $password;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => http_build_query($postFields),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Authorization: Bearer ' . $token
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
+    
+        $result = json_decode($response, true);
+    
+        if (isset($result['code']) && $result['code'] === 4) { 
+            $flag = true;
+        } else {
+            $message = isset($result['message']) ? $result['message'] : 'Error desconocido'; 
+            header('Location: ' . BASE_PATH . 'profile?error=' . urlencode($message)); 
+            exit; 
+        }
+    
+        // Update de la foto de perfil si los datos fueron exitosos
+        if ($flag && $photo) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users/avatar',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array('id' => $id, 'profile_photo_file' => new CURLFILE($photo)),
+                CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $token),
+            ));
+            
+            $response = curl_exec($curl); 
+            curl_close($curl); 
+            
+            $resultProfileUpdate = json_decode($response, true);
+            $this->returnToFrontAlert($resultProfileUpdate, 4); //Enviar el resultado de la foto mediante URL
+        } else {
+            // Si no foto, redirige con éxito a el perfil del usuario
+            header('Location: ' . BASE_PATH . 'profile?message=' . urlencode($result['message']));
+            exit;
+        }
+    }
+
+    public function returnToFrontAlert($data, $code){
+        if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje con éxito mediante url success
+            header('Location: ' . BASE_PATH . 'profile?message=' . urlencode($data['message'])); 
+        } 
+        else{
+            $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; 
+            header('Location: ' . BASE_PATH . 'profile?error=' . urlencode($message)); // Envio del mensaje mediante url error
+        }
+        exit;
+    }
+    
 
 
 }
