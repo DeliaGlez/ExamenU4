@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $userController->updateProfileImage($id,$photo);
                     break;
+                case 'delete': 
+                    $id = $_POST['user_id']; 
+                    $userController->deleteUser($id);
                 default:
                     echo "Accion desconocida";
                     break;
