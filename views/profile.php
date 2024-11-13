@@ -2,11 +2,16 @@
   include_once "../app/config.php";
   include_once "../app/AuthController.php";
 
-  $authController = new AuthController();
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
 
-  $profileData = $authController->getProfile();
-
-  $user = $profileData['data'];
+    $profileData = $authController->getProfile();
+    $user = $profileData['data'];
+  }
 ?>
 <!doctype html>
 <html lang="en">
