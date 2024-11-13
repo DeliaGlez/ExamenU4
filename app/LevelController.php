@@ -1,7 +1,9 @@
 <?php
 include_once "config.php";
 
-
+if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+}
 class LevelController
 {
     public function getLevels(){

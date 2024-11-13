@@ -245,7 +245,7 @@ class UserController
     
     public function updateProfileImage($id,$photo){
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
-
+        $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/users/avatar',
             CURLOPT_RETURNTRANSFER => true,
