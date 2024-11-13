@@ -2,6 +2,9 @@
 
 include_once "config.php";
 
+if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
 
@@ -68,9 +71,9 @@ class AuthController
 			header('Location: ' . BASE_PATH . 'home');
 		} 
 		else {
-			header('Location: ' . BASE_PATH );
+            // Mensaje de error a través de URL 
+            header('Location: ' . BASE_PATH . '?error=' . urlencode($data['message']));
         }
-
 
 	}
 
@@ -98,9 +101,16 @@ class AuthController
         $response = curl_exec($curl);
 
         curl_close($curl);
-        session_unset();
-        session_destroy();
-        header('Location: ' . BASE_PATH);
+        $result = json_decode($response, true);
+
+        if (isset($result['code']) && $result['code'] === 2) { 
+            
+            session_unset();
+            session_destroy();
+            header('Location: ' . BASE_PATH);
+
+         } 
+
         
     }
 
