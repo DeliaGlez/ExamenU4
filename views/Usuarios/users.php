@@ -1,5 +1,5 @@
 <?php 
-  include_once "../app/config.php";
+  include_once "../../app/config.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,7 +8,7 @@
   <head>
     <title>Lista de usuarios | </title>
     <?php 
-      include "layouts/head.php";
+      include "../layouts/head.php";
     ?>
     </head>
     <!-- [Head] end -->
@@ -16,11 +16,11 @@
 
     <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
     <?php 
-      include "layouts/sidebar.php";
+      include "../layouts/sidebar.php";
     ?>
 
     <?php 
-      include "layouts/nav.php";
+      include "../layouts/nav.php";
     ?>
     <!-- [ Main Content ] start -->
     <div class="pc-container">
@@ -190,19 +190,19 @@
 
     <?php 
 
-      include "layouts/footer.php";
+      include "../layouts/footer.php";
 
     ?>
     
     <?php 
 
-      include "layouts/modals.php";
+      include "../layouts/modals.php";
 
     ?>
 
     <?php 
 
-      include "layouts/scripts.php";
+      include "../layouts/scripts.php";
 
     ?>
  <!-- Required Js -->

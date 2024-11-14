@@ -1,5 +1,5 @@
 <?php 
-  include_once "../app/config.php";
+  include_once "../../app/config.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -7,7 +7,7 @@
     <head>
     <title>Registro | </title>
     <?php 
-      include "layouts/head.php";
+      include "../layouts/head.php";
     ?>
     </head>
     <!-- [Head] end -->
@@ -137,7 +137,7 @@
         <script src="<?= BASE_PATH ?>assets/js/plugins/feather.min.js"></script>
         <?php 
 
-            include "layouts/scripts.php";
+            include "../layouts/scripts.php";
 
         ?>
     </body>

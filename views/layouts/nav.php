@@ -1,8 +1,8 @@
- 
- <?php 
-  include_once "../app/config.php";
-
+<?php 
+  include_once __DIR__ . "/../../app/config.php"; 
 ?>
+
+
  <!-- [ Header Topbar ] start -->
 <header class="pc-header">
   <div class="header-wrapper"> <!-- [Mobile Media Block] start -->

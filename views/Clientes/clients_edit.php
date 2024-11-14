@@ -1,5 +1,5 @@
 <?php 
-  include_once "../app/config.php";
+  include_once "../../app/config.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,7 +8,7 @@
   <head>
     <title>Perfil de usuario  | </title>
     <?php 
-      include "layouts/head.php";
+      include "../layouts/head.php";
     ?>
   </head>
   <!-- [Head] end -->
@@ -17,11 +17,11 @@
   <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
 
   <?php 
-    include "layouts/sidebar.php";
+    include "../layouts/sidebar.php";
   ?>
 
   <?php 
-    include "layouts/nav.php";
+    include "../layouts/nav.php";
   ?>
     <!-- [ Main Content ] start -->
     <div class="pc-container">
@@ -33,19 +33,19 @@
               <div class="col-md-12">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Home</a></li>
-                  <li class="breadcrumb-item"><a href="">Usuarios</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Perfil de usuario</li>
+                  <li class="breadcrumb-item"><a href="<?= BASE_PATH ?>clients">Clientes</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Modificar Cliente</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Editar Usuario</h2>
+                  <h2 class="mb-0">Editar Cliente</h2>
                 </div>
               </div>
             </div>
           </div>
           <div class="text-end btn-page mt-3">
-            <button  onclick="window.location.href = '<?= BASE_PATH ?>users'" class="btn btn-primary">Regresar</button>
+            <button  onclick="window.location.href = '<?= BASE_PATH ?>clients'" class="btn btn-primary">Regresar</button>
           </div>
         </div>
         <!-- [ breadcrumb ] end -->
@@ -95,58 +95,52 @@
               <div class="col-lg-7 col-xxl-9">
                 <div class="tab-content" id="user-set-tabContent">
                     <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel" aria-labelledby="user-set-profile-tab">
-                    <form action="" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+                      <form action="" enctype="multipart/form-data" onsubmit="return validarFormulario()">
                         <div class="card">
-                        <div class="card-header">
-                            <h5>Actualizar datos</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" value="Anshan" name="name" id="name" />
-                                </div>
+                          <div class="card-header">
+                              <h5>Actualizar datos</h5>
+                          </div>
+                          <div class="card-body">
+                              <div class="row">
+                              <div class="col-sm-12">
+                                  <div class="mb-3">
+                                  <label class="form-label">Nombre</label>
+                                  <input type="text" class="form-control" value="Anshan" name="name" id="name" />
+                                  </div>
+                              </div>
+                              <div class="col-sm-12">
+                                  <div class="mb-3">
+                                  <label class="form-label">Correo</label>
+                                  <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
+                                  </div>
+                              </div>
+                              <div class="col-sm-12">
+                                  <div class="mb-3">
+                                  <label class="form-label">Número de contacto</label>
+                                  <input type="number" class="form-control" value="6121234567" name="number" id="number" />
+                                  </div>
+                              </div>
+                              <div class="col-sm-12">
+                                  <div class="mb-3">
+                                  <label class="form-label">Está suscrito?</label>
+                                  <input type="number" class="form-control" value="1" name="is_suscribed" id="is_suscribed" />
+                                  </div>
+                              </div>
+                              <div class="col-sm-12">
+                                  <div class="mb-3">
+                                  <label class="form-label">Nivel de Cliente</label>
+                                  <input type="number" class="form-control" value="1" name="level_id" id="level_id" />
+                                  </div>
+                              </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Apellido</label>
-                                <input type="text" class="form-control" value="Handgun" name="lastname" id="lastname" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Número de contacto</label>
-                                <input type="text" class="form-control" value="(+99) 9999 999 999" name="number" id="number" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Correo</label>
-                                <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Nueva Contraseña</label>
-                                <input type="password" class="form-control" value="1234" name="password" id="password" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                <label class="form-label">Subir Imagen de Perfil</label>
-                                <input type="file" class="form-control" name="profile_image" id="profile_image" accept="image/*" />
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+                          </div>
                         </div>
                         <div class="text-end btn-page mt-3">
                             <button type="button" class="btn btn-outline-secondary">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Actualizar perfil</button>
                         </div>
                     </form>
-                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -160,34 +154,57 @@
     <script>
       function validarFormulario() {
         const name = document.getElementById("name").value.trim();
-        const lastname = document.getElementById("lastname").value.trim();
-        const number = document.getElementById("number").value.trim();
         const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
-        const profileImage = document.getElementById("profile_image").files.length;
+        const number = document.getElementById("number").value.trim();
+        const isSuscribed = document.getElementById("is_suscribed").value.trim();
+        const levelId = document.getElementById("level_id").value.trim();
 
-        if (!name || !lastname || !number || !email || !password || profileImage === 0) {
-          alert("Por favor, completa todos los campos antes de continuar.");
-          return false; // Evita el envío del formulario
+        if (name === "") {
+          alert("Por favor ingrese su nombre.");
+          return false;
         }
-        return true; // Permite el envío del formulario
+
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (email === "" || !emailPattern.test(email)) {
+          alert("Por favor ingrese un correo válido.");
+          return false;
+        }
+
+        if (number === "" || isNaN(number) || number.length !== 10) {
+          alert("Por favor ingrese un número de contacto válido de 10 dígitos.");
+          return false;
+        }
+
+        if (isSuscribed === "" || (isSuscribed !== "0" && isSuscribed !== "1")) {
+          alert("El campo 'Está suscrito?' debe ser 0 (No) o 1 (Sí).");
+          return false;
+        }
+
+        if (levelId === "" || isNaN(levelId) || parseInt(levelId) <= 0) {
+          alert("El campo 'Nivel de Cliente' debe ser un número positivo.");
+          return false;
+        }
+
+        return true;
       }
     </script>
+
+
     <?php 
 
-      include "layouts/footer.php";
+      include "../layouts/footer.php";
 
     ?>
     
     <?php 
 
-      include "layouts/modals.php";
+      include "../layouts/modals.php";
 
     ?>
     
     <?php 
 
-        include "layouts/scripts.php";
+        include "../layouts/scripts.php";
 
     ?>
     </body>

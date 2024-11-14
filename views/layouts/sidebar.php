@@ -26,7 +26,7 @@
                 <span class="pc-micon">
                   <i class="ph-duotone ph-identification-card"></i>
                 </span>
-                <span class="pc-mtext">Prefil de Usuario</span>
+                <span class="pc-mtext">Perfil de Usuario</span>
               </a>
             </li>
             <li class="pc-item">
@@ -35,6 +35,14 @@
                   <i class="ph-duotone ph-identification-card"></i>
                 </span>
                 <span class="pc-mtext">Lista de Usuarios</span>
+              </a>
+            </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>clients" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Lista de Clientes</span>
               </a>
             </li>
           </ul>
