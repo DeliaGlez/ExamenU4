@@ -246,7 +246,8 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card-body shadow border-0">
+
+                      <div class="card-body">
                         <div class="table-responsive">
                           <table id="report-table" class="table table-bordered table-striped mb-0">
                             <thead>
@@ -318,7 +319,6 @@
                                     </div>
                                   </div>
                                 </div>
-
                                   <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                                 </td>
                               </tr>
@@ -326,7 +326,41 @@
                           </table>
                         </div>
                       </div>
+
                     </div>
+                    
+
+                    <div class="card shadow-none">
+                      <div class="card-header">
+                        <h5>Pedidos</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table id="report-table" class="table table-bordered table-striped mb-0">
+                            <thead>
+                              <tr>
+                                <th class="border-top-0">ID</th>
+                                <th class="border-top-0">Objeto</th>
+                                <th class="border-top-0">Descripción</th>
+                                <th class="border-top-0">cantidad</th>
+                                <th class="border-top-0">Fecha de compra</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- Aqui va a ir el ciclo para recorrer los usuarios y llenar la tabla -->
+                              <tr>
+                                <td>1</td>
+                                <td>Iphone 12</td>
+                                <td>Iphone 12 128gb Negro</td>
+                                <td>1</td>
+                                <td>12 Noviembre 2024</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
