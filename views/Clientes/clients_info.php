@@ -370,20 +370,20 @@
                             <thead>
                               <tr>
                                 <th class="border-top-0">ID</th>
-                                <th class="border-top-0">Objeto</th>
-                                <th class="border-top-0">Descripción</th>
-                                <th class="border-top-0">cantidad</th>
-                                <th class="border-top-0">Fecha de compra</th>
+                                <th class="border-top-0">Folio</th>
+                                <th class="border-top-0">Total</th>
+                                <th class="border-top-0">Se pagó?</th>
+                                <th class="border-top-0">Estado de la orden</th>
                               </tr>
                             </thead>
                             <tbody>
                               <!-- Aqui va a ir el ciclo para recorrer los usuarios y llenar la tabla -->
                               <tr>
                                 <td>1</td>
-                                <td>Iphone 12</td>
-                                <td>Iphone 12 128gb Negro</td>
+                                <td>82412</td>
+                                <td>$10,000</td>
+                                <td>Si</td>
                                 <td>1</td>
-                                <td>12 Noviembre 2024</td>
                               </tr>
                             </tbody>
                           </table>

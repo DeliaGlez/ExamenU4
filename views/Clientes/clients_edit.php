@@ -114,10 +114,6 @@
                                   <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
                                   </div>
                               </div>
-                              <div class="mb-3">
-                                <label class="form-label">Nueva Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Nueva Contraseña" required/>
-                              </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Número de contacto</label>

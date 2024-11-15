@@ -87,18 +87,6 @@
                               <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" required/>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">Contraseña</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required/>
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Subir Imagen de Perfil</label>
-                              <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" required/>
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Contraseña</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required/>
-                            </div>
-                            <div class="mb-3">
                               <label class="form-label">Está suscrito?</label>
                               <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" />
                             </div>
