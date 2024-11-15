@@ -16,12 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 case 'storeClient':
                     $name = $_POST['name'];
                     $email = $_POST['email'];
-                    $password = $_POST['password'];
                     $phone = $_POST['phone_number'];
-                    $isSubscribed= $_POST['is_subscribed'];
+                    $isSubscribed= $_POST['is_suscribed'];
                     $levelId = $_POST['level_id'];
                     
-                    $clientController->storeClient($name,$email,$password,$phone,$isSubscribed,$levelId);
+                    $clientController->storeClient($name,$email,$phone,$isSubscribed,$levelId);
 
                     break;
                 case 'deleteClient':
@@ -32,12 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $id = $_POST['id']; 
                     $name = $_POST['name'];
                     $email = $_POST['email'];
-                    $password = $_POST['password'];
                     $phone = $_POST['phone_number'];
-                    $isSubscribed= $_POST['is_subscribed'];
+                    $isSubscribed= $_POST['is_suscribed'];
                     $levelId = $_POST['level_id'];
                     
-                    $clientController->updateClient($id,$name,$email,$password,$phone,$isSubscribed,$levelId);
+                    $clientController->updateClient($id,$name,$email,$phone,$isSubscribed,$levelId);
                 break;
                 default:
                     echo "Accion desconocida";
@@ -172,7 +170,7 @@ class ClientController
         curl_close($curl);
         $result = json_decode($response, true);
 
-        $this->returnToFront($result, 4); 
+        return $this->returnToFront($result, 4); 
     }
     // Obtener informacion cliente
     public function getClient($clientId){
@@ -197,7 +195,7 @@ class ClientController
         curl_close($curl);
         $result = json_decode($response, true);
 
-        $this->returnToFront($result, 4); 
+        return $this->returnToFront($result, 4); 
     }
 
     private function returnToFront($data, $code){
@@ -216,11 +214,11 @@ class ClientController
     }
     public function returnToFrontAlert($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'clients?message=' . urlencode($data['message'])); // TODO: Corregir la ruta, aun no esta definida
+            header('Location: ' . BASE_PATH . 'clients?message=' . urlencode($data['message'])); 
         } 
         else{
             $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; 
-            header('Location: ' . BASE_PATH . 'clients?error=' . urlencode($message)); // TODO: Corregir la ruta, aun no esta definida
+            header('Location: ' . BASE_PATH . 'clients?error=' . urlencode($message)); 
         }
         exit;
     }

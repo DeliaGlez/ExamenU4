@@ -31,11 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 case 'deleteAddress':
                     $idAdress = $_POST['id']; 
-                    $addressController->deleteAddress($idAdress);
+                    $idClient = $_POST['client_id']; //
+                    $addressController->deleteAddress($idAdress,$idClient);
                     break;
 
                 case 'updateAddress':
-                    $idAddress = $_POST['id'];  // Pasar el id de la direccion, NO pasar el id del cliente.
+                    $idAddress = $_POST['id'];  
+                    $idClient = $_POST['client_id']; //
                     $firstName = $_POST['first_name'];
                     $lastName = $_POST['last_name'];
                     $street = $_POST['street_and_use_number'];
@@ -46,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $phone = $_POST['phone_number'];
                     $isbillingAdress= $_POST['is_billing_address'];
                     
-                    $addressController->updateAddress($idAddress,$firstName,$lastName,$street,$apartament,$postal,$city,$province,$phone,$isbillingAdress);
+                    $addressController->updateAddress($idAddress,$idClient,$firstName,$lastName,$street,$apartament,$postal,$city,$province,$phone,$isbillingAdress);
                 break;
                 default:
                     echo "Accion desconocida";
@@ -92,11 +94,11 @@ class AddressController
         curl_close($curl);
 
         $result = json_decode($response, true);
-        $this->returnToFrontAlert($result, 4); 
+        $this->returnToFrontAlert($result, 4,$idClient); 
     }
 
 
-    public function deleteAddress($idAdress)
+    public function deleteAddress($idAdress,$idClient)
     {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
@@ -120,10 +122,10 @@ class AddressController
         curl_close($curl);
 
         $result = json_decode($response, true);
-        $this->returnToFrontAlert($result, 2); 
+        $this->returnToFrontAlert($result, 2,$idClient); 
     }
 
-    public function updateAddress($idAddress, $firstName, $lastName, $street, $apartament, $postal, $city, $province, $phone, $isbillingAdress)
+    public function updateAddress($idAddress, $idClient,$firstName, $lastName, $street, $apartament, $postal, $city, $province, $phone, $isbillingAdress)
     {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
@@ -161,17 +163,19 @@ class AddressController
         curl_close($curl);
 
         $result = json_decode($response, true);
-        $this->returnToFrontAlert($result, 4); 
+        
+        $this->returnToFrontAlert($result, 4,$idClient); 
     }
 
 
-    public function returnToFrontAlert($data, $code){
+    public function returnToFrontAlert($data, $code,$idClient){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'address?message=' . urlencode($data['message'])); // TODO: Corregir la ruta, aun no esta definida
+            header('Location: ' . BASE_PATH . 'clients_info?client_id=' . $idClient . '&message=' . urlencode($data['message']) );
+
         } 
         else{
             $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; 
-            header('Location: ' . BASE_PATH . 'address?error=' . urlencode($message)); // TODO: Corregir la ruta, aun no esta definida
+            header('Location: ' . BASE_PATH . 'clients_info?client_id=' . $idClient . '&error='  . urlencode($message)); 
         }
         exit;
     }
