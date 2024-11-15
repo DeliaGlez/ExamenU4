@@ -4,8 +4,6 @@ include_once "config.php";
 if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
 }
-$tagController = new TagController();
-echo json_encode($tagController->getTag(23));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
