@@ -198,6 +198,40 @@ class ClientController
         return $this->returnToFront($result, 4); 
     }
 
+    public function getClientTotalPurchases($clientId)
+    {
+        $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients/' . $clientId,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $result = json_decode($response, true);
+        $totalPurchases = 0;
+
+        if (isset($result['data']['orders'])) {
+            foreach ($result['data']['orders'] as $order) {
+                $totalPurchases += $order['total'];
+            }
+        }
+
+        return $totalPurchases;
+    }
+
     private function returnToFront($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { 
             return [ 
