@@ -2,6 +2,7 @@
   include_once "../../app/config.php";
   include_once "../../app/AuthController.php";
   include_once "../../app/ClientController.php";
+  include_once "../../app/LevelController.php";
   
 
   if(!isset($_SESSION['user_data'])){
@@ -11,12 +12,15 @@
   else{
     $authController = new AuthController();
     $clientController = new ClientController();
+    $levelController = new LevelController();
 
     $profileData = $authController->getProfile();
     $clientData = $clientController->getClients();
+    $levelsData = $levelController->getLevels();
     
     $clients = $clientData['data'];
     $user = $profileData['data'];
+    $levels = $levelsData['data'];
     
   }
   $error_message = isset($_GET['error']) ? $_GET['error'] : '';
@@ -115,24 +119,28 @@
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Está suscrito?</label>
-                              <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" value="2" />
+                              <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" value="1"/>
                             </div>
                             <div class="mb-3">
-                              <label for="level_id" class="form-label">Nivel de Cliente</label>
-                              <select id="level_id" name="level_id" class="form-select">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                              </select>
-                            </div>
+                                  <label for="level_id" class="form-label">Nivel de Cliente</label>
+                                  <select id="level_id" name="level_id" class="form-select">
+                                      <?php
+                                      foreach ($levels as $level) {
+                                          $levelId = htmlspecialchars($level['id']);
+                                          $levelName = htmlspecialchars($level['name']); 
+                                          $selected = $levelId == htmlspecialchars($client['level']['id']) ? 'selected' : '';
+                                          echo "<option value=\"$levelId\" $selected>$levelName</option>";
+                                      }
+                                      ?>
+                                  </select>
+                              </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
                           </div>
                           <input type="hidden" name="action" value="storeClient"/>
+                          <input type="hidden" name="is_suscribed" value="0">
                           <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
                         </form>
                       </div>
@@ -237,9 +245,6 @@
 
         return true;
       }
-      document.getElementById("is_suscribed").addEventListener("change", function() {
-        this.value = this.checked ? "1" : "2";
-      });
     </script>
     <script>
       function remove(clientId){

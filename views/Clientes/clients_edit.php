@@ -2,7 +2,7 @@
   include_once "../../app/config.php";
   include_once "../../app/AuthController.php";
   include_once "../../app/ClientController.php";
-  
+  include_once "../../app/LevelController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
@@ -11,15 +11,18 @@
   else{
     $authController = new AuthController();
     $clientController = new ClientController();
+    $levelController = new LevelController();
 
     $link = $_SERVER['REQUEST_URI'];
     $link_array = explode('/', $link);
     $clientId = end($link_array);
 
     $profileData = $authController->getProfile();
+    $levelsData = $levelController->getLevels();
     $clientData = $clientController->getClient($clientId);
     
     $client = $clientData['data'];
+    $levels = $levelsData['data'];
     //var_dump($client);
     $user = $profileData['data'];
     
@@ -146,20 +149,23 @@
                                   </div>
                               </div>
                               <div class="mb-3">
-                                <label for="level_id" class="form-label">Nivel de Cliente</label>
-                                <select id="level_id" name="level_id" class="form-select">
-                                <?php
-                                  for ($level = 1; $level <= 5; $level++) {
-                                      $selected = $level == htmlspecialchars($client['level']['id'])  ? 'selected' : '';
-                                      echo "<option value=\"$level\" $selected>$level</option>";
-                                   }
-                                ?>
-                                </select>
+                                  <label for="level_id" class="form-label">Nivel de Cliente</label>
+                                  <select id="level_id" name="level_id" class="form-select">
+                                      <?php
+                                      foreach ($levels as $level) {
+                                          $levelId = htmlspecialchars($level['id']);
+                                          $levelName = htmlspecialchars($level['name']); 
+                                          $selected = $levelId == htmlspecialchars($client['level']['id']) ? 'selected' : '';
+                                          echo "<option value=\"$levelId\" $selected>$levelName</option>";
+                                      }
+                                      ?>
+                                  </select>
                               </div>
                               <div class="mb-3">
                                 <label class="form-label">Está suscrito?</label>
-                                <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" value="2"
-                                <?php echo htmlspecialchars($client['is_suscribed']) ? 'checked' : ''; ?> />
+                                <input type="hidden" name="is_suscribed" value="0">
+                                <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" value="1"
+                                    <?php echo htmlspecialchars($client['is_suscribed']) ? 'checked' : ''; ?>>
                               </div>
                             </div>
                           </div>
@@ -220,11 +226,6 @@
 
         return true;
       }
-    </script>
-    <script>
-      document.getElementById("is_suscribed").addEventListener("change", function() {
-        this.value = this.checked ? "1" : "2";
-      });
     </script>
     <?php 
 
