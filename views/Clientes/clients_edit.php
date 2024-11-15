@@ -114,23 +114,29 @@
                                   <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
                                   </div>
                               </div>
+                              <div class="mb-3">
+                                <label class="form-label">Nueva Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Nueva Contraseña" required/>
+                              </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Número de contacto</label>
                                   <input type="number" class="form-control" value="6121234567" name="number" id="number" />
                                   </div>
                               </div>
-                              <div class="col-sm-12">
-                                  <div class="mb-3">
-                                  <label class="form-label">Está suscrito?</label>
-                                  <input type="number" class="form-control" value="1" name="is_suscribed" id="is_suscribed" />
-                                  </div>
+                              <div class="mb-3">
+                                <label for="nivelCliente" class="form-label">Nivel de Cliente</label>
+                                <select id="nivelCliente" name="nivelCliente" class="form-select">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                </select>
                               </div>
-                              <div class="col-sm-12">
-                                  <div class="mb-3">
-                                  <label class="form-label">Nivel de Cliente</label>
-                                  <input type="number" class="form-control" value="1" name="level_id" id="level_id" />
-                                  </div>
+                              <div class="mb-3">
+                                <label class="form-label">Está suscrito?</label>
+                                <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" />
                               </div>
                             </div>
                           </div>
@@ -155,9 +161,10 @@
       function validarFormulario() {
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
         const number = document.getElementById("number").value.trim();
-        const isSuscribed = document.getElementById("is_suscribed").value.trim();
-        const levelId = document.getElementById("level_id").value.trim();
+        const nivelCliente = document.getElementById("nivelCliente").value;
+        const isSuscribed = document.getElementById("is_suscribed").checked;
 
         if (name === "") {
           alert("Por favor ingrese su nombre.");
@@ -165,29 +172,36 @@
         }
 
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (email === "" || !emailPattern.test(email)) {
-          alert("Por favor ingrese un correo válido.");
+        if (!emailPattern.test(email)) {
+          alert("Por favor ingrese un correo electrónico válido.");
           return false;
         }
 
-        if (number === "" || isNaN(number) || number.length !== 10) {
-          alert("Por favor ingrese un número de contacto válido de 10 dígitos.");
+        if (password.length < 5) {
+          alert("La contraseña debe tener al menos 5 caracteres.");
           return false;
         }
 
-        if (isSuscribed === "" || (isSuscribed !== "0" && isSuscribed !== "1")) {
-          alert("El campo 'Está suscrito?' debe ser 0 (No) o 1 (Sí).");
+        const phonePattern = /^\d{10,}$/;
+        if (!phonePattern.test(number)) {
+          alert("Por favor ingrese un número de contacto válido de al menos 10 dígitos.");
           return false;
         }
 
-        if (levelId === "" || isNaN(levelId) || parseInt(levelId) <= 0) {
-          alert("El campo 'Nivel de Cliente' debe ser un número positivo.");
+        if (nivelCliente === "") {
+          alert("Por favor seleccione un nivel de cliente.");
+          return false;
+        }
+
+        if (!isSuscribed) {
+          alert("Debe estar suscrito para continuar.");
           return false;
         }
 
         return true;
       }
     </script>
+
 
 
     <?php 

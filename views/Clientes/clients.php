@@ -74,36 +74,43 @@
                         </div>
                         <form onsubmit="return validarFormulario()">
                           <div class="modal-body">
-                            <small id="emailHelp" class="form-text text-muted mb-2 mt-0">
-                              Nunca compartiremos tu correo con externos.
-                            </small>
                             <div class="mb-3">
                               <label class="form-label">Nombre</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Apellido</label>
-                              <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Ingresar Apellido" />
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Correo Electrónico</label>
-                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
+                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Número de Teléfono</label>
-                              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" />
+                              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Contraseña</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Confirmar Contraseña</label>
-                              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirmar Contraseña" />
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Subir Imagen de Perfil</label>
-                              <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" />
+                              <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" required/>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Contraseña</label>
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required/>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Está suscrito?</label>
+                              <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" />
+                            </div>
+                            <div class="mb-3">
+                              <label for="nivelCliente" class="form-label">Nivel de Cliente</label>
+                              <select id="nivelCliente" name="nivelCliente" class="form-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -158,34 +165,50 @@
     <script>
       function validarFormulario() {
         const name = document.getElementById("name").value.trim();
-        const lastname = document.getElementById("lastname").value.trim();
         const email = document.getElementById("email").value.trim();
-        const phone = document.getElementById("phone_number").value.trim();
+        const phoneNumber = document.getElementById("phone_number").value.trim();
         const password = document.getElementById("password").value.trim();
-        const passwordConfirm = document.getElementById("passwordConfirm").value.trim();
-        const profilePhoto = document.getElementById("profile_photo_file").files.length;
+        const profilePhoto = document.getElementById("profile_photo_file").value;
+        const isSubscribed = document.getElementById("is_suscribed").checked;
+        const nivelCliente = document.getElementById("nivelCliente").value;
 
-        if (!name || !lastname || !email || !phone || !password || !passwordConfirm || profilePhoto === 0) {
-          alert("Por favor, completa todos los campos.");
+        if (name === "") {
+          alert("Por favor ingrese su nombre.");
           return false;
         }
 
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(email)) {
-          alert("Por favor, ingresa un correo electrónico válido.");
+          alert("Por favor ingrese un correo electrónico válido.");
           return false;
         }
 
-        const phonePattern = /^[0-9]+$/;
-        if (!phonePattern.test(phone)) {
-          alert("Por favor, ingresa un número de teléfono válido (solo dígitos).");
+        const phonePattern = /^\d{10,}$/;
+        if (!phonePattern.test(phoneNumber)) {
+          alert("Por favor ingrese un número de teléfono válido de al menos 10 dígitos.");
           return false;
         }
 
-        if (password !== passwordConfirm) {
-          alert("Las contraseñas no coinciden.");
+        if (password.length < 5) {
+          alert("La contraseña debe tener al menos 5 caracteres.");
           return false;
         }
+
+        if (!profilePhoto) {
+          alert("Por favor suba una imagen de perfil.");
+          return false;
+        }
+
+        if (!isSubscribed) {
+          alert("Debe estar suscrito para continuar.");
+          return false;
+        }
+
+        if (!nivelCliente) {
+          alert("Por favor seleccione un nivel de cliente.");
+          return false;
+        }
+
         return true;
       }
     </script>

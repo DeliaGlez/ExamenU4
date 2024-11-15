@@ -213,27 +213,39 @@
                                   <div class="modal-body">
                                     <div class="mb-3">
                                       <label class="form-label">Nombre</label>
-                                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Ingresar Nombre" />
+                                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Jorge" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Apellido</label>
-                                      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Ingresar Apellido" />
+                                      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Perez" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Dirección</label>
-                                      <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Dirección" />
+                                      <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Chametla #2945" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Apartamento</label>
+                                      <input class="form-check-input input-primary" type="checkbox" id="apartment" name="apartment" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Código Postal</label>
-                                      <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Ingresar Código Postal" />
+                                      <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="23046" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Ciudad</label>
-                                      <input type="text" class="form-control" id="city" name="city" placeholder="Ingresar Ciudad" />
+                                      <input type="text" class="form-control" id="city" name="city" placeholder="La Paz" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Estado</label>
+                                      <input type="text" class="form-control" id="province" name="province" placeholder="Baja Clifornia Sur" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Número de Teléfono</label>
-                                      <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" />
+                                      <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="612 123 4567" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Dirección de Facturación</label>
+                                      <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" />
                                     </div>
                                   </div>
                                   <div class="modal-footer">
@@ -255,9 +267,12 @@
                                 <th class="border-top-0">Nombre</th>
                                 <th class="border-top-0">Apellido</th>
                                 <th class="border-top-0">Dirección</th>
+                                <th class="border-top-0">Apartamento</th>
                                 <th class="border-top-0">Código Postal</th>
                                 <th class="border-top-0">Ciudad</th>
+                                <th class="border-top-0">Estado</th>
                                 <th class="border-top-0">Número</th>
+                                <th class="border-top-0">Dirección de Facturación</th>
                                 <th class="border-top-0">Acción</th>
                               </tr>
                             </thead>
@@ -267,9 +282,12 @@
                                 <td>Jorge</td>
                                 <td>Perez</td>
                                 <td>Chametla #2945</td>
+                                <td>No</td>
                                 <td>23046</td>
                                 <td>La Paz</td>
+                                <td>Baja California Sur</td>
                                 <td>612 123 4567</td>
+                                <td>Si</td>
                                 <td>
                                 <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                   <i class="feather icon-edit"></i>
@@ -299,6 +317,10 @@
                                             <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Chametla #2945" />
                                           </div>
                                           <div class="mb-3">
+                                            <label class="form-label">Apartamento</label>
+                                            <input class="form-check-input input-primary" type="checkbox" id="apartment" name="apartment" />
+                                          </div>
+                                          <div class="mb-3">
                                             <label class="form-label">Código Postal</label>
                                             <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="23046" />
                                           </div>
@@ -307,8 +329,16 @@
                                             <input type="text" class="form-control" id="city" name="city" placeholder="La Paz" />
                                           </div>
                                           <div class="mb-3">
+                                            <label class="form-label">Estado</label>
+                                            <input type="text" class="form-control" id="province" name="province" placeholder="Baja Clifornia Sur" />
+                                          </div>
+                                          <div class="mb-3">
                                             <label class="form-label">Número de Teléfono</label>
                                             <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="612 123 4567" />
+                                          </div>
+                                          <div class="mb-3">
+                                            <label class="form-label">Dirección de Facturación</label>
+                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" />
                                           </div>
                                         </div>
                                         <div class="modal-footer">
@@ -371,7 +401,6 @@
         <!-- [ Main Content ] end -->
       </div>
     </div>
-
     <script>
       function validarFormulario() {
         const firstName = document.getElementById("first_name").value.trim();
@@ -379,28 +408,55 @@
         const address = document.getElementById("street_and_use_number").value.trim();
         const postalCode = document.getElementById("postal_code").value.trim();
         const city = document.getElementById("city").value.trim();
+        const province = document.getElementById("province").value.trim();
         const phoneNumber = document.getElementById("phone_number").value.trim();
 
-        if (!firstName || !lastName || !address || !postalCode || !city || !phoneNumber) {
-          alert("Por favor, completa todos los campos.");
+        if (firstName === "") {
+          alert("Por favor ingrese su nombre.");
           return false;
         }
 
-        const postalCodePattern = /^[0-9]+$/;
-        if (!postalCodePattern.test(postalCode)) {
-          alert("El código postal debe contener solo dígitos.");
+        if (lastName === "") {
+          alert("Por favor ingrese su apellido.");
           return false;
         }
 
-        const phonePattern = /^[0-9]{10,}$/;
+        if (address === "") {
+          alert("Por favor ingrese su dirección.");
+          return false;
+        }
+
+        if (postalCode === "") {
+          alert("Por favor ingrese su código postal.");
+          return false;
+        }
+
+        if (city === "") {
+          alert("Por favor ingrese su ciudad.");
+          return false;
+        }
+
+        if (province === "") {
+          alert("Por favor ingrese su estado.");
+          return false;
+        }
+
+        const phonePattern = /^\d{10,}$/;
         if (!phonePattern.test(phoneNumber)) {
-          alert("El número de teléfono debe contener solo dígitos y tener al menos 10 caracteres.");
+          alert("Por favor ingrese un número de teléfono válido (al menos 10 dígitos).");
+          return false;
+        }
+
+        const postalCodePattern = /^\d{4,6}$/;
+        if (!postalCodePattern.test(postalCode)) {
+          alert("Por favor ingrese un código postal válido (entre 4 y 6 dígitos).");
           return false;
         }
 
         return true;
       }
     </script>
+    
     <!-- [ Main Content ] end -->
     <?php 
 
