@@ -263,6 +263,29 @@
 			});
 		}
     </script>
+    <?php if (!empty($error_message) || isset($_GET['message'])): ?> 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const successMessage = urlParams.get('message');
+          const errorMessage = urlParams.get('error');
+
+          if (successMessage) {
+            swal("Éxito", successMessage, "success")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients");
+              });
+          } else if (errorMessage) {
+            swal("Error", errorMessage, "error")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients");
+              });
+          }
+        });
+      </script>
+    <?php endif; ?>
     <?php 
 
       include "../layouts/footer.php";

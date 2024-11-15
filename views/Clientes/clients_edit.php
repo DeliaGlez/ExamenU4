@@ -92,8 +92,8 @@
                         />
                         <i class="chat-badge bg-success me-2 mb-2"></i>
                       </div>
-                      <h5 class="mb-0">Anshan Handgun</h5>
-                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> @anshanhandgun </a> </p>
+                      <h5 class="mb-0"><?= htmlspecialchars($client['name']) ?></h5>
+                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> <?= htmlspecialchars($client['email']) ?> </a> </p>
                     </div>
                   </div>
                   <div
