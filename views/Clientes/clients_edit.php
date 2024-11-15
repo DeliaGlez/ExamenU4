@@ -171,7 +171,7 @@
                           </div>
                         </div>
                         <div class="text-end btn-page mt-3">
-                            <button type="button" class="btn btn-outline-secondary">Cancelar</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='<?= BASE_PATH ?>clients'">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Actualizar perfil</button>
                         </div>
                         <input type="hidden" name="action" value="updateClient"/>
