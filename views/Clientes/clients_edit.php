@@ -1,5 +1,30 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/ClientController.php";
+  
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
+    $clientController = new ClientController();
+
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $clientId = end($link_array);
+
+    $profileData = $authController->getProfile();
+    $clientData = $clientController->getClient($clientId);
+    
+    $client = $clientData['data'];
+    //var_dump($client);
+    $user = $profileData['data'];
+    
+  }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -95,7 +120,7 @@
               <div class="col-lg-7 col-xxl-9">
                 <div class="tab-content" id="user-set-tabContent">
                     <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel" aria-labelledby="user-set-profile-tab">
-                      <form action="" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+                      <form method="POST" action="client" enctype="multipart/form-data" onsubmit="return validarFormulario()">
                         <div class="card">
                           <div class="card-header">
                               <h5>Actualizar datos</h5>
@@ -105,34 +130,36 @@
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Nombre</label>
-                                  <input type="text" class="form-control" value="Anshan" name="name" id="name" />
+                                  <input type="text" class="form-control" value="<?= htmlspecialchars($client['name']) ?>" name="name" id="name" />
                                   </div>
                               </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Correo</label>
-                                  <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
+                                  <input type="email" class="form-control" value="<?= htmlspecialchars($client['email']) ?>" name="email" id="email" />
                                   </div>
                               </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Número de contacto</label>
-                                  <input type="number" class="form-control" value="6121234567" name="number" id="number" />
+                                  <input type="number" class="form-control" value="<?= htmlspecialchars($client['phone_number']) ?>" name="phone_number" id="phone_number" />
                                   </div>
                               </div>
                               <div class="mb-3">
-                                <label for="nivelCliente" class="form-label">Nivel de Cliente</label>
-                                <select id="nivelCliente" name="nivelCliente" class="form-select">
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
+                                <label for="level_id" class="form-label">Nivel de Cliente</label>
+                                <select id="level_id" name="level_id" class="form-select">
+                                <?php
+                                  for ($level = 1; $level <= 5; $level++) {
+                                      $selected = $level == htmlspecialchars($client['level']['id'])  ? 'selected' : '';
+                                      echo "<option value=\"$level\" $selected>$level</option>";
+                                   }
+                                ?>
                                 </select>
                               </div>
                               <div class="mb-3">
                                 <label class="form-label">Está suscrito?</label>
-                                <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" />
+                                <input class="form-check-input input-primary" type="checkbox" id="is_suscribed" name="is_suscribed" value="2"
+                                <?php echo htmlspecialchars($client['is_suscribed']) ? 'checked' : ''; ?> />
                               </div>
                             </div>
                           </div>
@@ -141,6 +168,9 @@
                             <button type="button" class="btn btn-outline-secondary">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Actualizar perfil</button>
                         </div>
+                        <input type="hidden" name="action" value="updateClient"/>
+                        <input type="hidden" id="id" name="id" value="<?= $client['id'] ?>" />
+                        <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
                     </form>
                   </div>
                 </div>
@@ -157,9 +187,8 @@
       function validarFormulario() {
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
         const number = document.getElementById("number").value.trim();
-        const nivelCliente = document.getElementById("nivelCliente").value;
+        const nivelCliente = document.getElementById("level_id").value;
         const isSuscribed = document.getElementById("is_suscribed").checked;
 
         if (name === "") {
@@ -170,11 +199,6 @@
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(email)) {
           alert("Por favor ingrese un correo electrónico válido.");
-          return false;
-        }
-
-        if (password.length < 5) {
-          alert("La contraseña debe tener al menos 5 caracteres.");
           return false;
         }
 
@@ -197,9 +221,11 @@
         return true;
       }
     </script>
-
-
-
+    <script>
+      document.getElementById("is_suscribed").addEventListener("change", function() {
+        this.value = this.checked ? "1" : "2";
+      });
+    </script>
     <?php 
 
       include "../layouts/footer.php";
@@ -217,6 +243,7 @@
         include "../layouts/scripts.php";
 
     ?>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </body>
     <!-- [Body] end -->
 </html>

@@ -166,8 +166,8 @@
                           <td><?= htmlspecialchars($client['is_suscribed']) ? 'Sí' : 'No' ?></td>
                           <td><?= htmlspecialchars($client['level']['name']) ?></td>
                           <td>
-                            <a href="<?= BASE_PATH ?>clients_edit?id=<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a>
-                            <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                            <a href="<?= BASE_PATH ?>clients_edit/<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a>
+                            <a href="#" onclick="remove(<?= $client['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                             <a href="<?= BASE_PATH ?>clients_info?id=<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-info"><i class="feather icon-eye"></i></a>
                           </td>
                         </tr>
@@ -176,6 +176,11 @@
                     </tbody>
                   </table>
                 </div>
+                <form id="delete-form" action="client" method="POST">
+                  <input type="hidden" name="action" value="deleteClient" />
+                  <input type="hidden" id="delete-client-id" name="id" />
+                  <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
+                </form>
               </div>
             </div>
           </div>
@@ -236,7 +241,28 @@
         this.value = this.checked ? "1" : "2";
       });
     </script>
-
+    <script>
+      function remove(clientId){
+			swal({
+			title: "Are you sure?",
+			text: "Once deleted, you will not be able to recover this imaginary file!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+			})
+			.then((willDelete) => {
+			if (willDelete) {
+				swal("Poof! Your imaginary file has been deleted!", {
+				icon: "success",
+				});
+				document.getElementById("delete-client-id").value = clientId;
+                document.getElementById("delete-form").submit();
+			} else {
+				
+			}
+			});
+		}
+    </script>
     <?php 
 
       include "../layouts/footer.php";

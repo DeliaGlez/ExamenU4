@@ -13,7 +13,7 @@ RewriteRule ^users_edit/?$ views/Usuarios/users_edit.php
 #Clientes
 RewriteRule ^clients/?$ views/Clientes/clients.php
 RewriteRule ^clients_info/?$ views/Clientes/clients_info.php
-RewriteRule ^clients_edit/?$ views/Clientes/clients_edit.php
+RewriteRule ^clients_edit/([^/]+)/?$ views/Clientes/clients_edit.php
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/([^/]+)/?$ views/products/details.php
