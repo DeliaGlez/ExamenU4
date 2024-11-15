@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 class ClientController
 {
     //Guardar cliente
-    public function storeClient($name,$email,$password,$phone,$isSubscribed,$levelId){
+    public function storeClient($name,$email,$phone,$isSubscribed,$levelId){
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
 
@@ -63,7 +63,6 @@ class ClientController
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array('name' => $name,
             'email' => $email,
-            'password' => $password,
             'phone_number' => $phone,
             'is_suscribed' => $isSubscribed,
             'level_id' => $levelId),
@@ -107,7 +106,7 @@ class ClientController
     }
 
     // Actualizar cliente
-    public function updateClient($id, $name, $email, $password, $phone, $isSubscribed, $levelId) {
+    public function updateClient($id, $name, $email, $phone, $isSubscribed, $levelId) {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
     
@@ -120,9 +119,7 @@ class ClientController
             'level_id' => $levelId,
         );
     
-        if (!empty($password)) {
-            $postFields['password'] = $password;
-        }
+       
     
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://crud.jonathansoto.mx/api/clients',
