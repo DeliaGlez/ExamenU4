@@ -329,9 +329,26 @@
                                 <td><?= htmlspecialchars($address['phone_number'] ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($address['is_billing_address'] ? 'Sí' : 'No') ?></td>
                                 <td>
-                                <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                <a href="#" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                  data-id="<?= htmlspecialchars($address['id']) ?>"
+                                  data-first-name="<?= htmlspecialchars($address['first_name'] ?? 'N/A') ?>"
+                                  data-last-name="<?= htmlspecialchars($address['last_name'] ?? 'N/A') ?>"
+                                  data-street-and-use-number="<?= htmlspecialchars($address['street_and_use_number'] ?? 'N/A') ?>"
+                                  data-apartment="<?= htmlspecialchars($address['apartment'] ?? 'N/A') ?>"
+                                  data-postal-code="<?= htmlspecialchars($address['postal_code'] ?? 'N/A') ?>"
+                                  data-city="<?= htmlspecialchars($address['city'] ?? 'N/A') ?>"
+                                  data-province="<?= htmlspecialchars($address['province'] ?? 'N/A') ?>"
+                                  data-phone-number="<?= htmlspecialchars($address['phone_number'] ?? 'N/A') ?>"
+                                  data-is-billing-address="<?= htmlspecialchars($address['is_billing_address']) ?>">
                                   <i class="feather icon-edit"></i>
+                                <a href="#" onclick="remove(<?= $client['id'] ?>, <?= $address['id']  ?>)" class="btn btn-sm btn-light-danger">
+                                    <i class="feather icon-trash-2"></i>
                                 </a>
+                                </td>
+                              </tr>
+                              <?php endforeach; ?>
+                            </tbody>
+                          </table>
                                 <!-- Modal  editar (para no perderme)-->
                                 <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
@@ -342,59 +359,57 @@
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
-                                      <form onsubmit="return validarFormulario()">
+                                      <form method="POST" action="address" enctype="multipart/form-data">
                                         <div class="modal-body">
                                           <div class="mb-3">
                                             <label class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="first_name" name="first_name" value="<?= htmlspecialchars($address['first_name'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="first_name" name="first_name_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Apellido</label>
-                                            <input type="text" class="form-control" id="last_name" name="last_name" value="<?= htmlspecialchars($address['last_name'] ?? 'N/A') ?>" />
+                                            <input type="text" class="form-control" id="last_name" name="last_name_edit"  />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Dirección</label>
-                                            <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" value="<?= htmlspecialchars($address['street_and_use_number'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Apartamento</label>
-                                            <input class="form-control" type="text" id="apartment" name="apartment" value="<?= htmlspecialchars($address['apartment'] ?? 'N/A') ?>"/>
+                                            <input class="form-control" type="text" id="apartment" name="apartment_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Código Postal</label>
-                                            <input type="text" class="form-control" id="postal_code" name="postal_code" value="<?= htmlspecialchars($address['postal_code'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="postal_code" name="postal_code_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Ciudad</label>
-                                            <input type="text" class="form-control" id="city" name="city" value="<?= htmlspecialchars($address['city'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="city" name="city_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Estado</label>
-                                            <input type="text" class="form-control" id="province" name="province" value="<?= htmlspecialchars($address['province'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="province" name="province_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Número de Teléfono</label>
-                                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?= htmlspecialchars($address['phone_number'] ?? 'N/A') ?>"/>
+                                            <input type="text" class="form-control" id="phone_number" name="phone_number_edit" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Dirección de Facturación</label>
-                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="<?= htmlspecialchars($address['is_billing_address']) ?>"/>
+                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address_edit" />
                                           </div>
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
                                           <button type="submit" class="btn btn-light-primary">Modificar Dirección</button>
                                         </div>
+                                          <input type="hidden" name="action" value="updateAddress"/>
+                                          <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
+                                          <input type="hidden" id="id" name="id" value="" />
+                                          <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
                                       </form>
                                     </div>
                                   </div>
                                 </div>
-                                  <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
-                                </td>
-                              </tr>
-                              <?php endforeach; ?>
-                            </tbody>
-                          </table>
                         </div>
                       </div>
 
@@ -433,12 +448,17 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <form id="delete-form" action="address" method="POST">
+            <input type="hidden" name="action" value="deleteAddress" />
+            <input type="hidden" id="delete-address-id" name="id" />
+            <input type="hidden" id="delete-client-id" name="client_id" />
+            <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
+          </form>
           <!-- [ sample-page ] end -->
         </div>
         <!-- [ Main Content ] end -->
@@ -535,6 +555,62 @@
         });
       </script>
     <?php endif; ?>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.btn-light-success');
+
+        editButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            const firstName = button.getAttribute('data-first-name');
+            const lastName = button.getAttribute('data-last-name');
+            const streetAndUseNumber = button.getAttribute('data-street-and-use-number');
+            const apartment = button.getAttribute('data-apartment');
+            const postalCode = button.getAttribute('data-postal-code');
+            const city = button.getAttribute('data-city');
+            const province = button.getAttribute('data-province');
+            const phoneNumber = button.getAttribute('data-phone-number');
+            const isBillingAddress = button.getAttribute('data-is-billing-address');
+
+            console.log(firstName, lastName, streetAndUseNumber, apartment, postalCode, city, province, phoneNumber, isBillingAddress);
+
+            document.getElementById('id').value = id;
+            document.querySelector('[name="first_name_edit"]').value = firstName;
+            document.querySelector('[name="last_name_edit"]').value = lastName;
+            document.querySelector('[name="street_and_use_number_edit"]').value = streetAndUseNumber;
+            document.querySelector('[name="apartment_edit"]').value = apartment;
+            document.querySelector('[name="postal_code_edit"]').value = postalCode;
+            document.querySelector('[name="city_edit"]').value = city;
+            document.querySelector('[name="province_edit"]').value = province;
+            document.querySelector('[name="phone_number_edit"]').value = phoneNumber;
+            document.querySelector('[name="is_billing_address_edit"]').checked = isBillingAddress === '1';
+          });
+        });
+      });
+    </script>
+    <script>
+      function remove(clientId, addressId) {
+        console.log("Client ID:", clientId, "Address ID:", addressId); //pruebas
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this address!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // Actualiza los valores en el formulario
+                document.getElementById("delete-client-id").value = clientId;
+                document.getElementById("delete-address-id").value = addressId;
+
+                // Enviar el formulario
+                document.getElementById("delete-form").submit();
+            }
+        });
+    }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- [ Main Content ] end -->
     <?php 
 
