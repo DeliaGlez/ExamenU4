@@ -59,6 +59,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 class AddressController
 {
+
+    public function getAddress($idAddress){
+        $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+        
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://crud.jonathansoto.mx/api/addresses/'. intval($idAddress),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $token
+            ),
+          ));
+        
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $result = json_decode($response, true);
+        return $this->returnToFront($result, 4); 
+    }
+
     public function storeAddress($idClient, $firstName, $lastName, $street, $apartament, $postal, $city, $province, $phone, $isbillingAdress)
     {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
