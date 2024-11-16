@@ -1,5 +1,5 @@
 <?php 
-  include_once "../app/config.php";
+  include_once "../../app/config.php";
 
 ?>
 <!doctype html>
@@ -9,7 +9,7 @@
   <head>
      <?php 
 
-      include "layouts/head.php";
+      include "../layouts/head.php";
 
     ?>
 
@@ -22,13 +22,13 @@
 
     <?php 
 
-      include "layouts/sidebar.php";
+      include "../layouts/sidebar.php";
 
     ?>
 
     <?php 
 
-      include "layouts/nav.php";
+      include "../layouts/nav.php";
 
     ?>
 
@@ -41,13 +41,14 @@
             <div class="row align-items-center">
               <div class="col-md-12">
                 <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Productos</li>
+                  <li class="breadcrumb-item"><a href="">Home</a></li>
+                  <li class="breadcrumb-item"><a href="">Productos</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Buscar por Categoría</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Productos</h2>
+                  <h2 class="mb-0">Productos por Categorías</h2>
                 </div>
               </div>
             </div>
@@ -130,16 +131,6 @@
         </div>
         <!-- [ breadcrumb ] end -->
 
-        <div>
-
-          <button onclick="window.location.href = '<?= BASE_PATH ?>brands'" type="button" class="btn btn-light-success m-0">
-            Buscar por Marca
-          </button>
-          <button onclick="window.location.href = '<?= BASE_PATH ?>tags'" type="button" class="btn btn-light-danger m-0">
-            Buscar por Categoría
-          </button>
-        </div>
-        <br>
         <!-- [ Main Content ] start -->
         <div class="row">
           <!-- [ sample-page ] start -->
@@ -309,19 +300,19 @@
 
     <?php 
 
-      include "layouts/footer.php";
+      include "../layouts/footer.php";
 
     ?>
     
     <?php 
 
-      include "layouts/modals.php";
+      include "../layouts/modals.php";
 
     ?>
 
     <?php 
 
-      include "layouts/scripts.php";
+      include "../layouts/scripts.php";
 
     ?>
 
