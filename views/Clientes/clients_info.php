@@ -1,5 +1,35 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/ClientController.php";
+  include_once "../../app/LevelController.php";
+  include_once "../../app/AddressController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
+    $clientController = new ClientController();
+    $levelController = new LevelController();
+    $addressController = new AddressController();
+
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $clientId = end($link_array);
+
+    $profileData = $authController->getProfile();
+    $levelsData = $levelController->getLevels();
+    $clientData = $clientController->getClient($clientId);
+    
+    
+    $client = $clientData['data'];
+    $levels = $levelsData['data'];
+    $user = $profileData['data'];
+    
+  }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,7 +45,13 @@
   <!-- [Body] Start -->
 
   <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
-
+  <?php if (!empty($error_message)): ?> 
+      <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+          swal("Error", "<?php echo htmlspecialchars($error_message); ?>", "error").then((value) => { window.location.href = '<?= BASE_PATH ?>'; });;
+        });
+      </script> 
+  <?php endif; ?>
   <?php 
     include "../layouts/sidebar.php";
   ?>
@@ -67,8 +103,8 @@
                         />
                         <i class="chat-badge bg-success me-2 mb-2"></i>
                       </div>
-                      <h5 class="mb-0">Anshan Handgun</h5>
-                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> @anshanhandgun </a> </p>
+                      <h5 class="mb-0"><?= htmlspecialchars($client['name']) ?></h5>
+                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> <?= htmlspecialchars($client['email']) ?> </a> </p>
                     </div>
                   </div>
                   <div
@@ -128,7 +164,7 @@
                                 <p class="mb-1 text-muted">Nombre completo</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Anshan Handgun</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['name']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -138,7 +174,7 @@
                                 <p class="mb-1 text-muted">Número celular</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">(+1-876) 8654 239 581</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['phone_number']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -148,7 +184,7 @@
                                 <p class="mb-1 text-muted">Correo</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">anshan.dh81@gmail.com</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['email']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -158,7 +194,7 @@
                                 <p class="mb-1 text-muted">Cuenta con suscripción</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Si</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['is_suscribed']) ? 'Sí' : 'No' ?></p>
                               </div>
                             </div>
                           </li>
@@ -168,7 +204,7 @@
                                 <p class="mb-1 text-muted">Nivel de usuario</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Normal</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['level']['name']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -178,7 +214,7 @@
                                 <p class="mb-1 text-muted">Porcentaje de descuento para el cliente</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">30%</p>
+                                <p class="mb-0"><?= htmlspecialchars($client['level']['percentage_discount']) ?>%</p>
                               </div>
                             </div>
                           </li>
@@ -209,7 +245,7 @@
                                   >
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                                 </div>
-                                <form onsubmit="return validarFormulario()">
+                                <form method="POST" action="adress" enctype="multipart/form-data" onsubmit="return validarFormulario()">
                                   <div class="modal-body">
                                     <div class="mb-3">
                                       <label class="form-label">Nombre</label>
@@ -225,7 +261,7 @@
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Apartamento</label>
-                                      <input class="form-check-input input-primary" type="checkbox" id="apartment" name="apartment" />
+                                      <input class="form-control" type="text" id="apartment" name="apartment" />
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Código Postal</label>
@@ -245,13 +281,16 @@
                                     </div>
                                     <div class="mb-3">
                                       <label class="form-label">Dirección de Facturación</label>
-                                      <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" />
+                                      <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="1"/>
                                     </div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-light-primary">Agregar Dirección</button>
                                   </div>
+                                    <input type="hidden" name="action" value="storeAddress"/>
+                                    <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
+                                    <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
                                 </form>
                               </div>
                             </div>
@@ -278,21 +317,22 @@
                             </thead>
                             <tbody>
                               <!-- Aqui va a ir el ciclo para recorrer los usuarios y llenar la tabla -->
+                              <?php foreach ($client['addresses'] as $address): ?>
                               <tr>
-                                <td>Jorge</td>
-                                <td>Perez</td>
-                                <td>Chametla #2945</td>
-                                <td>No</td>
-                                <td>23046</td>
-                                <td>La Paz</td>
-                                <td>Baja California Sur</td>
-                                <td>612 123 4567</td>
-                                <td>Si</td>
+                                <td><?= htmlspecialchars($address['first_name'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['last_name'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['street_and_use_number'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['apartment'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['postal_code'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['city'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['province'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['phone_number'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($address['is_billing_address'] ? 'Sí' : 'No') ?></td>
                                 <td>
                                 <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                   <i class="feather icon-edit"></i>
                                 </a>
-                                <!-- Modal -->
+                                <!-- Modal  editar (para no perderme)-->
                                 <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -306,39 +346,39 @@
                                         <div class="modal-body">
                                           <div class="mb-3">
                                             <label class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Jorge" />
+                                            <input type="text" class="form-control" id="first_name" name="first_name" value="<?= htmlspecialchars($address['first_name'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Apellido</label>
-                                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Perez" />
+                                            <input type="text" class="form-control" id="last_name" name="last_name" value="<?= htmlspecialchars($address['last_name'] ?? 'N/A') ?>" />
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Dirección</label>
-                                            <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Chametla #2945" />
+                                            <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" value="<?= htmlspecialchars($address['street_and_use_number'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Apartamento</label>
-                                            <input class="form-check-input input-primary" type="checkbox" id="apartment" name="apartment" />
+                                            <input class="form-control" type="text" id="apartment" name="apartment" value="<?= htmlspecialchars($address['apartment'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Código Postal</label>
-                                            <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="23046" />
+                                            <input type="text" class="form-control" id="postal_code" name="postal_code" value="<?= htmlspecialchars($address['postal_code'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Ciudad</label>
-                                            <input type="text" class="form-control" id="city" name="city" placeholder="La Paz" />
+                                            <input type="text" class="form-control" id="city" name="city" value="<?= htmlspecialchars($address['city'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Estado</label>
-                                            <input type="text" class="form-control" id="province" name="province" placeholder="Baja Clifornia Sur" />
+                                            <input type="text" class="form-control" id="province" name="province" value="<?= htmlspecialchars($address['province'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Número de Teléfono</label>
-                                            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="612 123 4567" />
+                                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?= htmlspecialchars($address['phone_number'] ?? 'N/A') ?>"/>
                                           </div>
                                           <div class="mb-3">
                                             <label class="form-label">Dirección de Facturación</label>
-                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" />
+                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="<?= htmlspecialchars($address['is_billing_address']) ?>"/>
                                           </div>
                                         </div>
                                         <div class="modal-footer">
@@ -352,6 +392,7 @@
                                   <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                                 </td>
                               </tr>
+                              <?php endforeach; ?>
                             </tbody>
                           </table>
                         </div>
@@ -378,13 +419,15 @@
                             </thead>
                             <tbody>
                               <!-- Aqui va a ir el ciclo para recorrer los usuarios y llenar la tabla -->
+                              <?php foreach ($client['orders'] as $order): ?>
                               <tr>
-                                <td>1</td>
-                                <td>82412</td>
-                                <td>$10,000</td>
-                                <td>Si</td>
-                                <td>1</td>
+                                <td><?= htmlspecialchars($order['id'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($order['folio'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($order['total'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($order['is_paid'] ? 'Sí' : 'No') ?></td>
+                                <td><?= htmlspecialchars($order['order_status'] ['name']?? 'N/A') ?></td>
                               </tr>
+                              <?php endforeach; ?>
                             </tbody>
                           </table>
                         </div>
@@ -456,7 +499,42 @@
         return true;
       }
     </script>
-    
+    <script>
+      document.querySelector('form').addEventListener('submit', function (event) {
+        const billingCheckbox = document.getElementById('is_billing_address');
+
+        if (!billingCheckbox.checked) {
+          const hiddenBilling = document.createElement('input');
+          hiddenBilling.type = 'hidden';
+          hiddenBilling.name = 'is_billing_address';
+          hiddenBilling.value = '0';
+          this.appendChild(hiddenBilling);
+        }
+      });
+    </script>
+    <?php if (!empty($error_message) || isset($_GET['message'])): ?> 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const successMessage = urlParams.get('message');
+          const errorMessage = urlParams.get('error');
+
+          if (successMessage) {
+            swal("Éxito", successMessage, "success")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients/". clientId);
+              });
+          } else if (errorMessage) {
+            swal("Error", errorMessage, "error")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients/". clientId);
+              });
+          }
+        });
+      </script>
+    <?php endif; ?>
     <!-- [ Main Content ] end -->
     <?php 
 

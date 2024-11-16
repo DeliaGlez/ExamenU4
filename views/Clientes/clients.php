@@ -176,7 +176,7 @@
                           <td>
                             <a href="<?= BASE_PATH ?>clients_edit/<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a>
                             <a href="#" onclick="remove(<?= $client['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
-                            <a href="<?= BASE_PATH ?>clients_info?id=<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-info"><i class="feather icon-eye"></i></a>
+                            <a href="<?= BASE_PATH ?>clients_info/<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-info"><i class="feather icon-eye"></i></a>
                           </td>
                         </tr>
                         <?php endforeach; ?>
