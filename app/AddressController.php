@@ -170,12 +170,12 @@ class AddressController
 
     public function returnToFrontAlert($data, $code,$idClient){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'clients_info?client_id=' . $idClient . '&message=' . urlencode($data['message']) );
+            header('Location: ' . BASE_PATH . 'clients_info/' . $idClient . '&message=' . urlencode($data['message']) );
 
         } 
         else{
-            $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; 
-            header('Location: ' . BASE_PATH . 'clients_info?client_id=' . $idClient . '&error='  . urlencode($message)); 
+            $message = isset($data['message']) ? $data['message'] : 'Algo salió mal, verifique los datos.'; 
+            header('Location: ' . BASE_PATH . 'clients_info/' . $idClient . '&error='  . urlencode($message)); 
         }
         exit;
     }
