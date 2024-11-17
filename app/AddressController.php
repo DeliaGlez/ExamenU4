@@ -195,7 +195,21 @@ class AddressController
         $this->returnToFrontAlert($result, 4,$idClient); 
     }
 
-
+    private function returnToFront($data, $code){
+        if (isset($data['code']) && $data['code'] === intval($code)) { 
+            return [ 
+                'success' => true, 
+                'data' => $data['data'],
+                'message' => $data['message'] 
+            ];
+        } else {
+            return [ 
+                'success' => false, 
+                'message' => isset($data['message']) ? $data['message'] : 'Error desconocido' 
+            ];
+        }
+    }
+    
     public function returnToFrontAlert($data, $code,$idClient){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
             header('Location: ' . BASE_PATH . 'clients_info/' . $idClient . '&message=' . urlencode($data['message']) );
