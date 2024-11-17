@@ -229,72 +229,6 @@
                           <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                           Agregar Dirección
                           </button>
-                          <div
-                            class="modal fade"
-                            id="exampleModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel"
-                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Dirección</h5
-                                  >
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                                </div>
-                                <form method="POST" action="adress" enctype="multipart/form-data" onsubmit="return validarFormulario()">
-                                  <div class="modal-body">
-                                    <div class="mb-3">
-                                      <label class="form-label">Nombre</label>
-                                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Jorge" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Apellido</label>
-                                      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Perez" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Dirección</label>
-                                      <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Chametla #2945" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Apartamento</label>
-                                      <input class="form-control" type="text" id="apartment" name="apartment" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Código Postal</label>
-                                      <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="23046" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Ciudad</label>
-                                      <input type="text" class="form-control" id="city" name="city" placeholder="La Paz" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Estado</label>
-                                      <input type="text" class="form-control" id="province" name="province" placeholder="Baja Clifornia Sur" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Número de Teléfono</label>
-                                      <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="612 123 4567" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Dirección de Facturación</label>
-                                      <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="1"/>
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-light-primary">Agregar Dirección</button>
-                                  </div>
-                                    <input type="hidden" name="action" value="storeAddress"/>
-                                    <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
-                                    <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
 
@@ -349,67 +283,6 @@
                               <?php endforeach; ?>
                             </tbody>
                           </table>
-                                <!-- Modal  editar (para no perderme)-->
-                                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                          <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Dirección
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <form method="POST" action="address" enctype="multipart/form-data">
-                                        <div class="modal-body">
-                                          <div class="mb-3">
-                                            <label class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="first_name" name="first_name_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Apellido</label>
-                                            <input type="text" class="form-control" id="last_name" name="last_name_edit"  />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Dirección</label>
-                                            <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Apartamento</label>
-                                            <input class="form-control" type="text" id="apartment" name="apartment_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Código Postal</label>
-                                            <input type="text" class="form-control" id="postal_code" name="postal_code_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Ciudad</label>
-                                            <input type="text" class="form-control" id="city" name="city_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Estado</label>
-                                            <input type="text" class="form-control" id="province" name="province_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Número de Teléfono</label>
-                                            <input type="text" class="form-control" id="phone_number" name="phone_number_edit" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Dirección de Facturación</label>
-                                            <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address_edit" />
-                                          </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                                          <button type="submit" class="btn btn-light-primary">Modificar Dirección</button>
-                                        </div>
-                                          <input type="hidden" name="action" value="updateAddress"/>
-                                          <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
-                                          <input type="hidden" id="id" name="id" value="" />
-                                          <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
                         </div>
                       </div>
 
@@ -460,8 +333,137 @@
             <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
           </form>
           <!-- [ sample-page ] end -->
+           <!-- Modal  editar (para no perderme)-->
+           <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Dirección
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form method="POST" action="address" enctype="multipart/form-data">
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name"  />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Apartamento</label>
+                        <input class="form-control" type="text" id="apartment" name="apartment" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Código Postal</label>
+                        <input type="text" class="form-control" id="postal_code" name="postal_code" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Ciudad</label>
+                        <input type="text" class="form-control" id="city" name="city" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <input type="text" class="form-control" id="province" name="province" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Número de Teléfono</label>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Dirección de Facturación</label>
+                        <input type="hidden" name="is_billing_address" value="0">
+                        <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="1"/>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+                      <button type="submit" class="btn btn-light-primary">Modificar Dirección</button>
+                    </div>
+                      <input type="hidden" name="action" value="updateAddress"/>
+                      <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
+                      <input type="hidden" id="id" name="id" value="" />
+                      <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
+                  </form>
+                </div>
+              </div>
+            </div>
         </div>
         <!-- [ Main Content ] end -->
+      </div>
+      <!-- Modal  agregar (para no perderme)-->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"
+                ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Dirección</h5
+              >
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form method="POST" action="adress" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Jorge" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Apellido</label>
+                  <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Perez" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="street_and_use_number" name="street_and_use_number" placeholder="Chametla #2945" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Apartamento</label>
+                  <input class="form-control" type="text" id="apartment" name="apartment" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Código Postal</label>
+                  <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="23046" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ciudad</label>
+                  <input type="text" class="form-control" id="city" name="city" placeholder="La Paz" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Estado</label>
+                  <input type="text" class="form-control" id="province" name="province" placeholder="Baja Clifornia Sur" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Número de Teléfono</label>
+                  <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="612 123 4567" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Dirección de Facturación</label>
+                  <input class="form-check-input input-primary" type="checkbox" id="is_billing_address" name="is_billing_address" value="1"/>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-light-primary">Agregar Dirección</button>
+              </div>
+                <input type="hidden" name="action" value="storeAddress"/>
+                <input type="hidden" id="client_id" name="client_id" value="<?= $client['id'] ?>" />
+                <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     <script>
@@ -575,15 +577,15 @@
             console.log(firstName, lastName, streetAndUseNumber, apartment, postalCode, city, province, phoneNumber, isBillingAddress);
 
             document.getElementById('id').value = id;
-            document.querySelector('[name="first_name_edit"]').value = firstName;
-            document.querySelector('[name="last_name_edit"]').value = lastName;
-            document.querySelector('[name="street_and_use_number_edit"]').value = streetAndUseNumber;
-            document.querySelector('[name="apartment_edit"]').value = apartment;
-            document.querySelector('[name="postal_code_edit"]').value = postalCode;
-            document.querySelector('[name="city_edit"]').value = city;
-            document.querySelector('[name="province_edit"]').value = province;
-            document.querySelector('[name="phone_number_edit"]').value = phoneNumber;
-            document.querySelector('[name="is_billing_address_edit"]').checked = isBillingAddress === '1';
+            document.getElementById('first_name').value = firstName;
+            document.getElementById('last_name').value = lastName;
+            document.getElementById('street_and_use_number').value = streetAndUseNumber;
+            document.getElementById('apartment').value = apartment;
+            document.getElementById('postal_code').value = postalCode;
+            document.getElementById('city').value = city;
+            document.getElementById('province').value = province;
+            document.getElementById('phone_number').value = phoneNumber;
+            document.getElementById('is_billing_address').checked = isBillingAddress === '1';
           });
         });
       });
