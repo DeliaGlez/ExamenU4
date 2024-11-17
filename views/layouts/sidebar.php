@@ -45,6 +45,22 @@
                 <span class="pc-mtext">Lista de Clientes</span>
               </a>
             </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>brands" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Lista de Marcas</span>
+              </a>
+            </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>tags" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Lista de Etiquetas</span>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="card pc-user-card">

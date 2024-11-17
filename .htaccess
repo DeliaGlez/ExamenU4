@@ -14,9 +14,13 @@ RewriteRule ^users_edit/?$ views/Usuarios/users_edit.php
 RewriteRule ^clients/?$ views/Clientes/clients.php
 RewriteRule ^clients_info/([^/]+)/?$ views/Clientes/clients_info.php
 RewriteRule ^clients_edit/([^/]+)/?$ views/Clientes/clients_edit.php
+#Productos
 RewriteRule ^products/?$ views/products/index.php
 RewriteRule ^products/create/?$ views/products/create.php
 RewriteRule ^products/([^/]+)/?$ views/products/details.php
+#Catalogo
+RewriteRule ^brands/?$ views/Catalogo/brands.php
+RewriteRule ^tags/?$ views/Catalogo/tags.php
 
 #Controladores
 RewriteRule ^auth?$ app/AuthController.php
