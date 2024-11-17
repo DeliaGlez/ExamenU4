@@ -19,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $firstName = $_POST['first_name'];
                     $lastName = $_POST['last_name'];
                     $street = $_POST['street_and_use_number'];
-                    $apartament = $_POST['apartment'];
+                    $apartment = $_POST['apartment'];
                     $postal = $_POST['postal_code'];
                     $city = $_POST['city'];
                     $province = $_POST['province'];
                     $phone = $_POST['phone_number'];
                     $isbillingAdress= $_POST['is_billing_address'];
                     
-                    $addressController->storeAddress($idClient,$firstName,$lastName,$street,$apartament,$postal,$city,$province,$phone,$isbillingAdress);
+                    $addressController->storeAddress($idClient,$firstName,$lastName,$street,$apartment,$postal,$city,$province,$phone,$isbillingAdress);
                     break;
 
                 case 'deleteAddress':
@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $firstName = $_POST['first_name'];
                     $lastName = $_POST['last_name'];
                     $street = $_POST['street_and_use_number'];
-                    $apartament = $_POST['apartment'];
+                    $apartment = $_POST['apartment'];
                     $postal = $_POST['postal_code'];
                     $city = $_POST['city'];
                     $province = $_POST['province'];
                     $phone = $_POST['phone_number'];
                     $isbillingAdress= $_POST['is_billing_address'];
                     
-                    $addressController->updateAddress($idAddress,$idClient,$firstName,$lastName,$street,$apartament,$postal,$city,$province,$phone,$isbillingAdress);
+                    $addressController->updateAddress($idAddress,$idClient,$firstName,$lastName,$street,$apartment,$postal,$city,$province,$phone,$isbillingAdress);
                 break;
                 default:
                     echo "Accion desconocida";
@@ -87,7 +87,7 @@ class AddressController
         return $this->returnToFront($result, 4); 
     }
 
-    public function storeAddress($idClient, $firstName, $lastName, $street, $apartament, $postal, $city, $province, $phone, $isbillingAdress)
+    public function storeAddress($idClient, $firstName, $lastName, $street, $apartment, $postal, $city, $province, $phone, $isbillingAdress)
     {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
@@ -106,7 +106,7 @@ class AddressController
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'street_and_use_number' => $street,
-                'apartment' => $apartament,
+                'apartment' => $apartment,
                 'postal_code' => $postal,
                 'city' => $city,
                 'province' => $province,
@@ -153,7 +153,7 @@ class AddressController
         $this->returnToFrontAlert($result, 2,$idClient); 
     }
 
-    public function updateAddress($idAddress, $idClient,$firstName, $lastName, $street, $apartament, $postal, $city, $province, $phone, $isbillingAdress)
+    public function updateAddress($idAddress, $idClient, $firstName, $lastName, $street, $apartment, $postal, $city, $province, $phone, $isbillingAdress)
     {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
@@ -163,7 +163,7 @@ class AddressController
             'first_name' => $firstName,
             'last_name' => $lastName,
             'street_and_use_number' => $street,
-            'apartment' => $apartament,
+            'apartment' => $apartment,
             'postal_code' => $postal,
             'city' => $city,
             'province' => $province,
@@ -191,8 +191,7 @@ class AddressController
         curl_close($curl);
 
         $result = json_decode($response, true);
-        
-        $this->returnToFrontAlert($result, 4,$idClient); 
+        $this->returnToFrontAlert($result, 4, $idClient);
     }
 
     private function returnToFront($data, $code){
@@ -209,7 +208,7 @@ class AddressController
             ];
         }
     }
-    
+
     public function returnToFrontAlert($data, $code,$idClient){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
             header('Location: ' . BASE_PATH . 'clients_info/' . $idClient . '&message=' . urlencode($data['message']) );
