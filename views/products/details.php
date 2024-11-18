@@ -1,5 +1,29 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/ProductController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
+    $productController = new ProductController();
+
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $productSlug = end($link_array);
+
+    $profileData = $authController->getProfile();
+    $productData = $productController->getProductBySlug($productSlug);
+
+    
+    $products = $productData ['data'];
+    $user = $profileData['data'];
+    
+  }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 
 ?>
 <!doctype html>
@@ -90,31 +114,19 @@
                             </ul>
                           </div>
                           <div class="carousel-item active">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" class="d-block w-100" alt="Product images" />
-                          </div>
-                          <div class="carousel-item">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-2.jpg" class="d-block w-100" alt="Product images" />
-                          </div>
-                          <div class="carousel-item">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-3.jpg" class="d-block w-100" alt="Product images" />
+                            <img src="<?= htmlspecialchars($products['cover']) ?>" class="d-block w-100" alt="Product images" />
                           </div>
                         </div>
                         <ol class="list-inline carousel-indicators position-relative product-carousel-indicators my-sm-3 mx-0">
                           <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="list-inline-item w-25 h-auto active">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" class="d-block wid-50 rounded" alt="Product images" />
-                          </li>
-                          <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" class="list-inline-item w-25 h-auto">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-2.jpg" class="d-block wid-50 rounded" alt="Product images" />
-                          </li>
-                          <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" class="list-inline-item w-25 h-auto">
-                            <img src="<?= BASE_PATH ?>assets/images/application/img-prod-3.jpg" class="d-block wid-50 rounded" alt="Product images" />
+                            <img src="<?= htmlspecialchars($products['cover']) ?>" class="d-block wid-50 rounded" alt="Product images" />
                           </li>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <h5 class="my-3">Apple Watch SE Smartwatch (GPS, 40mm)</h5>
-                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially</h6>
+                    <h5 class="my-3"><?= htmlspecialchars($products['name']) ?></h5>
+                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500"><?= htmlspecialchars($products['description']) ?></h6>
                     <div class="mb-3 row">
                       <label class="col-form-label col-lg-3 col-sm-12">Cantidad <span class="text-danger">*</span></label>
                       <div class="col-lg-6 col-md-12 col-sm-12">
