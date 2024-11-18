@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stock_max = $_POST['stock_max']; 
                     $amount = $_POST['amount']; 
  
-                    $presentationController->updatePresentation($productSlug,$idProduct,$description,$code,$weight_in_grams,$status,$stock,$stock_min,$stock_max,$amount);
+                    $presentationController->updatePresentation($productSlug,$idPresentation,$idProduct,$description,$code,$weight_in_grams,$status,$stock,$stock_min,$stock_max,$amount);
                 break;
                 default:
                     echo "Accion desconocida";
