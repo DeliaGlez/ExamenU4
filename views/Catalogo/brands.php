@@ -1,5 +1,24 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/BrandController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
+    $brandController = new BrandController();
+
+    $profileData = $authController->getProfile();
+    $brandData = $brandController->getBrands();
+
+    $brands = $brandData['data'];
+    $user = $profileData['data'];
+    
+  }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -72,11 +91,11 @@
                           >
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                         </div>
-                        <form onsubmit="return validarFormulario()">
+                        <form  method="POST" action="brand" onsubmit="return validarFormulario()">
                           <div class="modal-body">
                             <div class="mb-3">
                               <label class="form-label"> Nuevo Nombre de Marca</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />  <!-- Lalo aqui pon description y slug para los brands start -->
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -100,9 +119,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <?php if (!empty($brands)): ?>
+                      <?php foreach ($brands as $brand): ?>
                       <tr>
-                        <td>1</td>
-                        <td>Apple</td>
+                        <td><?= htmlspecialchars($brand['id']) ?></td> 
+                        <td><?= htmlspecialchars($brand['name']) ?></td>
                         <td>
                           <a 
                             href=""
@@ -112,59 +133,10 @@
                           >
                             <i class="feather icon-edit"></i>
                           </a>
-                          <div
-                            class="modal fade"
-                            id="exampleModal1"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel1"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel1">
-                                    <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>
-                                    Modificar Marca
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                  ></button>
-                                </div>
-                                <form onsubmit="return validarFormulario()">
-                                  <div class="modal-body">
-                                    <div class="mb-3">
-                                      <label class="form-label">Nuevo Nombre de Marca</label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="name"
-                                        name="name"
-                                        placeholder="Ingresar Nombre"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button
-                                      type="button"
-                                      class="btn btn-light-danger"
-                                      data-bs-dismiss="modal"
-                                    >
-                                      Cerrar
-                                    </button>
-                                    <button type="submit" class="btn btn-light-primary">
-                                      Guardar cambios
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
                       </tr>
                     </tbody>
                   </table>
@@ -172,6 +144,57 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="exampleModal1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">
+              <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>
+              Modificar Marca
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Nuevo Nombre de Marca</label> <!-- Lalo aqui tambien pon description y slug para los brands start -->
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Ingresar Nombre"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light-danger"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
+              <button type="submit" class="btn btn-light-primary">
+                Guardar cambios
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

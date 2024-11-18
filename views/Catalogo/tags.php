@@ -1,5 +1,24 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/TagController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $authController = new AuthController();
+    $tagController = new TagController();
+
+    $profileData = $authController->getProfile();
+    $tagData = $tagController->getTags();
+
+    $tags = $tagData['data'];
+    $user = $profileData['data'];
+    
+  }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -76,7 +95,7 @@
                           <div class="modal-body">
                             <div class="mb-3">
                               <label class="form-label"> Nuevo Nombre de Etiqueta</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" /> <!-- Lalo aqui pon description y slug para los tags  -->
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -100,9 +119,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <?php if (!empty($tags)): ?>
+                        <?php foreach ($tags as $tag): ?>
                       <tr>
-                        <td>1</td>
-                        <td>Deportivo</td>
+                        <td><?= htmlspecialchars($tag['id']) ?></td> 
+                        <td><?= htmlspecialchars($tag['name']) ?></td>
                         <td>
                           <a 
                             href=""
@@ -112,66 +133,68 @@
                           >
                             <i class="feather icon-edit"></i>
                           </a>
-                          <div
-                            class="modal fade"
-                            id="exampleModal1"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel1"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel1">
-                                    <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>
-                                    Modificar Etiqueta
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                  ></button>
-                                </div>
-                                <form onsubmit="return validarFormulario()">
-                                  <div class="modal-body">
-                                    <div class="mb-3">
-                                      <label class="form-label">Nuevo Nombre de Etiqueta</label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="name"
-                                        name="name"
-                                        placeholder="Ingresar Nombre"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button
-                                      type="button"
-                                      class="btn btn-light-danger"
-                                      data-bs-dismiss="modal"
-                                    >
-                                      Cerrar
-                                    </button>
-                                    <button type="submit" class="btn btn-light-primary">
-                                      Guardar cambios
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
                       </tr>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="exampleModal1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">
+              <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>
+              Modificar Etiqueta
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Nuevo Nombre de Etiqueta</label> <!-- Lalo aqui pon description y slug para los tags  -->
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Ingresar Nombre"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-light-danger"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
+              <button type="submit" class="btn btn-light-primary">
+                Guardar cambios
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
