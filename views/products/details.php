@@ -43,21 +43,13 @@
 
   <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
       
+      <?php 
+        include "../layouts/sidebar.php";
+      ?>
 
       <?php 
-
-      include "../layouts/sidebar.php";
-
+        include "../layouts/nav.php";
       ?>
-
-  <?php 
-
-      include "../layouts/nav.php";
-
-      ?>
-
-
-
     <!-- [ Main Content ] start -->
     <div class="pc-container">
       <div class="pc-content">
@@ -170,12 +162,12 @@
                 <ul class="nav nav-tabs profile-tabs mb-0" id="myTab" role="tablist">
                   <li class="nav-item">
                     <a
-                      class="nav-link"
-                      id="ecomtab-tab-3"
+                      class="nav-link active"
+                      id="ecomtab-tab-1"
                       data-bs-toggle="tab"
-                      href="#ecomtab-3"
+                      href="#ecomtab-1"
                       role="tab"
-                      aria-controls="ecomtab-3"
+                      aria-controls="ecomtab-1"
                       aria-selected="true"
                       >Características
                     </a>
@@ -184,7 +176,7 @@
               </div>
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="tab-pane" id="ecomtab-3" role="tabpanel" aria-labelledby="ecomtab-tab-3">
+                  <div class="tab-pane show active" id="ecomtab-1" role="tabpanel" aria-labelledby="ecomtab-tab-1">
                     <div class="table-responsive">
                       <p class="text-muted">
                         It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
@@ -193,6 +185,178 @@
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card shadow-none">
+              <div class="card-header">
+                <h5>Presentaciones</h5>
+                <div class="card-header-right">
+                  <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Agregar Presentación
+                  </button>
+                  <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"
+                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+                          >
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                        </div>
+                        <form onsubmit="return validarFormulario()">
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label class="form-label">Slug</label>
+                              <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Descripción</label>
+                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Código</label>
+                              <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Peso en Gramos</label>
+                              <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Estado</label>
+                              <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock</label>
+                              <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock Mínimo</label>
+                              <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock Máximo</label>
+                              <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Precio</label>
+                              <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body shadow border-0">
+                <div class="table-responsive">
+                  <table id="report-table" class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th class="border-top-0">ID</th>
+                        <th class="border-top-0">Imagen</th>
+                        <th class="border-top-0">Descripción</th>
+                        <th class="border-top-0">Peso</th>
+                        <th class="border-top-0">Estado</th>
+                        <th class="border-top-0">Precio</th>
+                        <th class="border-top-0">Stock</th>
+                        <th class="border-top-0">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>
+                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>Descripción del producto</td>
+                        <td>100 gramos</td>
+                        <td>Disponible</td>
+                        <td>$1,000</td>
+                        <td>Si</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="feather icon-edit"></i>
+                          </a>
+                          <div
+                            class="modal fade"
+                            id="exampleModal1"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel1"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel"
+                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+                                  >
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                </div>
+                                <form onsubmit="return validarFormulario()">
+                                  <div class="modal-body">
+                                    <div class="mb-3">
+                                      <label class="form-label">Slug</label>
+                                      <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Descripción</label>
+                                      <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Código</label>
+                                      <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Peso en Gramos</label>
+                                      <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Estado</label>
+                                      <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Stock</label>
+                                      <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Stock Mínimo</label>
+                                      <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Stock Máximo</label>
+                                      <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label">Precio</label>
+                                      <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -209,11 +373,11 @@
 
       ?>
 
- <?php 
+    <?php 
 
       include "../layouts/scripts.php";
 
-      ?>
+    ?>
 
 
     <!-- [Page Specific JS] start -->
@@ -239,7 +403,76 @@
         document.getElementById(temp).value = value;
       }
       // quantity end
-    </script>
+      </script>
+      
+      <script>
+        function validarFormulario() {
+          const slug = document.getElementById("productSlug").value.trim();
+          const description = document.getElementById("description").value.trim();
+          const code = document.getElementById("code").value.trim();
+          const weight = document.getElementById("weight_in_grams").value.trim();
+          const status = document.getElementById("status").value.trim();
+          const stock = document.getElementById("stock").value.trim();
+          const stockMin = document.getElementById("stock_min").value.trim();
+          const stockMax = document.getElementById("stock_max").value.trim();
+          const amount = document.getElementById("amount").value.trim();
+
+          if (slug === "") {
+            alert("Por favor, ingrese un slug válido.");
+            return false;
+          }
+          if (!/^[a-z0-9-]+$/.test(slug)) {
+            alert("El slug solo puede contener letras minúsculas, números y guiones.");
+            return false;
+          }
+
+          if (description === "") {
+            alert("Por favor, ingrese una descripción.");
+            return false;
+          }
+          if (description.length < 10) {
+            alert("La descripción debe tener al menos 10 caracteres.");
+            return false;
+          }
+
+          if (code === "") {
+            alert("Por favor, ingrese un código válido.");
+            return false;
+          }
+
+          if (weight === "" || isNaN(weight) || weight <= 0) {
+            alert("Por favor, ingrese un peso válido en gramos (mayor a 0).");
+            return false;
+          }
+
+          if (status === "") {
+            alert("Por favor, ingrese un estado válido.");
+            return false;
+          }
+
+          if (stock === "" || isNaN(stock) || stock < 0) {
+            alert("Por favor, ingrese un valor válido para el stock.");
+            return false;
+          }
+
+          if (stockMin === "" || isNaN(stockMin) || stockMin < 0) {
+            alert("Por favor, ingrese un valor válido para el stock mínimo.");
+            return false;
+          }
+
+          if (stockMax === "" || isNaN(stockMax) || stockMax < stockMin) {
+            alert("El stock máximo debe ser mayor o igual al stock mínimo.");
+            return false;
+          }
+
+          if (amount === "" || isNaN(amount) || amount <= 0) {
+            alert("Por favor, ingrese un valor mayor a 0");
+            return false;
+          }
+          return true;
+        }
+      </script>
+
     
     <?php 
 

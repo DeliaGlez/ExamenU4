@@ -21,7 +21,12 @@ RewriteRule ^products/([^/]+)/?$ views/products/details.php
 #Catalogo
 RewriteRule ^brands/?$ views/Catalogo/brands.php
 RewriteRule ^tags/?$ views/Catalogo/tags.php
-
+RewriteRule ^categorys/?$ views/Catalogo/category.php
+#Cupones
+RewriteRule ^cupons/?$ views/Cupones/cupons.php
+RewriteRule ^cupon_details/?$ views/Cupones/cupon_details.php
+#Ordenes
+RewriteRule ^orders/?$ views/Ordenes/orders.php
 #Controladores
 RewriteRule ^auth?$ app/AuthController.php
 RewriteRule ^user?$ app/UserController.php

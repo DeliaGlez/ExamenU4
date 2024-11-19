@@ -147,17 +147,6 @@
 
         </div>
         <!-- [ breadcrumb ] end -->
-
-        <div>
-
-          <button onclick="window.location.href = '<?= BASE_PATH ?>brands'" type="button" class="btn btn-light-success m-0">
-            Buscar por Marca
-          </button>
-          <button onclick="window.location.href = '<?= BASE_PATH ?>tags'" type="button" class="btn btn-light-danger m-0">
-            Buscar por Categoría
-          </button>
-        </div>
-        <br>
         <!-- [ Main Content ] start -->
         <div class="row">
           <!-- [ sample-page ] start -->

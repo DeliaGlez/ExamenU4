@@ -95,7 +95,15 @@
                           <div class="modal-body">
                             <div class="mb-3">
                               <label class="form-label"> Nuevo Nombre de Marca</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />  <!-- Lalo aqui pon description y slug para los brands start -->
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label"> Nueva Descripción de Marca</label>
+                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" /> 
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label"> Nuevo Slug de Marca</label>
+                              <input type="text" class="form-control" id="slug" name="slug" placeholder="Ingresar Slug" /> 
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -115,6 +123,8 @@
                       <tr>
                         <th class="border-top-0">ID</th>
                         <th class="border-top-0">Nombre de Marca</th>
+                        <th class="border-top-0">Descripción de la Marca</th>
+                        <th class="border-top-0">Slug de Marca</th>
                         <th class="border-top-0">Acción</th>
                       </tr>
                     </thead>
@@ -124,6 +134,8 @@
                       <tr>
                         <td><?= htmlspecialchars($brand['id']) ?></td> 
                         <td><?= htmlspecialchars($brand['name']) ?></td>
+                        <td>Descripción</td>
+                        <td>Slug</td>
                         <td>
                           <a 
                             href=""
@@ -172,7 +184,27 @@
           <form onsubmit="return validarFormulario()">
             <div class="modal-body">
               <div class="mb-3">
-                <label class="form-label">Nuevo Nombre de Marca</label> <!-- Lalo aqui tambien pon description y slug para los brands start -->
+                <label class="form-label">Nuevo Nombre de Marca</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Ingresar Nombre"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nueva Descripción de Marca</label> 
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Ingresar Nombre"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nuevo Slug de Marca</label> 
                 <input
                   type="text"
                   class="form-control"
@@ -201,20 +233,40 @@
     <!-- [ Main Content ] end -->
     <script>
       function validarFormulario() {
-        const name = document.getElementById("name").value.trim();
+        const name = document.getElementsByName("name")[0].value.trim();
+        const description = document.getElementsByName("name")[1].value.trim();
+        const slug = document.getElementsByName("name")[2].value.trim();
 
         if (name === "") {
           alert("Por favor, ingrese un nombre válido para la marca.");
           return false;
         }
-
         if (name.length < 3) {
           alert("El nombre de la marca debe tener al menos 3 caracteres.");
+          return false;
+        }
+
+        if (description === "") {
+          alert("Por favor, ingrese una descripción para la marca.");
+          return false;
+        }
+        if (description.length < 10) {
+          alert("La descripción debe tener al menos 10 caracteres.");
+          return false;
+        }
+
+        if (slug === "") {
+          alert("Por favor, ingrese un slug válido para la marca.");
+          return false;
+        }
+        if (!/^[a-z0-9-]+$/.test(slug)) {
+          alert("El slug solo puede contener letras minúsculas, números y guiones.");
           return false;
         }
         return true;
       }
     </script>
+
 
     <?php 
 

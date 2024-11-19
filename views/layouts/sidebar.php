@@ -61,6 +61,30 @@
                 <span class="pc-mtext">Lista de Etiquetas</span>
               </a>
             </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>categorys" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Lista de Categorías</span>
+              </a>
+            </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>cupons" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Cupones</span>
+              </a>
+            </li>
+            <li class="pc-item">
+              <a href="<?= BASE_PATH ?>orders" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-identification-card"></i>
+                </span>
+                <span class="pc-mtext">Ordenes</span>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="card pc-user-card">

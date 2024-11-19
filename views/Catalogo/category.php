@@ -51,12 +51,12 @@
               <div class="col-md-12">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Home</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Etiquetas</li>
+                  <li class="breadcrumb-item" aria-current="page">Categorías</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Etiquetas</h2>
+                  <h2 class="mb-0">Categorías</h2>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@
                 <h5>Etiquetas</h5>
                 <div class="card-header-right">
                   <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Agregar Etiqueta
+                  Agregar Categoría
                   </button>
                   <div
                     class="modal fade"
@@ -87,22 +87,22 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel"
-                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Etiqueta</h5
+                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Categoría</h5
                           >
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                         </div>
                         <form onsubmit="return validarFormulario()">
                           <div class="modal-body">
                             <div class="mb-3">
-                              <label class="form-label"> Nuevo Nombre de Etiqueta</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+                              <label class="form-label"> Nuevo Nombre de Categoría</label>
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" /> 
                             </div>
                             <div class="mb-3">
-                              <label class="form-label"> Nueva Descripción de Etiqueta</label>
+                              <label class="form-label"> Nueva Descripción de Categoría</label>
                               <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" /> 
                             </div>
                             <div class="mb-3">
-                              <label class="form-label"> Nuevo Slug de Etiqueta</label>
+                              <label class="form-label"> Nuevo Slug de Categoría</label>
                               <input type="text" class="form-control" id="slug" name="slug" placeholder="Ingresar Slug" /> 
                             </div>
                           </div>
@@ -129,11 +129,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php if (!empty($tags)): ?>
-                        <?php foreach ($tags as $tag): ?>
                       <tr>
-                        <td><?= htmlspecialchars($tag['id']) ?></td> 
-                        <td><?= htmlspecialchars($tag['name']) ?></td>
+                        <td>1</td>
+                        <td>Ropa</td>
                         <td>Descripción</td>
                         <td>Slug</td>
                         <td>
@@ -148,8 +146,6 @@
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
                       </tr>
-                        <?php endforeach; ?>
-                      <?php endif; ?>
                     </tbody>
                   </table>
                 </div>
@@ -184,7 +180,7 @@
           <form onsubmit="return validarFormulario()">
             <div class="modal-body">
               <div class="mb-3">
-                <label class="form-label">Nuevo Nombre de Etiqueta</label> 
+                <label class="form-label">Nuevo Nombre de Categoría</label> 
                 <input
                   type="text"
                   class="form-control"
@@ -194,7 +190,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Nueva Descripción de Etiqueta</label> 
+                <label class="form-label">Nueva Descripción de Categoría</label> 
                 <input
                   type="text"
                   class="form-control"
@@ -204,7 +200,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Nuevo Slug de Etiqueta</label> 
+                <label class="form-label">Nuevo Slug de Categoría</label> 
                 <input
                   type="text"
                   class="form-control"
@@ -239,7 +235,7 @@
         const slug = document.getElementsByName("name")[2].value.trim();
 
         if (name === "") {
-          alert("Por favor, ingrese un nombre válido para la etiqueta.");
+          alert("Por favor, ingrese un nombre válido para la categoría.");
           return false;
         }
         if (name.length < 3) {
@@ -248,16 +244,16 @@
         }
 
         if (description === "") {
-          alert("Por favor, ingrese una descripción para la etiqueta.");
+          alert("Por favor, ingrese una categoría para la etiqueta.");
           return false;
         }
         if (description.length < 10) {
-          alert("La descripción debe tener al menos 10 caracteres.");
+          alert("La categoría debe tener al menos 10 caracteres.");
           return false;
         }
 
         if (slug === "") {
-          alert("Por favor, ingrese un slug válido para la marca.");
+          alert("Por favor, ingrese un slug válido para la categoría.");
           return false;
         }
         if (!/^[a-z0-9-]+$/.test(slug)) {
