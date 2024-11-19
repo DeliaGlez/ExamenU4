@@ -1,5 +1,17 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/UserController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $userController = new UserController();
+
+    $profileData = $userController->getUsers();
+    $users = $profileData['data'];
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -130,19 +142,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- Aqui va a ir el ciclo para recorrer los usuarios y llenar la tabla -->
-                      <tr>
-                        <td>1</td>
-                        <td>Mark Jason</td>
-                        <td><a href="" class="link-secondary">mark@mark.com</a></td>
-                        <td>N/A</td>
-                        <td>Enero 01,2019 a las 03:35 PM</td>
-                        <td>
-                          <a href="<?= BASE_PATH ?>users_edit" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a>
-                          <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
-                          <a href="<?= BASE_PATH ?>users_info" class="btn btn-sm btn-light-info"><i class="feather icon-eye"></i></a>
-                        </td>
-                      </tr>
+                      <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($user['id']) ?></td>
+                            <td><?= htmlspecialchars($user['name'] . ' ' . $user['lastname']) ?></td>
+                            <td><?= htmlspecialchars($user['email']) ?></td>
+                            <td><?= htmlspecialchars($user['role']) ?></td>
+                            <td><?= htmlspecialchars($user['created_at']) ?></td>
+                            <td>
+                              <a href="users_info?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
+
+                              <a href="users_edit?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a> 
+
+                            </td>
+                        </tr>
+                      <?php endforeach; ?>
                     </tbody>
                   </table>
                 </div>

@@ -1,5 +1,28 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/UserController.php";
+
+  if (!isset($_SESSION['user_data'])) {
+    header('Location: ' . BASE_PATH . '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+
+  if (isset($_GET['id'])) {
+      $userId = intval($_GET['id']);
+  } else {
+      header('Location: users_list.php?error=No se especificó un ID de usuario.');
+      exit;
+  }
+
+  $userController = new UserController();
+  $profileData = $userController->getUserById($userId);
+
+  if (!$profileData || empty($profileData['data'])) {
+      header('Location: users_list.php?error=Usuario no encontrado.');
+      exit;
+  }
+
+  $user = $profileData['data'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,13 +85,13 @@
                       <div class="chat-avtar d-inline-flex mx-auto">
                         <img
                           class="rounded-circle img-fluid wid-90 img-thumbnail"
-                          src="<?= BASE_PATH ?>assets/images/user/avatar-1.jpg"
+                          src="<?= $user['avatar'] ?>"
                           alt="User image"
                         />
                         <i class="chat-badge bg-success me-2 mb-2"></i>
                       </div>
-                      <h5 class="mb-0">Anshan Handgun</h5>
-                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> @anshanhandgun </a> </p>
+                      <h5 class="mb-0"><?= $user['name'] . ' ' . $user['lastname'] ?></h5>
+                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> <?= $user['email']?> </a> </p>
                     </div>
                   </div>
                   <div
@@ -95,7 +118,10 @@
               <div class="col-lg-7 col-xxl-9">
                 <div class="tab-content" id="user-set-tabContent">
                     <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel" aria-labelledby="user-set-profile-tab">
-                    <form action="" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+                    <form action="user" method= "POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="updateUser">
+                    <input type="hidden" name="id" value="<?= $user['id']; ?>">
+                    <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
                         <div class="card">
                         <div class="card-header">
                             <h5>Actualizar datos</h5>
@@ -105,37 +131,37 @@
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" value="Anshan" name="name" id="name" />
+                                <input type="text" class="form-control" value="<?= $user['name']?>" name="name" id="name" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Apellido</label>
-                                <input type="text" class="form-control" value="Handgun" name="lastname" id="lastname" />
+                                <input type="text" class="form-control" value="<?= $user['lastname'] ?>" name="lastname" id="lastname" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Número de contacto</label>
-                                <input type="text" class="form-control" value="(+99) 9999 999 999" name="number" id="number" />
+                                <input type="text" class="form-control" value="<?= $user['phone_number']?>" name="phone_number" id="phone_number" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Correo</label>
-                                <input type="email" class="form-control" value="anshan.dh81@gmail.com" name="email" id="email" />
+                                <input type="email" class="form-control" value="<?= $user['email']?>" name="email" id="email" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Nueva Contraseña</label>
-                                <input type="password" class="form-control" value="1234" name="password" id="password" />
+                                <input type="password" class="form-control" name="password" id="password" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                 <label class="form-label">Subir Imagen de Perfil</label>
-                                <input type="file" class="form-control" name="profile_image" id="profile_image" accept="image/*" />
+                                <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" />
                                 </div>
                             </div>
                             </div>

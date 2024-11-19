@@ -1,5 +1,28 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/UserController.php";
+
+  if (!isset($_SESSION['user_data'])) {
+    header('Location: ' . BASE_PATH . '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+
+  if (isset($_GET['id'])) {
+      $userId = intval($_GET['id']);
+  } else {
+      header('Location: users_list.php?error=No se especificó un ID de usuario.');
+      exit;
+  }
+
+  $userController = new UserController();
+  $profileData = $userController->getUserById($userId);
+
+  if (!$profileData || empty($profileData['data'])) {
+      header('Location: users_list.php?error=Usuario no encontrado.');
+      exit;
+  }
+
+  $user = $profileData['data'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,13 +85,13 @@
                       <div class="chat-avtar d-inline-flex mx-auto">
                         <img
                           class="rounded-circle img-fluid wid-90 img-thumbnail"
-                          src="<?= BASE_PATH ?>assets/images/user/avatar-1.jpg"
+                          src="<?= $user['avatar'] ?>"
                           alt="User image"
                         />
                         <i class="chat-badge bg-success me-2 mb-2"></i>
                       </div>
-                      <h5 class="mb-0">Anshan Handgun</h5>
-                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> @anshanhandgun </a> </p>
+                      <h5 class="mb-0"><?= $user['name'] . ' ' . $user['lastname'] ?></h5>
+                      <p class="text-muted text-sm">Contáctame <a href="" class="link-primary"> <?= $user['email']?> </a> </p>
                     </div>
                   </div>
                   <div
@@ -108,7 +131,7 @@
                                 <p class="mb-1 text-muted">Nombre completo</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Anshan Handgun</p>
+                                <p class="mb-0"><?= $user['name'] . ' ' . $user['lastname'] ?></p>
                               </div>
                             </div>
                           </li>
@@ -118,7 +141,7 @@
                                 <p class="mb-1 text-muted">Número celular</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">(+1-876) 8654 239 581</p>
+                                <p class="mb-0"><?= $user['phone_number']?></p>
                               </div>
                             </div>
                           </li>
@@ -128,7 +151,7 @@
                                 <p class="mb-1 text-muted">Correo</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">anshan.dh81@gmail.com</p>
+                                <p class="mb-0"><?= $user['email']?></p>
                               </div>
                             </div>
                           </li>
@@ -138,7 +161,7 @@
                                 <p class="mb-1 text-muted">Creado por</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Jose Lopez</p>
+                                <p class="mb-0"><?= $user['created_by']?></p>
                               </div>
                             </div>
                           </li>
@@ -148,7 +171,7 @@
                                 <p class="mb-1 text-muted">Rol</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Administrador</p>
+                                <p class="mb-0"><?= $user['role']?></p>
                               </div>
                             </div>
                           </li>
@@ -158,7 +181,7 @@
                                 <p class="mb-1 text-muted">Fecha de Creación</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">2024-10-30</p>
+                                <p class="mb-0"><?= $user['created_at']?></p>
                               </div>
                             </div>
                           </li>
@@ -168,7 +191,7 @@
                                 <p class="mb-1 text-muted">Última modificación</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">2024-10-30</p>
+                                <p class="mb-0"><?= $user['updated_at']?></p>
                               </div>
                             </div>
                           </li>
