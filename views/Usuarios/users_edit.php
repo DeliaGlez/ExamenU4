@@ -187,16 +187,55 @@
       function validarFormulario() {
         const name = document.getElementById("name").value.trim();
         const lastname = document.getElementById("lastname").value.trim();
-        const number = document.getElementById("number").value.trim();
+        const phoneNumber = document.getElementById("phone_number").value.trim();
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
-        const profileImage = document.getElementById("profile_image").files.length;
+        const profilePhoto = document.getElementById("profile_photo_file").value;
 
-        if (!name || !lastname || !number || !email || !password || profileImage === 0) {
-          alert("Por favor, completa todos los campos antes de continuar.");
-          return false; // Evita el envío del formulario
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        if (name === "") {
+          alert("Por favor, ingrese su nombre.");
+          return false;
         }
-        return true; // Permite el envío del formulario
+        if (!nameRegex.test(name)) {
+          alert("El nombre no debe contener números ni caracteres especiales.");
+          return false;
+        }
+
+        if (lastname === "") {
+          alert("Por favor, ingrese su apellido.");
+          return false;
+        }
+        if (!nameRegex.test(lastname)) {
+          alert("El apellido no debe contener números ni caracteres especiales.");
+          return false;
+        }
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+          alert("Por favor, ingrese un número de contacto válido (10 dígitos).");
+          return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert("Por favor, ingrese un correo electrónico válido.");
+          return false;
+        }
+
+        if (password !== "" && password.length < 6) {
+          alert("La contraseña debe tener al menos 6 caracteres.");
+          return false;
+        }
+
+        if (profilePhoto !== "") {
+          const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+          if (!allowedExtensions.test(profilePhoto)) {
+            alert("El archivo de imagen debe ser de tipo JPG, JPEG, PNG o GIF.");
+            return false;
+          }
+        }
+        return true;
       }
     </script>
     <?php 

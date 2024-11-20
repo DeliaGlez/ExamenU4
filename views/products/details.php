@@ -117,42 +117,15 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <h5 class="my-3"><?= htmlspecialchars($products['name']) ?></h5>
+                    <h4 class="my-3"><?= htmlspecialchars($products['name']) ?></h4>
+                    <h5>(Cambiar a Marca Del Producto)</h5>
                     <h6 class="mt-4 mb-sm-3 mb-2 f-w-500"><?= htmlspecialchars($products['description']) ?></h6>
                     <div class="mb-3 row">
-                      <label class="col-form-label col-lg-3 col-sm-12">Cantidad <span class="text-danger">*</span></label>
-                      <div class="col-lg-6 col-md-12 col-sm-12">
-                        <div class="btn-group btn-group-sm mb-2 border" role="group">
-                          <button type="button" id="decrease" onclick="decreaseValue('number')" class="btn btn-link-secondary"
-                            ><i class="ti ti-minus"></i
-                          ></button>
-                          <input
-                            class="wid-35 text-center border-0 m-0 form-control rounded-0 shadow-none"
-                            type="text"
-                            id="number"
-                            value="0"
-                          />
-                          <button type="button" id="increase" onclick="increaseValue('number')" class="btn btn-link-secondary"
-                            ><i class="ti ti-plus"></i
-                          ></button>
-                        </div>
-                      </div>
+                      
                     </div>
-                    <h3 class="mb-4"
-                      ><b>$299.00</b><span class="mx-2 f-16 text-muted f-w-400 text-decoration-line-through">$399.00</span></h3
-                    >
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="d-grid">
-                          <button type="button" class="btn btn-primary">Comprar ahora</button>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="d-grid">
-                          <button type="button" class="btn btn-outline-secondary">Agregar al carrito</button>
-                        </div>
-                      </div>
-                    </div>
+                    <h2 class="mb-4"
+                      ><b>$299.00</b>
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -172,6 +145,30 @@
                       >Características
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link "
+                      id="ecomtab-tab-2"
+                      data-bs-toggle="tab"
+                      href="#ecomtab-2"
+                      role="tab"
+                      aria-controls="ecomtab-2"
+                      aria-selected="true"
+                      >Etiquetas
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link "
+                      id="ecomtab-tab-3"
+                      data-bs-toggle="tab"
+                      href="#ecomtab-3"
+                      role="tab"
+                      aria-controls="ecomtab-3"
+                      aria-selected="true"
+                      >Categorías
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div class="card-body">
@@ -183,6 +180,50 @@
                         unchanged. It was popularized in the 1960s with the release of Lestrade sheets containing Lorem Ipsum passages, and
                         more recently with desktop publishing software like PageMaker including versions of Lorem Ipsum.
                       </p>
+                    </div>
+                  </div>
+                  <div class="tab-pane show" id="ecomtab-2" role="tabpanel" aria-labelledby="ecomtab-tab-2">
+                    <div class="table-responsive">
+                      <p class="">
+                      <div class="table-responsive">
+                          <table id="report-table" class="table table-bordered table-striped mb-0">
+                            <thead>
+                              <tr>
+                                <th class="border-top-0">Nombre de Etiqueta</th>
+                                <th class="border-top-0">Slug</th>
+                                <th class="border-top-0">Descripción</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Apple</td>
+                                <td>apple</td>
+                                <td>Prdouctos de la marca apple</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="tab-pane show" id="ecomtab-3" role="tabpanel" aria-labelledby="ecomtab-tab-3">
+                    <div class="table-responsive">
+                      <table id="report-table" class="table table-bordered table-striped mb-0">
+                        <thead>
+                          <tr>
+                            <th class="border-top-0">Nombre de Categoría</th>
+                            <th class="border-top-0">Slug</th>
+                            <th class="border-top-0">Descripción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Apple</td>
+                            <td>apple</td>
+                            <td>Prdouctos de la Categoría deportivo</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -353,115 +394,63 @@
                             </div>
                           </div>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="card shadow-none">
-              <div class="card-header">
-                <h5>Presentaciones</h5>
-                <div class="card-header-right">
-                  <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Agregar Presentación
-                  </button>
-                  <div
-                    class="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"
-                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+                          <a href="" class="btn btn-sm btn-light-warning me-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="feather icon-book-open"></i>
+                          </a>
+                          <div
+                            class="modal fade"
+                            id="exampleModal2"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel2"
+                            aria-hidden="true"
                           >
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                        </div>
-                        <form onsubmit="return validarFormulario()">
-                          <div class="modal-body">
-                            <div class="mb-3">
-                              <label class="form-label">Slug</label>
-                              <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Descripción</label>
-                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Código</label>
-                              <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Peso en Gramos</label>
-                              <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Estado</label>
-                              <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock</label>
-                              <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock Mínimo</label>
-                              <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock Máximo</label>
-                              <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Precio</label>
-                              <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 80%;">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel"
+                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Ordenes de la Presentación</h5
+                                  >
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                </div>
+                                <div class="table-responsive">
+                                  <table id="report-table" class="table table-bordered table-striped mb-0">
+                                    <thead>
+                                      <tr>
+                                        <th>Folio</th>
+                                        <th>Total</th>
+                                        <th>Está Pagado</th>
+                                        <th>Cliente</th>
+                                        <th>Dirección</th>
+                                        <th>Estado de la Orden</th>
+                                        <th>Método de Pago</th>
+                                        <th>Cupón</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>1</td>
+                                        <td>$1,000</td>
+                                        <td>Si</td>
+                                        <td>Juan Perez</td>
+                                        <td>Chametla</td>
+                                        <td>Enviado</td>
+                                        <td>Tarjeta</td>
+                                        <td>Promo10off</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body shadow border-0">
-                <div class="table-responsive">
-                  <table id="report-table" class="table table-bordered table-striped mb-0">
-                    <thead>
-                      <tr>
-                        <th class="border-top-0">Imagen</th>
-                        <th class="border-top-0">Folio</th>
-                        <th class="border-top-0">Total</th>
-                        <th class="border-top-0">ID de Cliente</th>
-                        <th class="border-top-0">Está Pagado</th>
-                        <th class="border-top-0">ID del Cupón</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
                         </td>
-                        <td>folio</td>
-                        <td>total</td>
-                        <td>client_id</td>
-                        <td>is_paid</td>
-                        <td>coupon_id</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
+            
 
           </div>
           <!-- [ sample-page ] end -->

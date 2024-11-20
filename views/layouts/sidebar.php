@@ -22,6 +22,14 @@
               <i class="ph-duotone ph-gauge"></i>
             </li>
             <li class="pc-item">
+              <a href="<?= BASE_PATH ?>home" class="pc-link">
+                <span class="pc-micon">
+                  <i class="ph-duotone ph-shopping-cart"></i>
+                </span>
+                <span class="pc-mtext">Productos</span>
+              </a>
+            </li>
+            <li class="pc-item">
               <a href="<?= BASE_PATH ?>profile" class="pc-link">
                 <span class="pc-micon">
                   <i class="ph-duotone ph-user-circle"></i>

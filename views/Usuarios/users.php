@@ -153,8 +153,6 @@
                               <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
 
                               <a href="users_info?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
-
-
                             </td>
                         </tr>
                       <?php endforeach; ?>

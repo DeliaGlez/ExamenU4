@@ -73,10 +73,6 @@
                         <form onsubmit="return validarFormulario()">
                           <div class="modal-body">
                             <div class="mb-3">
-                              <label class="form-label">ID</label>
-                              <input type="number" class="form-control" id="id" name="id" placeholder="Ingresar ID" />
-                            </div>
-                            <div class="mb-3">
                               <label class="form-label">Folio</label>
                               <input type="number" class="form-control" id="folio" name="folio" placeholder="Ingresar Folio" />
                             </div>
@@ -92,24 +88,39 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">ID de Cliente</label>
-                              <input type="number" class="form-control" id="client_id" name="client_id" placeholder="Ingresar ID de Cliente" />
+                                <label for="is_paid" class="form-label">Cliente</label>
+                                <select id="is_paid" name="is_paid" class="form-select">
+                                    <option value="1">Nombre 1</option>
+                                    <option value="0">Nombre 2</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">ID de Dirección</label>
-                              <input type="number" class="form-control" id="address_id" name="address_id" placeholder="Ingresar ID de Dirección" />
+                                <label for="is_paid" class="form-label">Dirección de Envío</label>
+                                <select id="is_paid" name="is_paid" class="form-select">
+                                    <option value="1">Dirección 1</option>
+                                    <option value="0">Dirección 2</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">ID del Estado de Orden</label>
-                              <input type="number" class="form-control" id="order_status_id" name="order_status_id" placeholder="Ingresar ID del Estado de Orden" />
+                                <label for="is_paid" class="form-label">Estado de Orden</label>
+                                <select id="is_paid" name="is_paid" class="form-select">
+                                    <option value="1">Completado</option>
+                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">ID del Tipo de Pago</label>
-                              <input type="number" class="form-control" id="payment_type_id" name="payment_type_id" placeholder="Ingresar ID del Tipo de Pago" />
+                                <label for="is_paid" class="form-label">Tipo De Pago</label>
+                                <select id="is_paid" name="is_paid" class="form-select">
+                                    <option value="1">Tarjeta</option>
+                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                              <label class="form-label">ID del Cupón</label>
-                              <input type="number" class="form-control" id="cupon_id" name="cupon_id" placeholder="Ingresar ID del Cupón" />
+                                <label for="is_paid" class="form-label">Cupón</label>
+                                <select id="is_paid" name="is_paid" class="form-select">
+                                    <option value="1">10off</option>
+                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                </select>
                             </div>
                           </div>
                           <div class="modal-footer">
@@ -138,6 +149,7 @@
                         <th class="border-top-0">ID del Cupón</th>
                         <th class="border-top-0">ID del Cliente</th>
                         <th class="border-top-0">Nombre del Cliente</th>
+                        <th class="border-top-0">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -221,6 +233,8 @@
                                     </div>
                                 </div>   
                                 <a href="<?= BASE_PATH ?>order_details" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
+
+                                <a href="#" onclick="remove(<?= $client['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                             </td>
                         </tr>
                     </tbody>

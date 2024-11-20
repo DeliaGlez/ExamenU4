@@ -72,6 +72,25 @@
 
         <!-- [ Main Content ] start -->
         
+        <div class="card statistics-card-1 overflow-hidden">
+          <div class="card-body">
+            <img src="<?= BASE_PATH ?>assets/images/widget/img-status-4.svg" alt="img" class="img-fluid img-bg" />
+            <h5 class="mb-4">Total Descontado</h5>
+            <div class="d-flex align-items-center mt-3">
+              <h3 class="f-w-300 d-flex align-items-center m-b-0">$23,000</h3>
+            </div>
+            <div class="progress" style="height: 7px">
+              <div
+                class="progress-bar bg-brand-color-3"
+                role="progressbar"
+                style="width: 100%"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+        </div>
     <div class="row">
         <div class="col-lg-12">
         <div class="card">
