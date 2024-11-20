@@ -127,7 +127,7 @@
                                       <?php
                                       foreach ($levels as $level) {
                                           $levelId = htmlspecialchars($level['id']);
-                                          $levelName = htmlspecialchars($level['name']); 
+                                          $levelName = htmlspecialchars($level['name'] ); 
                                           $selected = $levelId == htmlspecialchars($client['level']['id']) ? 'selected' : '';
                                           echo "<option value=\"$levelId\" $selected>$levelName</option>";
                                       }
@@ -168,11 +168,11 @@
                         <?php foreach ($clients as $client): ?>
                         <tr>
                           <td><?= htmlspecialchars($client['id']) ?></td>
-                          <td><?= htmlspecialchars($client['name']) ?></td>
-                          <td><a href="mailto:<?= htmlspecialchars($client['email']) ?>" class="link-secondary"><?= htmlspecialchars($client['email']) ?></a></td>
-                          <td><?= htmlspecialchars($client['phone_number']) ?></td>
+                          <td><?= htmlspecialchars($client['name'] ?? 'Sin nombre') ?></td>
+                          <td><a href="mailto:<?= htmlspecialchars($client['email']?? 'Sin correo') ?>" class="link-secondary"><?= htmlspecialchars($client['email']) ?></a></td>
+                          <td><?= htmlspecialchars($client['phone_number']?? 'Sin telefono') ?></td>
                           <td><?= htmlspecialchars($client['is_suscribed']) ? 'Sí' : 'No' ?></td>
-                          <td><?= htmlspecialchars($client['level']['name']) ?></td>
+                          <td><?= htmlspecialchars($client['level']['name'] ?? 'Nivel incorrecto')?></td>
                           <td>
                             <a href="<?= BASE_PATH ?>clients_edit/<?= htmlspecialchars($client['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a>
                             <a href="#" onclick="remove(<?= $client['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
@@ -198,16 +198,20 @@
     <!-- [ Main Content ] end -->
     <script>
       function validarFormulario() {
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const phoneNumber = document.getElementById("phone_number").value.trim();
-        const password = document.getElementById("password").value.trim();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phoneNumber = document.getElementById("phone_number").value;
+        const password = document.getElementById("password").value;
         const profilePhoto = document.getElementById("profile_photo_file").value;
         const isSubscribed = document.getElementById("is_suscribed").checked;
         const nivelCliente = document.getElementById("nivelCliente").value;
 
+        const namePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
         if (name === "") {
           alert("Por favor ingrese su nombre.");
+          return false;
+        } else if (!namePattern.test(name)) {
+          alert("El nombre solo puede contener letras y espacios.");
           return false;
         }
 

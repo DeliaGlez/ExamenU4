@@ -133,30 +133,47 @@
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Nombre</label>
-                                  <input type="text" class="form-control" value="<?= htmlspecialchars($client['name']) ?>" name="name" id="name" />
+                                  <input type="text" class="form-control" value="<?= htmlspecialchars($client['name']?? 'Sin nombre') ?>" name="name" id="name" />
                                   </div>
                               </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Correo</label>
-                                  <input type="email" class="form-control" value="<?= htmlspecialchars($client['email']) ?>" name="email" id="email" />
+                                  <input type="email" class="form-control" value="<?= htmlspecialchars($client['email']?? 'Sin correo') ?>" name="email" id="email" />
                                   </div>
                               </div>
                               <div class="col-sm-12">
                                   <div class="mb-3">
                                   <label class="form-label">Número de contacto</label>
-                                  <input type="number" class="form-control" value="<?= htmlspecialchars($client['phone_number']) ?>" name="phone_number" id="phone_number" />
+                                  <input type="number" class="form-control" value="<?= htmlspecialchars($client['phone_number']?? 'Sin telefono') ?>" name="phone_number" id="phone_number" />
                                   </div>
                               </div>
                               <div class="mb-3">
                                   <label for="level_id" class="form-label">Nivel de Cliente</label>
                                   <select id="level_id" name="level_id" class="form-select">
                                       <?php
+                                      $levelIdCliente = isset($client['level']['id']) ? $client['level']['id'] : null;
+                                      $nivelCorrecto = false;
+
                                       foreach ($levels as $level) {
                                           $levelId = htmlspecialchars($level['id']);
-                                          $levelName = htmlspecialchars($level['name']); 
-                                          $selected = $levelId == htmlspecialchars($client['level']['id']) ? 'selected' : '';
-                                          echo "<option value=\"$levelId\" $selected>$levelName</option>";
+                                          $levelName = htmlspecialchars($level['name']);
+
+                                          if ($levelId == $levelIdCliente) {
+                                              $nivelCorrecto = true;
+                                              $selected = 'selected';
+                                              break;
+                                          }
+                                      }
+                                      if (!$nivelCorrecto) {
+                                          echo '<option value="" selected> Nivel incorrecto </option>';
+                                      } else {
+                                          foreach ($levels as $level) {
+                                              $levelId = htmlspecialchars($level['id']);
+                                              $levelName = htmlspecialchars($level['name']); 
+                                              $selected = ($levelId == $levelIdCliente) ? 'selected' : '';
+                                              echo "<option value=\"$levelId\" $selected>$levelName</option>";
+                                          }
                                       }
                                       ?>
                                   </select>
@@ -197,8 +214,12 @@
         const nivelCliente = document.getElementById("level_id").value;
         const isSuscribed = document.getElementById("is_suscribed").checked;
 
+        const namePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
         if (name === "") {
           alert("Por favor ingrese su nombre.");
+          return false;
+        } else if (!namePattern.test(name)) {
+          alert("El nombre solo puede contener letras y espacios.");
           return false;
         }
 
