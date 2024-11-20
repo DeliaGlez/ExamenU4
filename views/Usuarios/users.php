@@ -12,6 +12,8 @@
     $profileData = $userController->getUsers();
     $users = $profileData['data'];
   }
+
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,6 +29,14 @@
     <!-- [Body] Start -->
 
     <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+    <?php if (!empty($error_message)): ?> 
+      <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+          swal("Error", "<?php echo htmlspecialchars($error_message); ?>", "error").then((value) => { window.location.href = '<?= BASE_PATH ?>'; });;
+        });
+      </script> 
+    <?php endif; ?>
+
     <?php 
       include "../layouts/sidebar.php";
     ?>
@@ -209,6 +219,29 @@
         return true;
       }
     </script>
+    <?php if (!empty($error_message) || isset($_GET['message'])): ?> 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const successMessage = urlParams.get('message');
+          const errorMessage = urlParams.get('error');
+
+          if (successMessage) {
+            swal("Éxito", successMessage, "success")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>users");
+              });
+          } else if (errorMessage) {
+            swal("Error", errorMessage, "error")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>users");
+              });
+          }
+        });
+      </script>
+    <?php endif; ?>
 
     <?php 
 
@@ -234,6 +267,7 @@
 <script src="../assets/js/fonts/custom-font.js"></script>
 <script src="../assets/js/pcoded.js"></script>
 <script src="../assets/js/plugins/feather.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
   </body>
