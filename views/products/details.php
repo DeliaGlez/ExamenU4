@@ -360,6 +360,109 @@
                 </div>
               </div>
             </div>
+            <div class="card shadow-none">
+              <div class="card-header">
+                <h5>Presentaciones</h5>
+                <div class="card-header-right">
+                  <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Agregar Presentación
+                  </button>
+                  <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"
+                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+                          >
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                        </div>
+                        <form onsubmit="return validarFormulario()">
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label class="form-label">Slug</label>
+                              <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Descripción</label>
+                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Código</label>
+                              <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Peso en Gramos</label>
+                              <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Estado</label>
+                              <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock</label>
+                              <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock Mínimo</label>
+                              <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Stock Máximo</label>
+                              <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Precio</label>
+                              <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body shadow border-0">
+                <div class="table-responsive">
+                  <table id="report-table" class="table table-bordered table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th class="border-top-0">Imagen</th>
+                        <th class="border-top-0">Folio</th>
+                        <th class="border-top-0">Total</th>
+                        <th class="border-top-0">ID de Cliente</th>
+                        <th class="border-top-0">Está Pagado</th>
+                        <th class="border-top-0">ID del Cupón</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>
+                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>folio</td>
+                        <td>total</td>
+                        <td>client_id</td>
+                        <td>is_paid</td>
+                        <td>coupon_id</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
           </div>
           <!-- [ sample-page ] end -->
         </div>

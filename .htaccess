@@ -27,6 +27,7 @@ RewriteRule ^cupons/?$ views/Cupones/cupons.php
 RewriteRule ^cupon_details/?$ views/Cupones/cupon_details.php
 #Ordenes
 RewriteRule ^orders/?$ views/Ordenes/orders.php
+RewriteRule ^order_details/?$ views/Ordenes/order_details.php
 #Controladores
 RewriteRule ^auth?$ app/AuthController.php
 RewriteRule ^user?$ app/UserController.php

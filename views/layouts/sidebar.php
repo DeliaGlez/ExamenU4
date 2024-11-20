@@ -24,7 +24,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>profile" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-user-circle"></i>
                 </span>
                 <span class="pc-mtext">Perfil de Usuario</span>
               </a>
@@ -48,7 +48,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>brands" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-lifebuoy"></i>
                 </span>
                 <span class="pc-mtext">Lista de Marcas</span>
               </a>
@@ -56,7 +56,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>tags" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-projector-screen-chart"></i>
                 </span>
                 <span class="pc-mtext">Lista de Etiquetas</span>
               </a>
@@ -64,7 +64,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>categorys" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-database"></i>
                 </span>
                 <span class="pc-mtext">Lista de Categorías</span>
               </a>
@@ -72,7 +72,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>cupons" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-currency-circle-dollar"></i>
                 </span>
                 <span class="pc-mtext">Cupones</span>
               </a>
@@ -80,7 +80,7 @@
             <li class="pc-item">
               <a href="<?= BASE_PATH ?>orders" class="pc-link">
                 <span class="pc-micon">
-                  <i class="ph-duotone ph-identification-card"></i>
+                  <i class="ph-duotone ph-books"></i>
                 </span>
                 <span class="pc-mtext">Ordenes</span>
               </a>
