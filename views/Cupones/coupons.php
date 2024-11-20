@@ -132,7 +132,7 @@
                                   data-status="<?= htmlspecialchars($cupon['status']) ?>">
                                 <i class="feather icon-edit"></i></a>
                                 <a href="<?= BASE_PATH ?>coupon_details/<?= htmlspecialchars($cupon['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
-                                <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                                <a href="#" onclick="remove(<?= $cupon['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                             </td>
                             <?php endforeach; ?>
                           <?php endif; ?>
@@ -146,108 +146,113 @@
         </div>
       </div>
     </div>
-    <!-- [ Editar ]  -->
-    <div
-      class="modal fade"
-      id="exampleModal1"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel1"
-      aria-hidden="true"
-  >
-      <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Cupón</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-          </div>
-          <form method="POST" action="coupon" enctype="multipart/form-data"  onsubmit="return validarFormulario()">
-          <div class="modal-body">
+    <form id="delete-form" action="coupon" method="POST">
+      <input type="hidden" name="action" value="deleteCoupon" />
+      <input type="hidden" id="delete-coupon-id" name="id" />
+      <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
+    </form>
+   <!-- [ Editar ] -->
+<div
+  class="modal fade"
+  id="exampleModal1"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Cupón</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+      </div>
+      <form method="POST" action="coupon" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+        <div class="modal-body">
           <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
-              </div>
-              <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+          </div>
+          <div class="mb-3">
               <label class="form-label">Código</label>
               <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
-              </div>
-              <div class="mb-3">
+          </div>
+          <div class="mb-3">
               <label class="form-label">Porcentaje de Descuento</label>
               <input type="number" class="form-control" id="percentage_discount" name="percentage_discount" placeholder="Ingresar Porcentaje de Descuento" />
-              </div>
-              <div class="mb-3">
+          </div>
+          <div class="mb-3">
               <label class="form-label">Mínimo de Costo</label>
               <input type="number" class="form-control" id="min_amount_required" name="min_amount_required" placeholder="Ingresar Mínimo de Costo" />
-              </div>
-              <div class="mb-3">
+          </div>
+          <div class="mb-3">
               <label class="form-label">Mínimo de Productos</label>
               <input type="number" class="form-control" id="min_product_required" name="min_product_required" placeholder="Ingresar Mínimo de Productos" />
-              </div>
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
               <label class="form-label">Fecha de Inicio</label>
               <input type="date" class="form-control" id="start_date" name="start_date" />
-              </div>
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
               <label class="form-label">Fecha de Expiración</label>
-              <input type="date" class="form-control" id="end_date" name="end_date" />
-              </div>
-              <div class="mb-3">
+            <input type="date" class="form-control" id="end_date" name="end_date" />
+            </div>
+            <div class="mb-3">
               <label class="form-label">Usos Máximos</label>
               <input type="number" class="form-control" id="max_uses" name="max_uses" placeholder="Ingresar Usos Máximos" />
-              </div>
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
               <label class="form-label">Total de usos</label>
               <input type="number" class="form-control" id="count_uses" name="count_uses" placeholder="Ingresar Total de Usos" />
-              </div>
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
                   <label for="" class="form-label">Válido solo en primeras compras</label>
                   <select id="valid_only_first_purchase" name="valid_only_first_purchase" class="form-select">
                       <option value="1">Si</option>
                       <option value="0">No</option>
                   </select>
-              </div>
-              <div class="mb-3">
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
               <label class="form-label">Estado</label>
               <select class="form-control" id="status" name="status">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
               </select>
             </div>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-          </div>
-            <input type="hidden" name="action" value="updateCoupon"/>
-            <input type="hidden" id="id" name="id" value="" />
-            <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
-          </form>
-      </div>
-      </div>
-  </div>
-<!-- [ Agregar ]  -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Cupón</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
         </div>
-        <form method="POST" action="coupon" enctype="multipart/form-data" onsubmit="return validarFormulario()">
-          <div class="modal-body">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+        </div>
+        <input type="hidden" name="action" value="updateCoupon"/>
+        <input type="hidden" id="id" name="id" value="" />
+        <input type="text" name="global_token" value="<?= $_SESSION['global_token'] ?>" hidden>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- [ Agregar ] -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Cupón</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+      </div>
+      <form method="POST" action="coupon" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+        <div class="modal-body">
           <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
-            </div>
-            <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+          </div>
+          <div class="mb-3">
               <label class="form-label">Código</label>
               <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
             </div>
@@ -274,10 +279,6 @@
             <div class="mb-3">
               <label class="form-label">Usos Máximos</label>
               <input type="number" class="form-control" id="max_uses" name="max_uses" placeholder="Ingresar Usos Máximos" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Total de usos</label>
-              <input type="number" class="form-control" id="count_uses" name="count_uses" placeholder="Ingresar Total de Usos" />
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Válido solo en primeras compras</label>
@@ -293,17 +294,18 @@
                 <option value="0">Inactivo</option>
               </select>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-          </div>
-            <input type="hidden" name="action" value="storeCoupon"/>
-            <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+        </div>
+        <input type="hidden" name="action" value="storeCoupon"/>
+        <input type="text" name="global_token" value="<?= $_SESSION['global_token'] ?>" hidden>
+      </form>
     </div>
   </div>
+</div>
+
     <!-- [ Main Content ] end -->
 
     <?php 
@@ -367,8 +369,29 @@
     });
   });
 </script>
-
-
+<script>
+  function remove(couponId){
+  swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+  })
+  .then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your imaginary file has been deleted!", {
+    icon: "success",
+    });
+    document.getElementById("delete-coupon-id").value = couponId;
+            document.getElementById("delete-form").submit();
+  } else {
+    
+  }
+  });
+}
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
   <!-- [Body] end -->
 </html>
