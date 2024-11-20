@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $code = $_POST['code'];
                     $weight_in_grams = $_POST['weight_in_grams'];
                     $status = $_POST['status'];
-                    $cover = $_FILES['cover']['tmp_name'];
                     $stock = $_POST['stock']; 
                     $stock_min = $_POST['stock_min']; 
                     $stock_max = $_POST['stock_max']; 
