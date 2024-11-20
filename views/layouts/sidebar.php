@@ -70,7 +70,7 @@
               </a>
             </li>
             <li class="pc-item">
-              <a href="<?= BASE_PATH ?>cupons" class="pc-link">
+              <a href="<?= BASE_PATH ?>coupons" class="pc-link">
                 <span class="pc-micon">
                   <i class="ph-duotone ph-currency-circle-dollar"></i>
                 </span>

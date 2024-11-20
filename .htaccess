@@ -26,8 +26,8 @@ RewriteRule ^brands_products/?$ views/Catalogo/brands_products.php
 RewriteRule ^tags_products/?$ views/Catalogo/tags_products.php
 RewriteRule ^categorys_products/?$ views/Catalogo/categorys_products.php
 #Cupones
-RewriteRule ^cupons/?$ views/Cupones/cupons.php
-RewriteRule ^cupon_details/?$ views/Cupones/cupon_details.php
+RewriteRule ^coupons/?$ views/Cupones/coupons.php
+RewriteRule ^coupon_details/([^/]+)/?$ views/Cupones/coupon_details.php
 #Ordenes
 RewriteRule ^orders/?$ views/Ordenes/orders.php
 RewriteRule ^order_details/?$ views/Ordenes/order_details.php
@@ -40,3 +40,4 @@ RewriteRule ^address?$ app/AddressController.php
 RewriteRule ^brand?$ app/BrandController.php
 RewriteRule ^category?$ app/CategoryController.php
 RewriteRule ^tag?$ app/TagController.php
+RewriteRule ^coupon?$ app/CouponController.php

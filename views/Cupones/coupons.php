@@ -131,7 +131,7 @@
                                   data-valid-only-first-purchase="<?= htmlspecialchars($cupon['valid_only_first_purchase']) ?>"
                                   data-status="<?= htmlspecialchars($cupon['status']) ?>">
                                 <i class="feather icon-edit"></i></a>
-                                <a href="<?= BASE_PATH ?>cupon_details/<?= htmlspecialchars($cupon['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
+                                <a href="<?= BASE_PATH ?>coupon_details/<?= htmlspecialchars($cupon['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
                             </td>
                             <?php endforeach; ?>
                           <?php endif; ?>
