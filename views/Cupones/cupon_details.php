@@ -1,17 +1,29 @@
 <?php 
   include_once "../../app/config.php";
-  include_once "../../app/UserController.php";
+  include_once "../../app/AuthController.php";
+  include_once "../../app/CouponController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
     exit;
   }
   else{
-    $userController = new UserController();
+    $authController = new AuthController();
+    $couponController = new CouponController();
 
-    $profileData = $userController->getUsers();
-    $users = $profileData['data'];
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $couponId = end($link_array);
+
+    $profileData = $authController->getProfile();
+    $couponData = $couponController->getCoupon($couponId);
+
+    $user = $profileData['data'];
+    $coupon = $couponData['data'];
+    //var_dump($coupon);
+
   }
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
 <!doctype html>
 <html lang="en">
@@ -74,7 +86,7 @@
                                 <p class="mb-1 text-muted">ID</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">1</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['id']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -84,7 +96,7 @@
                                 <p class="mb-1 text-muted">Código</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">dfjae</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['code']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -94,17 +106,7 @@
                                 <p class="mb-1 text-muted">Porcentaje descuento</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">20%</p>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                              <div class="col-md-6">
-                                <p class="mb-1 text-muted">Total de Descuentos</p>
-                              </div>
-                              <div class="col-md-6">
-                                <p class="mb-0">$20,000</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['percentage_discount']) ?>%</p>
                               </div>
                             </div>
                           </li>
@@ -114,7 +116,7 @@
                                 <p class="mb-1 text-muted">Costo mínimo para descuento</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">$1,000</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['min_amount_required']) ?>$</p>
                               </div>
                             </div>
                           </li>
@@ -124,7 +126,7 @@
                                 <p class="mb-1 text-muted">Cantidad mínima de productos</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">3</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['min_product_required']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -134,7 +136,7 @@
                                 <p class="mb-1 text-muted">Fecha de Inicio</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">10-2-2024</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['start_date']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -144,7 +146,7 @@
                                 <p class="mb-1 text-muted">Fecha de Expiración</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">10-2-2024</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['end_date']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -154,7 +156,7 @@
                                 <p class="mb-1 text-muted">Usos máximos</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">20</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['max_uses']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -164,7 +166,7 @@
                                 <p class="mb-1 text-muted">Usos totales</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">5</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['count_uses']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -174,7 +176,7 @@
                                 <p class="mb-1 text-muted">Valido solo en la primera compra</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">No</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['valid_only_first_purchase']? 'Sí' : 'No') ?></p>
                               </div>
                             </div>
                           </li>
@@ -184,7 +186,7 @@
                                 <p class="mb-1 text-muted">Estado</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">1</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['status'])? 'Activio' : 'Inactivo' ?></p>
                               </div>
                             </div>
                           </li>
@@ -194,7 +196,7 @@
                                 <p class="mb-1 text-muted">Tipo de cupón</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">Descuento</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['couponable_type'] ?? 'N/A') ?></p>
                               </div>
                             </div>
                           </li>
@@ -204,7 +206,7 @@
                                 <p class="mb-1 text-muted">ID de la rama</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0">1</p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['branch_id'] ?? 'N/A') ?></p>
                               </div>
                             </div>
                           </li>
@@ -219,9 +221,6 @@
     </div>
 
 
-
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow-none">
@@ -233,6 +232,7 @@
                   <table id="report-table" class="table table-bordered table-striped mb-0">
                     <thead>
                       <tr>
+                      <?php foreach ($coupon['orders'] as $order): ?>
                         <th class="border-top-0">ID de Orden</th>
                         <th class="border-top-0">Folio</th>
                         <th class="border-top-0">Total</th>
@@ -246,16 +246,17 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>123</td>
-                            <td>$1,000</td>
-                            <td>Si</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>4</td>
+                            <td><?= htmlspecialchars($order['id'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['folio'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['total'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['is_paid'] ? 'Sí' : 'No') ?></td>
+                            <td><?= htmlspecialchars($order['client_id'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['address_id'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['order_status_id'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['payment_type_id'] ?? 'N/A') ?></td>
+                            <td><?= htmlspecialchars($order['coupon_id'] ?? 'N/A') ?></td>
                         </tr>
+                      <?php endforeach; ?>
                     </tbody>
                   </table>
                 </div>
