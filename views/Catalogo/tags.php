@@ -145,6 +145,7 @@
                           >
                             <i class="feather icon-edit"></i>
                           </a>
+                          <a href="<?= BASE_PATH ?>tags_products" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
                       </tr>
@@ -152,125 +153,6 @@
                       <?php endif; ?>
                     </tbody>
                   </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- [ sample-page ] start -->
-          <div class="col-sm-12">
-            <div class="ecom-wrapper">
-              <div class="ecom-content">
-                <div class="row">
-                  <div class="col-sm-6 col-xl-4">
-                    <div class="card product-card">
-                      <div class="card-img-top">
-                        <a href="<?= BASE_PATH ?>products/1">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" alt="image" class="img-prod img-fluid" />
-                        </a>
-                      </div>
-                      <div class="card-body">
-                        <a href="<?= BASE_PATH ?>products/1">
-                          <p class="prod-content mb-0 text-muted">Apple watch -4</p>
-                        </a>
-                        <div class="d-flex align-items-center justify-content-between mt-2 mb-3 flex-wrap gap-1">
-                          <h4 class="mb-0 text-truncate"
-                            ><b>$299.00</b>
-                          </h4>
-                        </div>
-                        <div class="d-flex">
-                          <div class="flex-shrink-0">
-                            <a 
-                              href="" 
-                              class="avtar avtar-s btn-link-warning btn-prod-card" 
-                              data-bs-toggle="modal" 
-                              data-bs-target="#exampleModal1">
-                              <i class="ti ti-edit f-18"></i>
-                            </a>
-                            <div
-                              class="modal fade"
-                              id="exampleModal1"
-                              tabindex="-1"
-                              role="dialog"
-                              aria-labelledby="exampleModalLabel"
-                              aria-hidden="true"
-                            >
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">
-                                      <i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>
-                                      Modificar Producto
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <form method="POST" action="client" enctype="multipart/form-data" onsubmit="return validarFormulario()">
-                                    <div class="modal-body">
-                                      <div class="mb-3">
-                                        <label class="form-label">Nombre</label>
-                                        <input
-                                          type="text"
-                                          class="form-control"
-                                          id="name"
-                                          name="name"
-                                          placeholder="Ingresar Nuevo Nombre"
-                                          required
-                                        />
-                                      </div>
-                                      <div class="mb-3">
-                                        <label class="form-label">Slug</label>
-                                        <input
-                                          type="text"
-                                          class="form-control"
-                                          id="slug"
-                                          name="slug"
-                                          placeholder="Ingresar Nuevo Slug"
-                                          required
-                                        />
-                                      </div>
-                                      <div class="mb-3">
-                                        <label class="form-label">Descripción</label>
-                                        <input
-                                          type="text"
-                                          class="form-control"
-                                          id="description"
-                                          name="description"
-                                          placeholder="Ingresar Nueva Descripción"
-                                          required
-                                        />
-                                      </div>
-                                      <div class="mb-3">
-                                        <label class="form-label">Agregar Nueva Imagen</label>
-                                        <input
-                                          type="file"
-                                          class="form-control"
-                                          name="cover"
-                                          id="cover"
-                                          accept="image/*"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                                      <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                          
-                          </div>
-                          <div class="flex-shrink-0">
-                            <a href="" class="avtar avtar-s btn-link-danger btn-prod-card" data-bs-toggle="offcanvas">
-                              <i class="ti ti-trash f-18"></i>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </div>
