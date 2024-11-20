@@ -63,8 +63,6 @@
           </div>
         </div>
         <!-- [ breadcrumb ] end -->
-
-
         <!-- [ Main Content ] start -->
         <div class="row">
           <div class="col-lg-12">
@@ -75,45 +73,6 @@
                   <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Agregar Etiqueta
                   </button>
-                  <div
-                    class="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"
-                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Etiqueta</h5
-                          >
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                        </div>
-                        <form onsubmit="return validarFormulario()">
-                          <div class="modal-body">
-                            <div class="mb-3">
-                              <label class="form-label"> Nuevo Nombre de Etiqueta</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label"> Nueva Descripción de Etiqueta</label>
-                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" /> 
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label"> Nuevo Slug de Etiqueta</label>
-                              <input type="text" class="form-control" id="slug" name="slug" placeholder="Ingresar Slug" /> 
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="card-body shadow border-0">
@@ -134,19 +93,20 @@
                       <tr>
                         <td><?= htmlspecialchars($tag['id']) ?></td> 
                         <td><?= htmlspecialchars($tag['name']) ?></td>
-                        <td>Descripción</td>
-                        <td>Slug</td>
+                        <td><?= htmlspecialchars($tag['description']) ?></td>
+                        <td><?= htmlspecialchars($tag['slug']) ?></td>
                         <td>
                           <a 
-                            href=""
-                            class="btn btn-sm btn-light-success me-1"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModal1"
+                          href="#" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                            data-id="<?= htmlspecialchars($tag['id']) ?>"
+                            data-name="<?= htmlspecialchars($tag['name'] ?? 'N/A') ?>"
+                            data-description="<?= htmlspecialchars($tag['description'] ?? 'N/A') ?>"
+                            data-slug="<?= htmlspecialchars($tag['slug'] ?? 'N/A') ?>"
                           >
                             <i class="feather icon-edit"></i>
                           </a>
-                          <a href="<?= BASE_PATH ?>tags_products" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
-                          <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                          <a href="<?= BASE_PATH ?>tags_products/<?= htmlspecialchars($tag['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
+                          <a href="" onclick="remove(<?= $tag['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
                       </tr>
                         <?php endforeach; ?>
@@ -160,6 +120,11 @@
         </div>
       </div>
     </div>
+    <form id="delete-form" action="tag" method="POST">
+      <input type="hidden" name="action" value="deleteTag" />
+      <input type="hidden" id="delete-tag-id" name="id" />
+      <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
+    </form>
     <div
       class="modal fade"
       id="exampleModal1"
@@ -182,7 +147,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form onsubmit="return validarFormulario()">
+          <form method="POST" action="tag" enctype="multipart/form-data" onsubmit="return validarFormulario()">
             <div class="modal-body">
               <div class="mb-3">
                 <label class="form-label">Nuevo Nombre de Etiqueta</label> 
@@ -191,7 +156,6 @@
                   class="form-control"
                   id="name"
                   name="name"
-                  placeholder="Ingresar Nombre"
                 />
               </div>
               <div class="mb-3">
@@ -199,9 +163,8 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="name"
-                  name="name"
-                  placeholder="Ingresar Nombre"
+                  id="description"
+                  name="description"
                 />
               </div>
               <div class="mb-3">
@@ -209,9 +172,8 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="name"
-                  name="name"
-                  placeholder="Ingresar Nombre"
+                  id="slug"
+                  name="slug"
                 />
               </div>
             </div>
@@ -226,7 +188,51 @@
               <button type="submit" class="btn btn-light-primary">
                 Guardar cambios
               </button>
+              <input type="hidden" id="id" name="id" value="<?= $tag['id'] ?>" />
+              <input type="hidden" name="action" value="updateTag"/>
+            <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"
+              ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Etiqueta</h5
+            >
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+          </div>
+          <form method="POST" action="tag" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label"> Nuevo Nombre de Etiqueta</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"> Nueva Descripción de Etiqueta</label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" /> 
+              </div>
+              <div class="mb-3">
+                <label class="form-label"> Nuevo Slug de Etiqueta</label>
+                <input type="text" class="form-control" id="slug" name="slug" placeholder="Ingresar Slug" /> 
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+            </div>
+            <input type="hidden" name="action" value="storeTag"/>
+            <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
           </form>
         </div>
       </div>
@@ -236,8 +242,8 @@
       function validarFormulario() {
         // Obtener los valores de los campos
         const name = document.getElementsByName("name")[0].value.trim();
-        const description = document.getElementsByName("name")[1].value.trim();
-        const slug = document.getElementsByName("name")[2].value.trim();
+        const description = document.getElementsByName("description")[1].value.trim();
+        const slug = document.getElementsByName("slug")[2].value.trim();
 
         if (name === "") {
           alert("Por favor, ingrese un nombre válido para la etiqueta.");
@@ -268,7 +274,47 @@
         return true;
       }
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.btn-light-success');
 
+        editButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const description = button.getAttribute('data-description');
+            const slug = button.getAttribute('data-slug');
+
+            console.log(id, name, description, slug,);
+
+            document.getElementById('id').value = id;
+            document.getElementById('name').value = name;
+            document.getElementById('description').value = description;
+            document.getElementById('slug').value = slug;
+          });
+        });
+      });
+    </script>
+    <script>
+      function remove(tagId) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this address!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // Actualiza los valores en el formulario
+                document.getElementById("delete-tag-id").value = tagId;
+                // Enviar el formulario
+                document.getElementById("delete-form").submit();
+            }
+        });
+    }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <?php 
 
       include "../layouts/footer.php";

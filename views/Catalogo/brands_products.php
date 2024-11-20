@@ -1,7 +1,7 @@
 <?php 
   include_once "../../app/config.php";
   include_once "../../app/AuthController.php";
-  include_once "../../app/ProductController.php";
+  include_once "../../app/BrandController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
@@ -9,12 +9,17 @@
   }
   else{
     $authController = new AuthController();
-    $productController = new ProductController();
+    $brandController = new BrandController();
+
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $brandId = end($link_array);
 
     $profileData = $authController->getProfile();
-    $productData = $productController->getProducts();
+    $brandData = $brandController->getBrand($brandId);
 
-    $products = $productData ['data'];
+    $brand = $brandData ['data'];
+    //var_dump($brand);
     $user = $profileData['data'];
     
   }
@@ -151,20 +156,22 @@
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
+          <?php if (!empty($brand)): ?>
+            <?php foreach ($brand['products'] as $product): ?>
                   <div class="col-sm-6 col-xl-4">
                     <div class="card product-card">
                       <div class="card-img-top">
                         <a href="<?= BASE_PATH ?>products/1">
-                          <img src="<?= BASE_PATH ?>assets/images/application/img-prod-1.jpg" alt="image" class="img-prod img-fluid" />
+                          <img src="<?= htmlspecialchars($product['cover'] ?? 'N/A') ?>" alt="image" class="img-prod img-fluid" />
                         </a>
                       </div>
                       <div class="card-body">
                         <a href="<?= BASE_PATH ?>products/1">
-                          <p class="prod-content mb-0 text-muted">Apple watch -4</p>
+                          <p class="prod-content mb-0 text-muted"><?= htmlspecialchars($product['name'] ?? 'N/A') ?></p>
                         </a>
                         <div class="d-flex align-items-center justify-content-between mt-2 mb-3 flex-wrap gap-1">
                           <h4 class="mb-0 text-truncate"
-                            ><b>$299.00</b>
+                            ><b><?= htmlspecialchars($product['description'] ?? 'N/A') ?></b>
                           </h4>
                         </div>
                         <div class="d-flex">
@@ -258,6 +265,8 @@
                       </div>
                     </div>
                   </div>
+                  <?php endforeach; ?>
+                 <?php endif; ?> 
                 </div>
         <!-- [ Main Content ] end -->
       </div>
@@ -375,7 +384,7 @@
         return true;
       }
     </script>
-
+    
     <?php 
 
       include "../layouts/footer.php";
