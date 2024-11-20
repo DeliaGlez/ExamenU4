@@ -132,6 +132,7 @@
                                   data-status="<?= htmlspecialchars($cupon['status']) ?>">
                                 <i class="feather icon-edit"></i></a>
                                 <a href="<?= BASE_PATH ?>coupon_details/<?= htmlspecialchars($cupon['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
+                                <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                             </td>
                             <?php endforeach; ?>
                           <?php endif; ?>
