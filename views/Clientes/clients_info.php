@@ -50,7 +50,7 @@
         document.addEventListener('DOMContentLoaded', function() {
           swal("Error", "<?php echo htmlspecialchars($error_message); ?>", "error").then((value) => { window.location.href = '<?= BASE_PATH ?>'; });;
         });
-      </script> 
+  </script> 
   <?php endif; ?>
   <?php 
     include "../layouts/sidebar.php";
@@ -415,7 +415,7 @@
               >
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
-            <form method="POST" action="adress" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+            <form method="POST" action="adress" enctype="multipart/form-data" >
               <div class="modal-body">
                 <div class="mb-3">
                   <label class="form-label">Nombre</label>
@@ -545,13 +545,13 @@
             swal("Éxito", successMessage, "success")
               .then(() => {
                 // quita ulr clean
-                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients/". clientId);
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients_info/<?= htmlspecialchars($client['id']) ?>");
               });
           } else if (errorMessage) {
             swal("Error", errorMessage, "error")
               .then(() => {
                 // quita ulr clean
-                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients/". clientId);
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>clients_info/<?= htmlspecialchars($client['id']) ?>");
               });
           }
         });

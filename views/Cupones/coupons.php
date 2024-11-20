@@ -34,6 +34,13 @@
     <!-- [Body] Start -->
 
     <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+    <?php if (!empty($error_message)): ?> 
+      <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+          swal("Error", "<?php echo htmlspecialchars($error_message); ?>", "error").then((value) => { window.location.href = '<?= BASE_PATH ?>'; });;
+        });
+      </script> 
+    <?php endif; ?>
     <?php 
       include "../layouts/sidebar.php";
     ?>
@@ -92,8 +99,6 @@
                         <th class="border-top-0">Usos</th>
                         <th class="border-top-0">Valido en Primera Compra</th>
                         <th class="border-top-0">Estado</th>
-                        <th class="border-top-0">Tipo de Cupón</th>
-                        <th class="border-top-0">ID de Rama</th>
                         <th class="border-top-0">Acción</th>
                       </tr>
                     </thead>
@@ -113,9 +118,7 @@
                             <td><?= htmlspecialchars($cupon['max_uses']) ?></td>
                             <td><?= htmlspecialchars($cupon['count_uses']) ?></td>
                             <td><?= htmlspecialchars($cupon['valid_only_first_purchase']? 'Sí' : 'No') ?></td>
-                            <td><?= htmlspecialchars($cupon['status'])? 'Activio' : 'Inactivo' ?></td>
-                            <td><?= htmlspecialchars($cupon['couponable_type']) ?></td>
-                            <td><?= htmlspecialchars($cupon['branch_id']) ?></td>
+                            <td><?= htmlspecialchars($cupon['status'])? 'Activo' : 'Inactivo' ?></td>
                             <td>
                                 <a href="" class="btn btn-sm btn-light-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"
                                   data-id="<?= htmlspecialchars($cupon['id']) ?>"
@@ -281,6 +284,10 @@
               <input type="number" class="form-control" id="max_uses" name="max_uses" placeholder="Ingresar Usos Máximos" />
             </div>
             <div class="mb-3">
+              <label class="form-label">Total de usos</label>
+              <input type="number" class="form-control" id="count_uses" name="count_uses" placeholder="Ingresar Total de Usos" />
+            </div>
+            <div class="mb-3">
                 <label for="" class="form-label">Válido solo en primeras compras</label>
                 <select id="valid_only_first_purchase" name="valid_only_first_purchase" class="form-select">
                     <option value="1">Si</option>
@@ -369,6 +376,29 @@
     });
   });
 </script>
+<?php if (!empty($error_message) || isset($_GET['message'])): ?> 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const successMessage = urlParams.get('message');
+          const errorMessage = urlParams.get('error');
+
+          if (successMessage) {
+            swal("Éxito", successMessage, "success")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>coupons");
+              });
+          } else if (errorMessage) {
+            swal("Error", errorMessage, "error")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>coupons");
+              });
+          }
+        });
+</script>
+<?php endif; ?>
 <script>
   function remove(couponId){
   swal({

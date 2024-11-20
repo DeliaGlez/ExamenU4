@@ -83,10 +83,10 @@
                         <li class="list-group-item px-0 pt-0">
                             <div class="row">
                               <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID</p>
+                                <p class="mb-1 text-muted">Nombre del cupón</p>
                               </div>
                               <div class="col-md-6">
-                                <p class="mb-0"><?= htmlspecialchars($coupon['id']) ?></p>
+                                <p class="mb-0"><?= htmlspecialchars($coupon['name']) ?></p>
                               </div>
                             </div>
                           </li>
@@ -187,26 +187,6 @@
                               </div>
                               <div class="col-md-6">
                                 <p class="mb-0"><?= htmlspecialchars($coupon['status'])? 'Activio' : 'Inactivo' ?></p>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                              <div class="col-md-6">
-                                <p class="mb-1 text-muted">Tipo de cupón</p>
-                              </div>
-                              <div class="col-md-6">
-                                <p class="mb-0"><?= htmlspecialchars($coupon['couponable_type'] ?? 'N/A') ?></p>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                              <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID de la rama</p>
-                              </div>
-                              <div class="col-md-6">
-                                <p class="mb-0"><?= htmlspecialchars($coupon['branch_id'] ?? 'N/A') ?></p>
                               </div>
                             </div>
                           </li>
