@@ -84,43 +84,41 @@
                           >
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                         </div>
-                        <form onsubmit="return validarFormulario()">
+                        <form action="user" method="POST" enctype="multipart/form-data">
+                          <input type="hidden" name="action" value="storeUser">
+                          <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
                           <div class="modal-body">
                             <small id="emailHelp" class="form-text text-muted mb-2 mt-0">
                               Nunca compartiremos tu correo con externos.
                             </small>
                             <div class="mb-3">
                               <label class="form-label">Nombre</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" />
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Ingresar Nombre" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Apellido</label>
-                              <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Ingresar Apellido" />
+                              <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Ingresar Apellido" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Correo Electrónico</label>
-                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
+                              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Número de Teléfono</label>
-                              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" />
+                              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Número de Teléfono" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Contraseña</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Confirmar Contraseña</label>
-                              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirmar Contraseña" />
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Subir Imagen de Perfil</label>
-                              <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" />
+                              <input type="file" class="form-control" name="profile_photo_file" id="profile_photo_file" accept="image/*" required/>
                             </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+                            <button type="submit" class="btn btn-light-primary">Agregar usuarios</button>
                           </div>
                         </form>
                       </div>
@@ -150,9 +148,12 @@
                             <td><?= htmlspecialchars($user['role']) ?></td>
                             <td><?= htmlspecialchars($user['created_at']) ?></td>
                             <td>
+                              <a href="users_edit?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a> 
+                              
+                              <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+
                               <a href="users_info?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
 
-                              <a href="users_edit?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a> 
 
                             </td>
                         </tr>
