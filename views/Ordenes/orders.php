@@ -122,6 +122,28 @@
                                     <option value="0">(Rellenar con todos los posibles)</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                              <label class="form-label">Productos en la Orden</label>
+
+                              <select name="producto[]" id="producto_original" class="form-select mb-2">
+                                <option value="Producto 1">Producto 1</option>
+                                <option value="Producto 2">Producto 2</option>
+                                <option value="Producto 3">Producto 3</option>
+                              </select>
+
+                              <select name="presentación[]" id="presentación_original" class="form-select mb-2">
+                                <option value="Presentación A">Presentación A</option>
+                                <option value="Presentación B">Presentación B</option>
+                                <option value="Presentación C">Presentación C</option>
+                              </select>
+
+                              <div id="otro_producto"></div>
+
+                              <button type="button" class="btn btn-primary mb-4" onclick="addProduct()">
+                                Añadir otro producto
+                              </button>
+                            </div>
+
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -176,7 +198,7 @@
                                     aria-labelledby="exampleModalLabel1"
                                     aria-hidden="true"
                                 >
-                                    <div class="modal-dialog" role="document">
+                                  <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Orden</h5>
@@ -184,53 +206,17 @@
                                         </div>
                                         <form onsubmit="return validarFormulario()">
                                         <div class="modal-body">
-                                          <div class="mb-3">
-                                            <label class="form-label">ID</label>
-                                            <input type="number" class="form-control" id="id" name="id" placeholder="Ingresar ID" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Folio</label>
-                                            <input type="number" class="form-control" id="folio" name="folio" placeholder="Ingresar Folio" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">Total</label>
-                                            <input type="number" class="form-control" id="total" name="total" placeholder="Ingresar Total" />
-                                          </div>
-                                          <div class="mb-3">
-                                              <label for="is_paid" class="form-label">Está Pagado</label>
-                                              <select id="is_paid" name="is_paid" class="form-select">
-                                                  <option value="1">Si</option>
-                                                  <option value="0">No</option>
-                                              </select>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">ID de Cliente</label>
-                                            <input type="number" class="form-control" id="client_id" name="client_id" placeholder="Ingresar ID de Cliente" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">ID de Dirección</label>
-                                            <input type="number" class="form-control" id="address_id" name="address_id" placeholder="Ingresar ID de Dirección" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">ID del Estado de Orden</label>
-                                            <input type="number" class="form-control" id="order_status_id" name="order_status_id" placeholder="Ingresar ID del Estado de Orden" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">ID del Tipo de Pago</label>
-                                            <input type="number" class="form-control" id="payment_type_id" name="payment_type_id" placeholder="Ingresar ID del Tipo de Pago" />
-                                          </div>
-                                          <div class="mb-3">
-                                            <label class="form-label">ID del Cupón</label>
-                                            <input type="number" class="form-control" id="cupon_id" name="cupon_id" placeholder="Ingresar ID del Cupón" />
-                                          </div>
+                                        <div class="mb-3">
+                                          <label for="is_paid" class="form-label">Estado de Orden</label>
+                                            <select id="is_paid" name="is_paid" class="form-select">
+                                              <option value="1">Completado</option>
+                                              <option value="0">(Rellenar con todos los posibles)</option>
+                                          </select>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                                        </div>
-                                        </form>
+
+                                      </form>
                                     </div>
-                                    </div>
+                                  </div>
                                 </div>   
                                 <a href="<?= BASE_PATH ?>order_details" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
 
@@ -261,62 +247,73 @@
         const paymentTypeId = document.getElementById("payment_type_id").value.trim();
         const cuponId = document.getElementById("cupon_id").value.trim();
 
-        // Validar campo ID
         if (id === "" || isNaN(id) || id <= 0) {
           alert("Por favor, ingrese un ID válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo Folio
         if (folio === "" || isNaN(folio) || folio <= 0) {
           alert("Por favor, ingrese un folio válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo Total
         if (total === "" || isNaN(total) || total <= 0) {
           alert("Por favor, ingrese un total válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo Está Pagado
         if (isPaid !== "1" && isPaid !== "0") {
           alert("Por favor, seleccione si está pagado o no.");
           return false;
         }
 
-        // Validar campo ID de Cliente
         if (clientId === "" || isNaN(clientId) || clientId <= 0) {
           alert("Por favor, ingrese un ID de cliente válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo ID de Dirección
         if (addressId === "" || isNaN(addressId) || addressId <= 0) {
           alert("Por favor, ingrese un ID de dirección válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo ID del Estado de Orden
         if (orderStatusId === "" || isNaN(orderStatusId) || orderStatusId <= 0) {
           alert("Por favor, ingrese un ID del estado de orden válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo ID del Tipo de Pago
         if (paymentTypeId === "" || isNaN(paymentTypeId) || paymentTypeId <= 0) {
           alert("Por favor, ingrese un ID del tipo de pago válido (número mayor a 0).");
           return false;
         }
 
-        // Validar campo ID del Cupón
         if (cuponId === "" || isNaN(cuponId) || cuponId < 0) {
           alert("Por favor, ingrese un ID del cupón válido (número mayor o igual a 0).");
           return false;
         }
 
-        // Si todas las validaciones pasan
         return true;
+      }
+    </script>
+
+    <script type="text/javascript">
+      function addProduct() {
+        let productoOptions = document.getElementById('producto_original').innerHTML;
+
+        let presentacionOptions = document.getElementById('presentación_original').innerHTML;
+
+        let newCode = `
+          <div class="mb-3">
+            <select name="producto[]" class="form-select mb-2">
+              ${productoOptions}
+            </select>
+            <select name="presentación[]" class="form-select mb-2">
+              ${presentacionOptions}
+            </select>
+          </div>
+        `;
+
+        document.getElementById('otro_producto').innerHTML += newCode;
       }
     </script>
 

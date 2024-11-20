@@ -255,10 +255,6 @@
                         <form onsubmit="return validarFormulario()">
                           <div class="modal-body">
                             <div class="mb-3">
-                              <label class="form-label">Slug</label>
-                              <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
-                            </div>
-                            <div class="mb-3">
                               <label class="form-label">Descripción</label>
                               <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
                             </div>
@@ -273,6 +269,10 @@
                             <div class="mb-3">
                               <label class="form-label">Estado</label>
                               <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Subir Imagen de Perfil</label>
+                              <input type="file" class="form-control" name="cover" id="cover" accept="image/*" required/>
                             </div>
                             <div class="mb-3">
                               <label class="form-label">Stock</label>
@@ -301,32 +301,37 @@
                   </div>
                 </div>
               </div>
+
               <div class="card-body shadow border-0">
                 <div class="table-responsive">
                   <table id="report-table" class="table table-bordered table-striped mb-0">
                     <thead>
                       <tr>
-                        <th class="border-top-0">ID</th>
                         <th class="border-top-0">Imagen</th>
                         <th class="border-top-0">Descripción</th>
+                        <th class="border-top-0">Código</th>
                         <th class="border-top-0">Peso</th>
                         <th class="border-top-0">Estado</th>
                         <th class="border-top-0">Precio</th>
                         <th class="border-top-0">Stock</th>
+                        <th class="border-top-0">Stock Min</th>
+                        <th class="border-top-0">Stock Max</th>
                         <th class="border-top-0">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>1</td>
                         <td>
                           <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
                         </td>
                         <td>Descripción del producto</td>
+                        <td>271204</td>
                         <td>100 gramos</td>
                         <td>Disponible</td>
                         <td>$1,000</td>
-                        <td>Si</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>50</td>
                         <td>
                           <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="feather icon-edit"></i>
                           </a>
@@ -342,16 +347,12 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLabel"
-                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Presentación</h5
                                   >
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                                 </div>
                                 <form onsubmit="return validarFormulario()">
                                   <div class="modal-body">
-                                    <div class="mb-3">
-                                      <label class="form-label">Slug</label>
-                                      <input type="text" class="form-control" id="productSlug" name="productSlug" placeholder="Ingresar Slug" />
-                                    </div>
                                     <div class="mb-3">
                                       <label class="form-label">Descripción</label>
                                       <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
