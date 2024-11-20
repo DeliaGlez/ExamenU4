@@ -121,9 +121,27 @@
                         class="form-control"
                         id="description"
                         name="description"
-                        placeholder="Ingresar Descripción"
+                        placeholder="Ingresar Descripción del Producto"
                         required
                       />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Características</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        placeholder="Ingresar Características del Producto"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Marca</label>
+                      <select id="is_paid" name="is_paid" class="form-select">
+                          <option value="1">Marca 1</option>
+                          <option value="0">(Rellenar con todos los posibles)</option>
+                      </select>
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Agregar Imagen</label>
@@ -134,6 +152,38 @@
                         id="cover"
                         accept="image/*"
                       />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Categoría</label>
+                      
+                      <select name="category[]" id="categoria_original" class="form-select">
+                        <option>Sneakers</option>
+                        <option>Category 1</option>
+                        <option>Category 2</option>
+                      </select>
+
+                      <div id="otra_categoria">
+                      </div>
+
+                      <button type="button" class="btn btn-primary mb-4" onclick="addCategory()">
+                        Añadir otra categoría
+                      </button>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Etiquetas</label>
+                      
+                      <select name="category[]" id="etiqueta_original" class="form-select">
+                        <option>Sneakers</option>
+                        <option>Category 1</option>
+                        <option>Category 2</option>
+                      </select>
+
+                      <div id="otra_etiqueta">
+                      </div>
+
+                      <button type="button" class="btn btn-primary mb-4" onclick="addTag()">
+                        Añadir otra etiqueta
+                      </button>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -228,7 +278,7 @@
                   class="form-control"
                   id="name"
                   name="name"
-                  placeholder="Ingresar Nuevo Nombre"
+                  placeholder="Ingresar Nombre"
                   required
                 />
               </div>
@@ -239,7 +289,7 @@
                   class="form-control"
                   id="slug"
                   name="slug"
-                  placeholder="Ingresar Nuevo Slug"
+                  placeholder="Ingresar Slug"
                   required
                 />
               </div>
@@ -250,12 +300,30 @@
                   class="form-control"
                   id="description"
                   name="description"
-                  placeholder="Ingresar Nueva Descripción"
+                  placeholder="Ingresar Descripción del Producto"
                   required
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Agregar Nueva Imagen</label>
+                <label class="form-label">Características</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  placeholder="Ingresar Características del Producto"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Marca</label>
+                <select id="is_paid" name="is_paid" class="form-select">
+                    <option value="1">Marca 1</option>
+                    <option value="0">(Rellenar con todos los posibles)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Agregar Imagen</label>
                 <input
                   type="file"
                   class="form-control"
@@ -264,10 +332,42 @@
                   accept="image/*"
                 />
               </div>
+              <div class="mb-3">
+                <label class="form-label">Categoría</label>
+                
+                <select name="category[]" id="categoria_original" class="form-select">
+                  <option>Sneakers</option>
+                  <option>Category 1</option>
+                  <option>Category 2</option>
+                </select>
+
+                <div id="otra_categoria">
+                </div>
+
+                <button type="button" class="btn btn-primary mb-4" onclick="addCategory()">
+                  Añadir otra categoría
+                </button>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Etiquetas</label>
+                
+                <select name="category[]" id="etiqueta_original" class="form-select">
+                  <option>Sneakers</option>
+                  <option>Category 1</option>
+                  <option>Category 2</option>
+                </select>
+
+                <div id="otra_etiqueta">
+                </div>
+
+                <button type="button" class="btn btn-primary mb-4" onclick="addTag()">
+                  Añadir otra etiqueta
+                </button>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+              <button type="submit" class="btn btn-light-primary">Actualizar Producto</button>
             </div>
           </form>
         </div>
@@ -313,6 +413,40 @@
           }
         }
         return true;
+      }
+    </script>
+
+    <script type="text/javascript">
+      function addCategory() {
+        
+        let category = document.getElementById('categoria_original').innerHTML
+
+         
+        let new_code = '<select name="category[]"  class="form-select">'
+        new_code += category; 
+        new_code += '</select>'
+
+        var nuevoElementoHTML = document.getElementById('otra_categoria').innerHTML + new_code ; 
+        
+        document.getElementById("otra_categoria").innerHTML = nuevoElementoHTML;
+
+      }
+    </script>
+
+    <script type="text/javascript">
+      function addTag() {
+        
+        let tag = document.getElementById('etiqueta_original').innerHTML
+
+         
+        let new_code = '<select name="tag[]"  class="form-select">'
+        new_code += tag; 
+        new_code += '</select>'
+
+        var nuevoElementoHTML = document.getElementById('otra_etiqueta').innerHTML + new_code ; 
+        
+        document.getElementById("otra_etiqueta").innerHTML = nuevoElementoHTML;
+
       }
     </script>
 
