@@ -150,7 +150,16 @@
                             <td>
                               <a href="users_edit?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-success me-1"><i class="feather icon-edit"></i></a> 
                               
-                              <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                              <form action="user" method="POST" style="display: inline;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
+                                <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']); ?>">
+
+                                <button type="submit" class="btn btn-sm btn-light-danger" 
+                                   onclick="return confirm('¿Estás seguro de que deseas eliminar este elemento?')">
+                                  <i class="feather icon-trash-2"></i>
+                                </button>
+                              </form>
 
                               <a href="users_info?id=<?= htmlspecialchars($user['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
                             </td>
