@@ -51,7 +51,7 @@
           <div class="col-lg-12">
             <div class="card shadow-none">
               <div class="card-header">
-                <h5>Cupones</h5>
+                <h5>Ordenes</h5>
                 <div class="card-header-right">
                   <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Agregar Orden
@@ -160,12 +160,11 @@
                   <table id="report-table" class="table table-bordered table-striped mb-0">
                     <thead>
                       <tr>
-                        <th class="border-top-0">ID</th>
                         <th class="border-top-0">Folio</th>
                         <th class="border-top-0">Total</th>
                         <th class="border-top-0">Se pagó</th>
-                        <th class="border-top-0">ID de Cliente</th>
-                        <th class="border-top-0">ID de Dirección</th>
+                        <th class="border-top-0">Cliente</th>
+                        <th class="border-top-0">Dirección</th>
                         <th class="border-top-0">Estado de la orden</th>
                         <th class="border-top-0">ID del Tipo de Pago</th>
                         <th class="border-top-0">ID del Cupón</th>
@@ -176,7 +175,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
                             <td>31824</td>
                             <td>$12,500</td>
                             <td>Si</td>
@@ -206,14 +204,14 @@
                                         </div>
                                         <form onsubmit="return validarFormulario()">
                                         <div class="modal-body">
-                                        <div class="mb-3">
-                                          <label for="is_paid" class="form-label">Estado de Orden</label>
-                                            <select id="is_paid" name="is_paid" class="form-select">
-                                              <option value="1">Completado</option>
-                                              <option value="0">(Rellenar con todos los posibles)</option>
-                                          </select>
+                                          <div class="mb-3">
+                                            <label for="is_paid" class="form-label">Estado de Orden</label>
+                                              <select id="is_paid" name="is_paid" class="form-select">
+                                                <option value="1">Completado</option>
+                                                <option value="0">(Rellenar con todos los posibles)</option>
+                                            </select>
+                                          </div>
                                         </div>
-
                                       </form>
                                     </div>
                                   </div>
