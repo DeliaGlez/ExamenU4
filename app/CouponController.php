@@ -4,8 +4,7 @@ include_once "config.php";
 if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
 }
- $couponController = new CouponController();
- echo json_encode($couponController->getCoupons());
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
@@ -37,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $couponController->deleteCoupon($idCoupon);
                     break;
                 case 'updateCoupon':
+                    $idCoupon = $_POST['id']; 
                     $name = $_POST['name'];
                     $code = $_POST['code']; 
                     $percentageDiscount = $_POST['percentage_discount'];
@@ -269,10 +269,10 @@ class CouponController
 
     public function returnToFrontAlert($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'coupons?message=' . urlencode($data['message'])); //Corregir redireccion cuando este definida
+            header('Location: ' . BASE_PATH . 'coupons?message=' . urlencode($data['message'])); 
         } 
         else{
-            $message = isset($data['message']) ? $data['message'] : 'Algo salió mal, verifique los datos.'; //Corregir redireccion cuando este definida
+            $message = isset($data['message']) ? $data['message'] : 'Algo salió mal, verifique los datos.'; 
             header('Location: ' . BASE_PATH . 'coupons?error=' . urlencode($message)); 
         }
         exit;

@@ -196,11 +196,11 @@ class CategoryController
 
     public function returnToFrontAlert($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'categories?message=' . urlencode($data['message'])); //Corregir redireccion
+            header('Location: ' . BASE_PATH . 'categorys?message=' . urlencode($data['message']));
         } 
         else{
-            $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; //Corregir redireccion
-            header('Location: ' . BASE_PATH . 'categories?error=' . urlencode($message)); 
+            $message = isset($data['message']) ? $data['message'] : 'Error desconocido';
+            header('Location: ' . BASE_PATH . 'categorys?error=' . urlencode($message)); 
         }
         exit;
     }

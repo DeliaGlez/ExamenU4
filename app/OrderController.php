@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 class OrderController
 {
-    public function createOrder($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id, $presentations) {
+    public function storeOrder($folio, $total, $is_paid, $client_id, $address_id, $order_status_id, $payment_type_id, $coupon_id, $presentations) {
         $token = isset($_SESSION['token']) ? $_SESSION['token'] : '';
         $curl = curl_init();
     
@@ -242,10 +242,10 @@ class OrderController
 
     public function returnToFrontAlert($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'orders?message=' . urlencode($data['message'])); //Corregir redireccion
+            header('Location: ' . BASE_PATH . 'orders?message=' . urlencode($data['message'])); 
         } 
         else{
-            $message = isset($data['message']) ? $data['message'] : 'Algo salió mal, verifique los datos.'; //Corregir redireccion
+            $message = isset($data['message']) ? $data['message'] : 'Algo salió mal, verifique los datos.'; 
             header('Location: ' . BASE_PATH . 'orders?error=' . urlencode($message)); 
         }
         exit;
