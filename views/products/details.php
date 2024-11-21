@@ -356,7 +356,7 @@
     <form id="delete-form" action="presentation" method="POST">
       <input type="hidden" name="action" value="deletePresentation" />
       <input type="hidden" id="delete-presentation-id" name="id" />
-      <input type="hidden" id="delete-slug" name="slug" />
+      <input type="hidden" id="delete-slug" name="product_slug" />
       <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
     </form>
     <!-- [ Editar  ] end -->                       
