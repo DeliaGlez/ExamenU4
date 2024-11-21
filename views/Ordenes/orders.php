@@ -142,6 +142,7 @@
                                 <select id="client_id" name="client_id" class="form-select">
                                     <?php if (!empty($clients)) : ?>
                                         <?php foreach ($clients as $client) : ?>
+                                            <option value="">Selecciona un cliente</option>
                                             <option value="<?= htmlspecialchars($client['id']) ?>">
                                                 <?= htmlspecialchars($client['name'])?>
                                             </option>
@@ -153,12 +154,13 @@
                             </div><!-- listo -->
                             <div class="mb-3">
                                 <label for="shipping_address_id" class="form-label">Dirección de Envío</label>
-                                <select id="shipping_address_id" name="shipping_address_id" class="form-select">
+                                <select id="address_id" name="address_id" class="form-select">
                                     <?php 
                                     if (!empty($clients)) : ?>
                                         <?php foreach ($clients as $client) : ?>
                                             <?php if (!empty($client['addresses'])) : ?>
                                                 <?php foreach ($client['addresses'] as $address) : ?>
+                                                    <option value="">Selecciona una direccion</option>
                                                     <option value="<?= htmlspecialchars($address['id']) ?>">
                                                         <?= htmlspecialchars($address['street_and_use_number']) ?>
                                                     </option>
@@ -174,7 +176,7 @@
                             </div><!-- listo -->
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label">Estado de Orden</label>
-                                <select id="is_paid" name="is_paid" class="form-select">
+                                <select id="order_status_id" name="order_status_id" class="form-select">
                                     <option value="1">Pendiente de pago</option>
                                     <option value="2">Pagada</option>
                                     <option value="3">Enviado</option>
@@ -185,7 +187,7 @@
                             </div><!-- listo -->
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label">Tipo De Pago</label>
-                                <select id="is_paid" name="is_paid" class="form-select">
+                                <select id="payment_type_id" name="payment_type_id" class="form-select">
                                     <option value="1">Efectivo</option>
                                     <option value="2">Tarjeta</option>
                                     <option value="3">Transferencia</option>
@@ -204,28 +206,22 @@
                                         <option value="">No hay cupones disponibles</option>
                                     <?php endif; ?>
                                 </select>
-                            </div><!-- listo -->
-                            <div class="mb-3">
-                              <label class="form-label">Productos en la Orden</label>
+                                <div class="mb-3">
+                                  <label for="producto_original" class="form-label">Productos</label>
+                                  <select name="producto" id="producto_original" class="form-select mb-2" onchange="updatePresentations()">
+                                    <option value="">Selecciona un producto</option>
+                                    <?php foreach ($products as $product): ?>
+                                      <option value="<?= htmlspecialchars($product['id']) ?>" data-presentations='<?= htmlspecialchars(json_encode($product['presentations'])) ?>'>
+                                        <?= htmlspecialchars($product['name']) ?>
+                                      </option>
+                                    <?php endforeach; ?>
+                                  </select>
 
-                              <select name="producto[]" id="producto_original" class="form-select mb-2">
-                                <?php foreach ($products as $product): ?>
-                                  <option value="<?= htmlspecialchars($product['id']) ?>"><?= htmlspecialchars($product['name']) ?></option>
-                                <?php endforeach; ?>
-                              </select>
-
-                              <select name="presentación[]" id="presentación_original" class="form-select mb-2">
-                                <option value="Presentación A">Presentación A</option>
-                                <option value="Presentación B">Presentación B</option>
-                                <option value="Presentación C">Presentación C</option>
-                              </select>
-
-                              <div id="otro_producto"></div>
-
-                              <button type="button" class="btn btn-primary mb-4" onclick="addProduct()">
-                                Añadir otro producto
-                              </button>
-                            </div><!-- listo pendiente-->
+                                  <label for="presentacion_original" class="form-label">Presentaciones</label>
+                                  <select name="presentations" id="presentacion_original" class="form-select mb-2">
+                                    <option value="">Selecciona una presentación</option>
+                                  </select>
+                                </div><!-- listo pendiente-->
 
                           </div>
                           <div class="modal-footer">
@@ -405,7 +401,7 @@
       function addProduct() {
         let productoOptions = document.getElementById('producto_original').innerHTML;
 
-        let presentacionOptions = document.getElementById('presentación_original').innerHTML;
+        let presentacionOptions = document.getElementById('presentacion_original').innerHTML;
 
         let newCode = `
           <div class="mb-3">
@@ -419,6 +415,26 @@
         `;
 
         document.getElementById('otro_producto').innerHTML += newCode;
+      }
+    </script>
+    <script>
+      function updatePresentations() {
+        const productSelect = document.getElementById('producto_original');
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+        const presentations = selectedOption.getAttribute('data-presentations');
+
+        const presentationSelect = document.getElementById('presentacion_original');
+        presentationSelect.innerHTML = '<option value="">Selecciona una presentación</option>';
+
+        if (presentations) {
+          const parsedPresentations = JSON.parse(presentations);
+          parsedPresentations.forEach(presentation => {
+            const option = document.createElement('option');
+            option.value = presentation.id;
+            option.textContent = presentation.description;
+            presentationSelect.appendChild(option);
+          });
+        }
       }
     </script>
 
