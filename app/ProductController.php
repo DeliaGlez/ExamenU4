@@ -38,11 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $description = $_POST['description']; 
                     $features = $_POST['features']; 
                     $brand_id = $_POST['brand_id']; 
-                    $cover = $_FILES['cover']['tmp_name'];
                     $categories = $_POST['categories'];
                     $tags = $_POST['tags']; 
  
-                    $productController->updateProduct($idProduct,$name, $slug, $description, $features, $brand_id, $cover, $categories, $tags);
+                    $productController->updateProduct($idProduct,$name, $slug, $description, $features, $brand_id, $categories, $tags);
                 break;
                 default:
                     echo "Accion desconocida";
