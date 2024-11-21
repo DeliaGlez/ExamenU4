@@ -274,7 +274,18 @@
                         <td><?= htmlspecialchars($presentations['stock_min'] ?? 'N/A') ?></td>
                         <td><?= htmlspecialchars($presentations['stock_max'] ?? 'N/A') ?></td>
                         <td>
-                          <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="feather icon-edit"></i>
+                          <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                            data-id="<?= htmlspecialchars($presentations['id']) ?>"
+                            data-description="<?= htmlspecialchars($presentations['description'] ?? 'N/A') ?>"
+                            data-code="<?= htmlspecialchars($presentations['code'] ?? 'N/A') ?>"
+                            data-weight="<?= htmlspecialchars($presentations['weight_in_grams'] ?? 'N/A') ?>"
+                            data-status="<?= htmlspecialchars($presentations['status'] ?? 'N/A') ?>"
+                            data-price="<?= htmlspecialchars($presentations['price'][0]['amount']) ?? 'N/A' ?>"
+                            data-stock="<?= htmlspecialchars($presentations['stock'] ?? 'N/A') ?>"
+                            data-stockMin="<?= htmlspecialchars($presentations['stock_min'] ?? 'N/A') ?>"
+                            data-stockMax="<?= htmlspecialchars($presentations['stock_max'] ?? 'N/A') ?>"
+                          >
+                          <i class="feather icon-edit"></i>
                           </a>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                           <a href="" class="btn btn-sm btn-light-warning me-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="feather icon-book-open"></i>
@@ -359,7 +370,7 @@
             >
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
           </div>
-          <form onsubmit="return validarFormulario()">
+          <form method="POST" action="presentation" enctype="multipart/form-data" onsubmit="return validarFormulario()">
             <div class="modal-body">
               <div class="mb-3">
                 <label class="form-label">Descripción</label>
@@ -398,6 +409,11 @@
               <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
               <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
             </div>
+              <input type="hidden" name="action" value="updatePresentation" />
+              <input type="hidden" id="product_id" name="product_id" value="<?= $products['id'] ?>" />
+              <input type="hidden" id="product_slug" name="product_slug" value="<?= $products['slug'] ?>" />
+              <input type="hidden" id="id" name="id" value="" />
+              <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
           </form>
         </div>
       </div>
@@ -575,7 +591,37 @@
           return true;
         }
       </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.btn-light-success');
 
+        editButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            const description = button.getAttribute('data-description');
+            const code = button.getAttribute('data-code');
+            const weight = button.getAttribute('data-weight');
+            const status = button.getAttribute('data-status');
+            const price = button.getAttribute('data-price');
+            const stock = button.getAttribute('data-stock');
+            const stockMin = button.getAttribute('data-stockMin');
+            const stockMax = button.getAttribute('data-stockMax');
+
+            console.log(id, description, code, weight, status, price, stock, stockMin, stockMax);
+
+            document.getElementById('id').value = id;
+            document.getElementById('description').value = description;
+            document.getElementById('code').value = code;
+            document.getElementById('weight_in_grams').value = weight;
+            document.getElementById('status').value = status;
+            document.getElementById('amount').value = price;
+            document.getElementById('stock').value = stock;
+            document.getElementById('stock_min').value = stockMin;
+            document.getElementById('stock_max').value = stockMax;
+          });
+        });
+      });
+    </script>
     
     <?php 
 
