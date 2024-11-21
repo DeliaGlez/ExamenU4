@@ -1,5 +1,39 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/OrderController.php";
+  include_once "../../app/ProductController.php";
+  include_once "../../app/ClientController.php";
+  include_once "../../app/CouponController.php";
+  include_once "../../app/AddressController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $orderController = new OrderController();
+    $profileData = $orderController->getOrders();
+    $orders = $profileData['data'];
+
+    $clientController = new ClientController();
+    $clienteData = $clientController->getClients();
+    $clients = $clienteData['data'];
+
+    $cuponController = new CouponController();
+    $cuponData = $cuponController->getCoupons();
+    $cupons = $cuponData['data'];
+
+    $addressController = new AddressController();
+    $addressData = $addressController->getAddress(8);
+    $address = $addressData['data'];
+
+    $productController = new ProductController();
+    $producteData = $productController->getproducts();
+    $products = $producteData['data'];
+  }
+
+  $error_message = isset($_GET['error']) ? $_GET['error'] : '';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -90,7 +124,9 @@
                           <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Orden</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                         </div>
-                        <form onsubmit="return validarFormulario()">
+                        <form action="order" method="POST" onsubmit="return validarFormulario()">
+                        <input type="hidden" name="action" value="storeOrder">
+                        <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
                           <div class="modal-body">
                             <div class="mb-3">
                               <label class="form-label">Folio</label>
@@ -106,49 +142,75 @@
                                     <option value="1">Si</option>
                                     <option value="0">No</option>
                                 </select>
-                            </div>
+                            </div><!-- listo -->
                             <div class="mb-3">
-                                <label for="is_paid" class="form-label">Cliente</label>
-                                <select id="is_paid" name="is_paid" class="form-select">
-                                    <option value="1">Nombre 1</option>
-                                    <option value="0">Nombre 2</option>
+                                <label for="client_id" class="form-label">Cliente</label>
+                                <select id="client_id" name="client_id" class="form-select">
+                                    <?php if (!empty($clients)) : ?>
+                                        <?php foreach ($clients as $client) : ?>
+                                            <option value="<?= htmlspecialchars($client['id']) ?>">
+                                                <?= htmlspecialchars($client['name'])?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <option value="">No hay clientes disponibles</option>
+                                    <?php endif; ?>
                                 </select>
-                            </div>
+                            </div><!-- listo -->
                             <div class="mb-3">
-                                <label for="is_paid" class="form-label">Dirección de Envío</label>
-                                <select id="is_paid" name="is_paid" class="form-select">
-                                    <option value="1">Dirección 1</option>
-                                    <option value="0">Dirección 2</option>
+                                <label for="shipping_address_id" class="form-label">Dirección de Envío</label>
+                                <select id="shipping_address_id" name="shipping_address_id" class="form-select">
+                                    <?php if (!empty($adresss)) : ?>
+                                        <?php foreach ($adresss as $address) : ?>
+                                            <option value="<?= htmlspecialchars($address['id']) ?>">
+                                                <?= htmlspecialchars($address['street_and_use_number'])?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <option value="">No hay direcciones disponibles</option>
+                                    <?php endif; ?>
                                 </select>
-                            </div>
+                            </div><!-- pendiente -->
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label">Estado de Orden</label>
                                 <select id="is_paid" name="is_paid" class="form-select">
-                                    <option value="1">Completado</option>
-                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                    <option value="1">Pendiente de pago</option>
+                                    <option value="2">Pagada</option>
+                                    <option value="3">Enviado</option>
+                                    <option value="4">Abandonada</option>
+                                    <option value="5">Pendiente de enviar</option>
+                                    <option value="6">Cancelada></option>
                                 </select>
-                            </div>
+                            </div><!-- listo -->
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label">Tipo De Pago</label>
                                 <select id="is_paid" name="is_paid" class="form-select">
-                                    <option value="1">Tarjeta</option>
-                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                    <option value="1">Efectivo</option>
+                                    <option value="2">Tarjeta</option>
+                                    <option value="3">Transferencia</option>
                                 </select>
-                            </div>
+                            </div><!-- listo -->
                             <div class="mb-3">
-                                <label for="is_paid" class="form-label">Cupón</label>
-                                <select id="is_paid" name="is_paid" class="form-select">
-                                    <option value="1">10off</option>
-                                    <option value="0">(Rellenar con todos los posibles)</option>
+                                <label for="coupon_id" class="form-label">Cupón</label>
+                                <select id="coupon_id" name="coupon_id" class="form-select">
+                                    <?php if (!empty($cupons)) : ?>
+                                        <?php foreach ($cupons as $cupon) : ?>
+                                            <option value="<?= htmlspecialchars($cupon['id']) ?>">
+                                                <?= htmlspecialchars($cupon['code'])?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <option value="">No hay cupones disponibles</option>
+                                    <?php endif; ?>
                                 </select>
-                            </div>
+                            </div><!-- listo -->
                             <div class="mb-3">
                               <label class="form-label">Productos en la Orden</label>
 
                               <select name="producto[]" id="producto_original" class="form-select mb-2">
-                                <option value="Producto 1">Producto 1</option>
-                                <option value="Producto 2">Producto 2</option>
-                                <option value="Producto 3">Producto 3</option>
+                                <?php foreach ($products as $product): ?>
+                                  <option value="<?= htmlspecialchars($product['id']) ?>"><?= htmlspecialchars($product['name']) ?></option>
+                                <?php endforeach; ?>
                               </select>
 
                               <select name="presentación[]" id="presentación_original" class="form-select mb-2">
@@ -162,7 +224,7 @@
                               <button type="button" class="btn btn-primary mb-4" onclick="addProduct()">
                                 Añadir otro producto
                               </button>
-                            </div>
+                            </div><!-- listo pendiente-->
 
                           </div>
                           <div class="modal-footer">
@@ -192,15 +254,18 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($orders as $order): ?>
+                      <pre><?php var_dump($order['order_status_id']); ?></pre>
                         <tr>
-                            <td>31824</td>
-                            <td>$12,500</td>
-                            <td>Si</td>
-                            <td>Jose Lopez</td>
-                            <td>6</td>
-                            <td>Entregado</td>
-                            <td>Tarjeta</td>
-                            <td>10off</td>
+                        <td><?= !empty($order['folio']) ? htmlspecialchars($order['folio']) : 'N/A' ?></td>
+                        <td><?= isset($order['total']) ? number_format($order['total'], 2) : 'N/A' ?></td>
+                        <td><?= isset($order['is_paid']) ? ($order['is_paid'] ? 'Sí' : 'No') : 'N/A' ?></td>
+                        <td><?= !empty($order['client']['name']) ? htmlspecialchars($order['client']['name']) : 'N/A' ?></td>
+                        <td><?= !empty($order['address']['street_and_use_number']) ? htmlspecialchars($order['address']['street_and_use_number']) : 'N/A' ?></td>
+                        <td><?= !empty($order['order_status']['name']) ? htmlspecialchars($order['order_status']['name']) : 'N/A' ?></td>
+                        <td><?= !empty($order['payment_type']['name']) ? htmlspecialchars($order['payment_type']['name']) : 'N/A' ?></td>
+                        <td><?= !empty($order['coupon']['name']) ? htmlspecialchars($order['coupon']['name']) : 'N/A' ?></td>
+
                             <td>
                                 <a href="" class="btn btn-sm btn-light-info me-1" data-bs-toggle="modal" 
                                 data-bs-target="#exampleModal1"><i class="feather icon-edit"></i></a>
@@ -218,29 +283,51 @@
                                         <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Orden</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                                         </div>
-                                        <form onsubmit="">
+                                        <form action="order" method="POST">
+                                        <input type="hidden" name="action" value="updateOrder">
+                                        <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($order['id']); ?>">
+                                        <input type="hidden" name="order_status_id" value="<?= htmlspecialchars($order['order_status_id']); ?>">
                                         <div class="modal-body">
                                           <div class="mb-3">
                                             <label for="status" class="form-label">Estado de Orden</label>
-                                              <select id="status" name="status" class="form-select">
-                                                <option value="1">Pendiente de pago</option>
-                                                <option value="2">Pagada</option>
-                                                <option value="3">Enviada</option>
-                                                <option value="4">Abandonado</option>
-                                                <option value="5">Pendiene de enviar</option>
-                                                <option value="6"Cancelada></option>
+                                              <select id="status" name="order_status_id" class="form-select">
+                                              <option value="1" <?= $order['order_status_id'] == 1 ? 'selected' : ''; ?>>Pendiente de pago</option>
+                                              <option value="2" <?= $order['order_status_id'] == 2 ? 'selected' : ''; ?>>Pagada</option>
+                                              <option value="3" <?= $order['order_status_id'] == 3 ? 'selected' : ''; ?>>Enviada</option>
+                                              <option value="4" <?= $order['order_status_id'] == 4 ? 'selected' : ''; ?>>Abandonada</option>
+                                              <option value="5" <?= $order['order_status_id'] == 5 ? 'selected' : ''; ?>>Pendiente de enviar</option>
+                                              <option value="6" <?= $order['order_status_id'] == 6 ? 'selected' : ''; ?>>Cancelada</option>
                                             </select>
                                           </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Aceptar</button>
                                         </div>
                                       </form>
                                     </div>
                                   </div>
                                 </div>   
-                                <a href="<?= BASE_PATH ?>order_details" class="btn btn-sm btn-light-success me-1"><i class="feather icon-eye"></i></a> 
 
-                                <a href="#" onclick="remove(<?= $client['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                                <a href="<?= BASE_PATH ?>order_details/<?= $order['id'] ?? 0 ?>" class="btn btn-sm btn-light-success me-1">
+                                  <i class="feather icon-eye"></i>
+                                </a>
+
+                                <form action="order" method="POST" style="display: inline;">
+                                  <input type="hidden" name="action" value="deleteOrder">
+                                  <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
+                                  <input type="hidden" name="id" value="<?= htmlspecialchars($order['id']); ?>">
+
+                                  <button type="submit" class="btn btn-sm btn-light-danger" 
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este elemento?')">
+                                    <i class="feather icon-trash-2"></i>
+                                  </button>
+                                </form>
                             </td>
                         </tr>
+                      <?php endforeach; ?>
                     </tbody>
                   </table>
                 </div>

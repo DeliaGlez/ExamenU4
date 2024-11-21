@@ -1,5 +1,38 @@
 <?php 
   include_once "../../app/config.php";
+  include_once "../../app/OrderController.php";
+  include_once "../../app/LevelController.php";
+
+  if(!isset($_SESSION['user_data'])){
+    header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
+    exit;
+  }
+  else{
+    $orderController = new OrderController();
+    $levelController = new LevelController();
+    
+    $link = $_SERVER['REQUEST_URI'];
+    $link_array = explode('/', $link);
+    $orderId = end($link_array);
+
+    
+    $orderData = $orderController->getOrder($orderId);
+    $order = $orderData['data'];
+    if (empty($order)) {
+      header('Location: ' .BASE_PATH. 'orders');
+    exit;
+    }
+    
+    if (!empty($order['client'])) {
+      // Obtener el nivel del cliente
+      $levelData = $levelController->getLevel($order['client']['level_id']);
+      $level = $levelData['data'] ?? null;
+    }
+    
+
+    
+
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,59 +89,61 @@
                 <h5>Datos De la Orden</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="">
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
+                <ul class="">
+                <ul class="">
+                  <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <p class="mb-1 text-muted">Folio</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">61274</p>
-                                </div>
                             </div>
-                            </li>
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <p class="mb-0"><?= htmlspecialchars($order['folio'] ?? 'Información no existente') ?></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <p class="mb-1 text-muted">Total</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">$4,000</p>
-                                </div>
                             </div>
-                            </li>
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <p class="mb-0">$<?= isset($order['total']) ? number_format($order['total'], 2) : '0.00' ?></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <p class="mb-1 text-muted">Está pagado</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Si</p>
-                                </div>
                             </div>
-                            </li>
-
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <p class="mb-0"><?= isset($order['is_paid']) && $order['is_paid'] ? 'Sí' : 'No' ?></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <p class="mb-1 text-muted">Estado</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Enviado</p>
-                                </div>
                             </div>
-                            </li>
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <p class="mb-0"><?= htmlspecialchars($order['order_status']['name'] ?? 'Información no existente') ?></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <p class="mb-1 text-muted">Tipo de Pago</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Tarjeta</p>
-                                </div>
                             </div>
-                        </li>
-                    </ul>
+                            <div class="col-md-6">
+                                <p class="mb-0"><?= htmlspecialchars($order['payment_type']['name'] ?? 'Información no existente') ?></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
                 </div>
             </div> 
             
@@ -117,6 +152,7 @@
                 <h5>Datos Del Cliente</h5>
                 </div>
                 <div class="card-body">
+                <?php if (!empty($order['client'])): ?>
                     <ul class="">
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
@@ -124,7 +160,7 @@
                                 <p class="mb-1 text-muted">Nombre</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">pepe</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['client']['name']) ?></p>
                                 </div>
                             </div>
                             </li>
@@ -134,7 +170,7 @@
                                 <p class="mb-1 text-muted">Correo</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">pepe@gmail.com</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['client']['email']) ?></p>
                                 </div>
                             </div>
                             </li>
@@ -144,7 +180,7 @@
                                 <p class="mb-1 text-muted">Celular</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">6121234567</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['client']['phone_number']) ?></p>
                                 </div>
                             </div>
                             </li>
@@ -155,7 +191,7 @@
                                 <p class="mb-1 text-muted">Está suscrito</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">No</p>
+                                <p class="mb-0"><?= $order['client']['is_suscribed'] ? 'Sí' : 'No' ?></p>
                                 </div>
                             </div>
                             </li>
@@ -165,11 +201,14 @@
                                 <p class="mb-1 text-muted">Nivel</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">VIP</p>
+                                <?= !empty($level) ? htmlspecialchars($level['name']) : 'Nivel no encontrado' ?>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php else: ?>
+                    <p class="text-muted">Información del cliente no existente.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -178,6 +217,7 @@
                 <h5>Dirección de envío</h5>
                 </div>
                 <div class="card-body">
+                <?php if (!empty($order['address'])): ?>
                     <ul class="">
                         <li class="list-group-item px-0 pt-0">
                         <div class="row">
@@ -185,7 +225,7 @@
                             <p class="mb-1 text-muted">Nombre</p>
                             </div>
                             <div class="col-md-6">
-                            <p class="mb-0">pepe</p>
+                            <p class="mb-0"><?= htmlspecialchars($order['address']['first_name']? : 'N/A') ?></p>
                             </div>
                         </div>
                         <div class="row">
@@ -193,7 +233,7 @@
                             <p class="mb-1 text-muted">Apellido</p>
                             </div>
                             <div class="col-md-6">
-                            <p class="mb-0">Sech</p>
+                            <p class="mb-0"><?= htmlspecialchars($order['address']['last_name']? : 'N/A') ?></p>
                             </div>
                         </div>
                         </li>
@@ -203,7 +243,7 @@
                             <p class="mb-1 text-muted">Calle y número</p>
                             </div>
                             <div class="col-md-6">
-                            <p class="mb-0">chametla #123</p>
+                            <p class="mb-0"><?= htmlspecialchars($order['address']['street_and_use_number']? : 'N/A') ?></p>
                             </div>
                         </div>
                         </li>
@@ -213,7 +253,7 @@
                             <p class="mb-1 text-muted">Apartamento</p>
                             </div>
                             <div class="col-md-6">
-                            <p class="mb-0">512</p>
+                            <p class="mb-0"><?= htmlspecialchars($order['address']['apartment']? : 'N/A') ?></p>
                             </div>
                         </div>
                         </li>
@@ -224,7 +264,7 @@
                             <p class="mb-1 text-muted">Código postal</p>
                             </div>
                             <div class="col-md-6">
-                            <p class="mb-0">23045</p>
+                            <p class="mb-0"><?= htmlspecialchars($order['address']['postal_code']? : 'N/A') ?></p>
                             </div>
                         </div>
                         </li>
@@ -234,7 +274,7 @@
                                 <p class="mb-1 text-muted">Ciudad</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">La Paz</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['address']['city']? : 'N/A') ?></p>
                                 </div>
                             </div>
                         </li>
@@ -244,7 +284,7 @@
                                 <p class="mb-1 text-muted">Estado</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">BCS</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['address']['province']? : 'N/A') ?></p>
                                 </div>
                             </div>
                         </li>
@@ -254,7 +294,7 @@
                                 <p class="mb-1 text-muted">Celular</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">6121234567</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['address']['phone_number']? : 'N/A') ?></p>
                                 </div>
                             </div>
                         </li>
@@ -264,19 +304,23 @@
                                 <p class="mb-1 text-muted">Es dirección de facturación</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">No</p>
+                                <p class="mb-0"><?= $order['address']['is_billing_address'] ? 'Sí' : 'No' ?></p>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php else: ?>
+                    <p class="text-muted">Información de la dirección no existente.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                <h5>Cupón Usado (En caso de Usarse)</h5>
+                <h5>Cupón Usado </h5>
                 </div>
                 <div class="card-body">
+                <?php if (!empty($order['coupon'])): ?>
                     <ul class="">
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
@@ -284,7 +328,7 @@
                                 <p class="mb-1 text-muted">Nombre de cupón</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">10off</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['coupon']['name']) ?></p>
                                 </div>
                             </div>
                             </li>
@@ -294,7 +338,7 @@
                                 <p class="mb-1 text-muted">Código</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">10off2024</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['coupon']['code']) ?></p>
                                 </div>
                             </div>
                             </li>
@@ -304,32 +348,23 @@
                                 <p class="mb-1 text-muted">Porcentaje de descuento</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">10%</p>
+                                <p class="mb-0"><?= htmlspecialchars($order['coupon']['percentage_discount'] ?? 'N/A') ?>%</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                <p class="mb-1 text-muted">Monto de descuento</p>
+                                </div>
+                                <div class="col-md-6">
+                                <p class="mb-0">$<?= htmlspecialchars($order['coupon']['amount_discount'] ?? 'N/A') ?></p>
                                 </div>
                             </div>
                             </li>
 
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Está suscrito</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">No</p>
-                                </div>
-                            </div>
-                            </li>
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Nivel</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">VIP</p>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
+                    <?php else: ?>
+                    <p class="text-muted">Información del cupón no existente.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -351,17 +386,26 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
-                        </td>
-                        <td>Descripción del producto</td>
-                        <td>271204</td>
-                        <td>100 gramos</td>
-                        <td>Disponible</td>
-                        <td>$1,000</td>
-                      </tr>
+                        <?php if (!empty($order['presentations'])): ?>
+                            <?php foreach ($order['presentations'] as $presentation): ?>
+                                <tr>
+                                    <td>
+                                        <img src="<?= BASE_PATH ?>assets/images/products/<?= htmlspecialchars($presentation['cover']) ?>" alt="Imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                    </td>
+                                    <td><?= htmlspecialchars($presentation['description']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['code']) ?></td>
+                                    <td><?= htmlspecialchars($presentation['weight_in_grams']) ?> gramos</td>
+                                    <td><?= htmlspecialchars($presentation['status']) ?></td>
+                                    <td>$<?= number_format($presentation['current_price']['amount'], 2) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="text-center">No hay productos comprados.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
+
                   </table>
                 </div>
               </div>
