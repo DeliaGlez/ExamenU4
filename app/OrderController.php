@@ -55,11 +55,13 @@ class OrderController
             'total' => $total,
             'is_paid' => $is_paid,
             'client_id' => $client_id,
-            'address_id' => $address_id,
             'order_status_id' => $order_status_id,
             'payment_type_id' => $payment_type_id,
             
         ];
+        if (!empty($address_id)) { 
+            $postFields['address_id'] = $address_id;
+        }
         if (!empty($coupon_id)) { 
             $postFields['coupon_id'] = $coupon_id;
         }
