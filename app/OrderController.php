@@ -175,7 +175,7 @@ class OrderController
         $curl = curl_init();
         $postFields = [
             'id' => $idOrder,
-            '$order_status_id' => $order_status_id,
+            'order_status_id' => $order_status_id,
         ];
     
         $postData = http_build_query($postFields);
