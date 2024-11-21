@@ -113,7 +113,7 @@
                             <i class="feather icon-edit"></i>
                           </a>
                           <a href="<?= BASE_PATH ?>tags_products/<?= htmlspecialchars($tag['id']) ?>" class="btn btn-sm btn-light-info me-1"><i class="feather icon-eye"></i></a>
-                          <a href="" onclick="remove(<?= $tag['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                          <a href="#" onclick="remove(<?= $tag['id'] ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                         </td>
                       </tr>
                         <?php endforeach; ?>
