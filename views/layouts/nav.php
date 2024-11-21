@@ -1,5 +1,11 @@
 <?php 
   include_once __DIR__ . "/../../app/config.php"; 
+  include_once __DIR__ . "/../../app/UserController.php"; 
+
+  $userController = new UserController();
+
+    $profileData = $userController->getUsers();
+    $users = $profileData['data'];
 ?>
 
 
@@ -52,7 +58,7 @@
         data-bs-auto-close="outside"
         aria-expanded="false"
       >
-        <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
+        <img src="<?= $user['avatar']?>" alt="user-image" class="user-avtar" />
       </a>
       <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
         <div class="dropdown-header d-flex align-items-center justify-content-between">
@@ -64,11 +70,11 @@
               <li class="list-group-item">
                 <div class="d-flex align-items-center">
                   <div class="flex-shrink-0">
-                    <img src="<?= BASE_PATH ?>assets/images/user/avatar-2.jpg" alt="user-image" class="wid-50 rounded-circle" />
+                    <img src="<?= $user['avatar']?>" alt="user-image" class="wid-50 rounded-circle" />
                   </div>
                   <div class="flex-grow-1 mx-3">
-                    <h5 class="mb-0">Carson Darrin</h5>
-                    <a class="link-primary" href="mailto:carson.darrin@company.io">carson.darrin@company.io</a>
+                    <h5 class="mb-0"><?= $user['name'] . ' ' . $user['lastname'] ?></h5>
+                    <a class="link-primary" href=""><?= $user['email']?></a>
                   </div>
                   <span class="badge bg-primary">PRO</span>
                 </div>

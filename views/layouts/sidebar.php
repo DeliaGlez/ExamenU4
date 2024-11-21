@@ -95,48 +95,6 @@
             </li>
           </ul>
         </div>
-        <div class="card pc-user-card">
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="flex-shrink-0">
-                <img src="<?= BASE_PATH ?>assets/images/user/avatar-1.jpg" alt="user-image" class="user-avtar wid-45 rounded-circle" />
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <div class="dropdown">
-                  <a href="#" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
-                    <div class="d-flex align-items-center">
-                      <div class="flex-grow-1 me-2">
-                        <h6 class="mb-0">Jonh Smith</h6>
-                        <small>Administrator</small>
-                      </div>
-                      <div class="flex-shrink-0">
-                        <div class="btn btn-icon btn-link-secondary avtar">
-                          <i class="ph-duotone ph-windows-logo"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                  <div class="dropdown-menu">
-                    <ul>
-                      <li>
-                        <a class="pc-user-links" href="<?= BASE_PATH ?>profile">
-                          <i class="ph-duotone ph-user"></i>
-                          <span>Prefil de Usuario</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a class="pc-user-links" href="<?= BASE_PATH ?>">
-                          <i class="ph-duotone ph-power"></i>
-                          <span>Cerrar Sesión</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
     <!-- [ Sidebar Menu ] end -->
