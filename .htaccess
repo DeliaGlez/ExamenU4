@@ -41,3 +41,6 @@ RewriteRule ^brand?$ app/BrandController.php
 RewriteRule ^category?$ app/CategoryController.php
 RewriteRule ^tag?$ app/TagController.php
 RewriteRule ^coupon?$ app/CouponController.php
+RewriteRule ^order?$ app/OrderController.php
+RewriteRule ^presentation?$ app/PresentationController.php
+RewriteRule ^product?$ app/ProductController.php
