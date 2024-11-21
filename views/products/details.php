@@ -287,7 +287,7 @@
                           >
                           <i class="feather icon-edit"></i>
                           </a>
-                          <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
+                          <a href="#" onclick="remove(<?= $presentations['id'] ?>, <?= $products['id']  ?>)" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                           <a href="" class="btn btn-sm btn-light-warning me-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="feather icon-book-open"></i>
                           </a>
                           <div
@@ -353,6 +353,12 @@
         <!-- [ Main Content ] end -->
       </div>
     </div>
+    <form id="delete-form" action="presentation" method="POST">
+      <input type="hidden" name="action" value="deletePresentation" />
+      <input type="hidden" id="delete-presentation-id" name="id" />
+      <input type="hidden" id="delete-product-id" name="product_id" />
+      <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
+    </form>
     <!-- [ Editar  ] end -->                       
     <div
       class="modal fade"
@@ -622,7 +628,29 @@
         });
       });
     </script>
-    
+    <script>
+      function remove(presentationId, productId) {
+        console.log("Presentacion ID:", presentationId, "Product ID:", productId); //pruebas
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this address!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // Actualiza los valores en el formulario
+                document.getElementById("delete-presentation-id").value = presentationId;
+                document.getElementById("delete-product-id").value = productId;
+
+                // Enviar el formulario
+                document.getElementById("delete-form").submit();
+            }
+        });
+    }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <?php 
 
       include "../layouts/modals.php";
