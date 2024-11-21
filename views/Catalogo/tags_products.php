@@ -67,12 +67,12 @@
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Home</a></li>
                   <li class="breadcrumb-item"><a href="">Etiquetas</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Productos de la Etiqueta Seleccionada</li>
+                  <li class="breadcrumb-item" aria-current="page">Productos de <?= htmlspecialchars($tag['name']) ?></li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Productos de la Etiqueta Seleccionada</h2>
+                  <h2 class="mb-0">Productos de <?= htmlspecialchars($tag['name']) ?></h2>
                 </div>
               </div>
             </div>
@@ -87,12 +87,12 @@
                   <div class="col-sm-6 col-xl-4">
                     <div class="card product-card">
                       <div class="card-img-top">
-                        <a href="<?= BASE_PATH ?>products/1">
+                        <a href="<?= BASE_PATH ?>products/<?= htmlspecialchars($product['slug']) ?>">
                           <img src="<?= htmlspecialchars($product['cover']) ?>" alt="image" class="img-prod img-fluid" />
                         </a>
                       </div>
                       <div class="card-body">
-                        <a href="<?= BASE_PATH ?>products/1">
+                        <a href="<?= BASE_PATH ?>products/<?= htmlspecialchars($product['slug']) ?>">
                           <p class="prod-content mb-0 text-muted"><?= htmlspecialchars($product['name'] ?? 'N/A') ?></p>
                         </a>
                         <div class="d-flex align-items-center justify-content-between mt-2 mb-3 flex-wrap gap-1">

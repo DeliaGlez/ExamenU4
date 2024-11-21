@@ -315,6 +315,30 @@
         });
     }
     </script>
+    </script>
+    <?php if (!empty($error_message) || isset($_GET['message'])): ?> 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const successMessage = urlParams.get('message');
+          const errorMessage = urlParams.get('error');
+
+          if (successMessage) {
+            swal("Éxito", successMessage, "success")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>category");
+              });
+          } else if (errorMessage) {
+            swal("Error", errorMessage, "error")
+              .then(() => {
+                // quita ulr clean
+                window.history.replaceState({}, document.title, "<?= BASE_PATH ?>category");
+              });
+          }
+        });
+      </script>
+    <?php endif; ?>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <?php 
 
