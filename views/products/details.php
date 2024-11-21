@@ -117,14 +117,14 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <h4 class="my-3"><?= htmlspecialchars($products['name']) ?></h4>
-                    <h5>(Cambiar a Marca Del Producto)</h5>
-                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500"><?= htmlspecialchars($products['description']) ?></h6>
+                    <h4 class="my-3">Nombre del Producto: <?= htmlspecialchars($products['name']) ?></h4>
+                    <h5>Marca: <?= htmlspecialchars($products['brand']['name']) ?></h5>
+                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500">Descripción: <?= htmlspecialchars($products['description']) ?></h6>
                     <div class="mb-3 row">
                       
                     </div>
                     <h2 class="mb-4"
-                      ><b>$299.00</b>
+                      ><b></b>
                     </h2>
                   </div>
                 </div>
@@ -176,9 +176,7 @@
                   <div class="tab-pane show active" id="ecomtab-1" role="tabpanel" aria-labelledby="ecomtab-tab-1">
                     <div class="table-responsive">
                       <p class="text-muted">
-                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
-                        unchanged. It was popularized in the 1960s with the release of Lestrade sheets containing Lorem Ipsum passages, and
-                        more recently with desktop publishing software like PageMaker including versions of Lorem Ipsum.
+                      <?= htmlspecialchars($products['features']) ?>
                       </p>
                     </div>
                   </div>
@@ -195,11 +193,13 @@
                               </tr>
                             </thead>
                             <tbody>
+                            <?php foreach ($products['tags'] as $tags): ?>
                               <tr>
-                                <td>Apple</td>
-                                <td>apple</td>
-                                <td>Prdouctos de la marca apple</td>
+                                <td><?= htmlspecialchars($tags['name'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($tags['slug'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($tags['description'] ?? 'N/A') ?></td>
                               </tr>
+                            <?php endforeach; ?>
                             </tbody>
                           </table>
                         </div>
@@ -217,11 +217,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Apple</td>
-                            <td>apple</td>
-                            <td>Prdouctos de la Categoría deportivo</td>
-                          </tr>
+                          <?php foreach ($products['categories'] as $categories): ?>
+                            <tr>
+                              <td><?= htmlspecialchars($categories['name'] ?? 'N/A') ?></td>
+                              <td><?= htmlspecialchars($categories['slug'] ?? 'N/A') ?></td>
+                              <td><?= htmlspecialchars($categories['description'] ?? 'N/A') ?></td>
+                            </tr>
+                          <?php endforeach; ?>
                         </tbody>
                       </table>
                     </div>
