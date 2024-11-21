@@ -2,6 +2,7 @@
   include_once "../../app/config.php";
   include_once "../../app/AuthController.php";
   include_once "../../app/ProductController.php";
+  include_once "../../app/PresentationController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
@@ -20,6 +21,7 @@
 
     
     $products = $productData ['data'];
+    //var_dump($products);
     $user = $profileData['data'];
     
   }
@@ -238,72 +240,8 @@
                   <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Agregar Presentación
                   </button>
-                  <div
-                    class="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"
-                            ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
-                          >
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                        </div>
-                        <form onsubmit="return validarFormulario()">
-                          <div class="modal-body">
-                            <div class="mb-3">
-                              <label class="form-label">Descripción</label>
-                              <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Código</label>
-                              <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Peso en Gramos</label>
-                              <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Estado</label>
-                              <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Subir Imagen de Perfil</label>
-                              <input type="file" class="form-control" name="cover" id="cover" accept="image/*" required/>
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock</label>
-                              <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock Mínimo</label>
-                              <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Stock Máximo</label>
-                              <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
-                            </div>
-                            <div class="mb-3">
-                              <label class="form-label">Precio</label>
-                              <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-
               <div class="card-body shadow border-0">
                 <div class="table-responsive">
                   <table id="report-table" class="table table-bordered table-striped mb-0">
@@ -322,80 +260,22 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($products['presentations'] as $presentations): ?>          
                       <tr>
                         <td>
-                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                          <img src="<?= htmlspecialchars($presentations['cover'] ?? 'N/A') ?>" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
                         </td>
-                        <td>Descripción del producto</td>
-                        <td>271204</td>
-                        <td>100 gramos</td>
-                        <td>Disponible</td>
-                        <td>$1,000</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>50</td>
+                        <td><?= htmlspecialchars($presentations['description'] ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($presentations['code'] ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($presentations['weight_in_grams'] ?? 'N/A') ?> gramos</td>
+                        <td><?= htmlspecialchars($presentations['status'] ?? 'N/A') ?></td>
+                        <td><?= isset($presentations['price'][0]['amount']) ? htmlspecialchars($presentations['price'][0]['amount']) : 'N/A' ?>$</td>
+                        <td><?= htmlspecialchars($presentations['stock'] ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($presentations['stock_min'] ?? 'N/A') ?></td>
+                        <td><?= htmlspecialchars($presentations['stock_max'] ?? 'N/A') ?></td>
                         <td>
                           <a href="" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"><i class="feather icon-edit"></i>
                           </a>
-                          <div
-                            class="modal fade"
-                            id="exampleModal1"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel1"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel"
-                                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Presentación</h5
-                                  >
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                                </div>
-                                <form onsubmit="return validarFormulario()">
-                                  <div class="modal-body">
-                                    <div class="mb-3">
-                                      <label class="form-label">Descripción</label>
-                                      <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Código</label>
-                                      <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Peso en Gramos</label>
-                                      <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Estado</label>
-                                      <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Stock</label>
-                                      <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Stock Mínimo</label>
-                                      <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Stock Máximo</label>
-                                      <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
-                                    </div>
-                                    <div class="mb-3">
-                                      <label class="form-label">Precio</label>
-                                      <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
                           <a href="" class="btn btn-sm btn-light-danger"><i class="feather icon-trash-2"></i></a>
                           <a href="" class="btn btn-sm btn-light-warning me-1" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i class="feather icon-book-open"></i>
                           </a>
@@ -422,24 +302,26 @@
                                         <th>Folio</th>
                                         <th>Total</th>
                                         <th>Está Pagado</th>
-                                        <th>Cliente</th>
-                                        <th>Dirección</th>
+                                        <th>ID Cliente</th>
+                                        <th>ID Dirección</th>
                                         <th>Estado de la Orden</th>
                                         <th>Método de Pago</th>
-                                        <th>Cupón</th>
+                                        <th>Cupón ID</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <td>1</td>
-                                        <td>$1,000</td>
-                                        <td>Si</td>
-                                        <td>Juan Perez</td>
-                                        <td>Chametla</td>
-                                        <td>Enviado</td>
-                                        <td>Tarjeta</td>
-                                        <td>Promo10off</td>
-                                      </tr>
+                                    <?php foreach ($presentations['orders'] as $order): ?>
+                                          <tr>
+                                              <td><?= htmlspecialchars($order['folio'] ?? 'N/A') ?></td>
+                                              <td><?= isset($order['total']) ? '$' . number_format($order['total'], 2) : 'N/A' ?></td>
+                                              <td><?= isset($order['is_paid']) ? ($order['is_paid'] ? 'Sí' : 'No') : 'N/A' ?></td>
+                                              <td><?= htmlspecialchars($order['client_id'] ?? 'N/A') ?></td>
+                                              <td><?= htmlspecialchars($order['address_id'] ?? 'N/A') ?></td>
+                                              <td><?= htmlspecialchars($order['order_status_id'] ?? 'N/A') ?></td>
+                                              <td><?= htmlspecialchars($order['payment_type_id'] ?? 'N/A') ?></td>
+                                              <td><?= htmlspecialchars($order['coupon_id'] ?? 'N/A') ?></td>
+                                          </tr>
+                                      <?php endforeach; ?>
                                     </tbody>
                                   </table>
                                 </div>
@@ -447,21 +329,147 @@
                             </div>
                           </div>
                         </td>
+                      <?php endforeach; ?>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            
-
           </div>
           <!-- [ sample-page ] end -->
         </div>
         <!-- [ Main Content ] end -->
       </div>
     </div>
-    
+    <!-- [ Editar  ] end -->                       
+    <div
+      class="modal fade"
+      id="exampleModal1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"
+              ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Presentación</h5
+            >
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+          </div>
+          <form onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="description" name="description"/>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Código</label>
+                <input type="text" class="form-control" id="code" name="code" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Peso en Gramos</label>
+                <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Estado</label>
+                <input type="text" class="form-control" id="status" name="status" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-control" id="stock" name="stock" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock Mínimo</label>
+                <input type="number" class="form-control" id="stock_min" name="stock_min" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock Máximo</label>
+                <input type="number" class="form-control" id="stock_max" name="stock_max" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Precio</label>
+                <input type="number" class="form-control" id="amount" name="amount"  />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>                       
+    <!-- [ Agregar  ] end -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"
+              ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Agregar Presentación</h5
+            >
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+          </div>
+          <form method="POST" action="presentation" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Ingresar Descripción" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Código</label>
+                <input type="text" class="form-control" id="code" name="code" placeholder="Ingresar Código" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Peso en Gramos</label>
+                <input type="number" class="form-control" id="weight_in_grams" name="weight_in_grams" placeholder="Ingresar Peso en Gramos" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Estado</label>
+                <input type="text" class="form-control" id="status" name="status" placeholder="Ingresar Estado" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Subir Imagen de Perfil</label>
+                <input type="file" class="form-control" name="cover" id="cover" accept="image/*" required/>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingresar Cantidad de Stock" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock Mínimo</label>
+                <input type="number" class="form-control" id="stock_min" name="stock_min" placeholder="Ingresar Stock Mínimo" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Stock Máximo</label>
+                <input type="number" class="form-control" id="stock_max" name="stock_max" placeholder="Ingresar Stock Máximo" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Precio</label>
+                <input type="number" class="form-control" id="amount" name="amount" placeholder="Ingresar Precio del Producto" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-light-primary">Guardar cambios</button>
+            </div>
+              <input type="hidden" name="action" value="storePresentation" />
+              <input type="hidden" id="product_id" name="product_id" value="<?= $products['id'] ?>" />
+              <input type="hidden" id="product_slug" name="product_slug" value="<?= $products['slug'] ?>" />
+              <input type="text" name="global_token" value=<?= $_SESSION['global_token'] ?> hidden>
+          </form>
+        </div>
+      </div>
+    </div>
     <?php 
 
       include "../layouts/footer.php";
