@@ -176,7 +176,7 @@
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form method="POST" action="client" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+          <form method="POST" action="product" enctype="multipart/form-data">
             <div class="modal-body">
               <div class="mb-3">
                 <label class="form-label">Nombre</label>
@@ -230,19 +230,15 @@
                   </select>
               </div>
               <div class="mb-3">
-                <label class="form-label">Agregar Imagen</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  name="cover"
-                  id="cover"
-                  accept="image/*"
-                />
-              </div>
-              <div class="mb-3">
                 <label class="form-label">Categoría</label>
                 
-                <select name="categories[]" id="categoria_original_edit" class="form-select" multiple></select>
+                <select name="categories[]" id="categoria_original_edit" class="form-select" >
+                  <?php foreach ($categories as $category): ?>
+                      <option value="<?= htmlspecialchars($category['id']) ?>">
+                          <?= htmlspecialchars($category['name']) ?>
+                      </option>
+                  <?php endforeach; ?>
+                </select>
 
                 <div id="otra_categoria_edit">
                 </div>
@@ -254,8 +250,13 @@
               <div class="mb-3">
                 <label class="form-label">Etiquetas</label>
                 
-                <select name="tags[]" id="etiqueta_original_edit" class="form-select" multiple></select>
-
+                <select name="tags[]" id="etiqueta_original_edit" class="form-select" >
+                  <?php foreach ($tags as $tag): ?>
+                      <option value="<?= htmlspecialchars($tag['id']) ?>">
+                          <?= htmlspecialchars($tag['name']) ?>
+                      </option>
+                  <?php endforeach; ?>
+                </select>
 
                 <div id="otra_etiqueta_edit">
                 </div>
@@ -270,6 +271,8 @@
               <button type="submit" class="btn btn-light-primary">Actualizar Producto</button>
             </div>
             <input type="hidden" id="id" name="id" value="<?= $product['id'] ?>" />
+            <input type="hidden" name="action" value="updateProduct">
+            <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
           </form>
         </div>
       </div>
@@ -488,55 +491,65 @@
 
 
     <script type="text/javascript">
+      let categoryCount = 0;
       function addCategoryEdit() {
-        
-        let category = document.getElementById('categoria_original_edit').innerHTML
+        // Obtener las opciones del select original
+        const originalOptions = document.getElementById('categoria_original_edit').innerHTML;
 
-         
-        let new_code = '<select name="category[]"  class="form-select">'
-        new_code += category; 
-        new_code += '</select>'
+        // Crear un nuevo select independiente
+        const newSelect = document.createElement('select');
+        newSelect.name = "categories[]";
+        newSelect.className = "form-select";
 
-        var nuevoElementoHTML = document.getElementById('otra_categoria_edit').innerHTML + new_code ; 
-        
-        document.getElementById("otra_categoria_edit").innerHTML = nuevoElementoHTML;
+        // Generar un id único para el nuevo select
+        categoryCount++;
+        newSelect.id = "categoria_original_edit_" + categoryCount;
 
+        newSelect.innerHTML = originalOptions;
+
+        // Agregar el nuevo select al contenedor
+        document.getElementById('otra_categoria_edit').appendChild(newSelect);
       }
     </script>
 
     <script type="text/javascript">
       function addTagEdit() {
+        let tagCount = 0;
+        // Obtener las opciones del select original
+        const originalOptions = document.getElementById('etiqueta_original_edit').innerHTML;
+
+        // Crear un nuevo select independiente
+        const newSelect = document.createElement('select');
+        newSelect.name = "tags[]";
+        newSelect.className = "form-select";
+
+        // Generar un id único para el nuevo select
+        tagCount++;
+        newSelect.id = "etiqueta_original_edit_" + tagCount;
         
-        let tag = document.getElementById('etiqueta_original_edit').innerHTML
+        newSelect.innerHTML = originalOptions;
 
-         
-        let new_code = '<select name="tag[]"  class="form-select">'
-        new_code += tag; 
-        new_code += '</select>'
-
-        var nuevoElementoHTML = document.getElementById('otra_etiqueta_edit').innerHTML + new_code ; 
-        
-        document.getElementById("otra_etiqueta_edit").innerHTML = nuevoElementoHTML;
-
+        // Agregar el nuevo select al contenedor
+        document.getElementById('otra_etiqueta_edit').appendChild(newSelect);
       }
     </script>
 
 
 
-  <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const editButtons = document.querySelectorAll('.btn-light-success');
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.btn-light-success');
 
-        editButtons.forEach(button => {
-          button.addEventListener('click', function() {
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
             const id = button.getAttribute('data-id');
             const name = button.getAttribute('data-name');
             const description = button.getAttribute('data-description');
             const slug = button.getAttribute('data-slug');
-            const features = button.getAttribute('data-features'); 
+            const features = button.getAttribute('data-features');
             const brand = button.getAttribute('data-brand');
-            const categories = JSON.parse(button.getAttribute('data-categories') || '[]'); // Parse JSON
-            const tags = JSON.parse(button.getAttribute('data-tags') || '[]'); // Parse JSON
+            let categories = JSON.parse(button.getAttribute('data-categories') || '[]');
+            let tags = JSON.parse(button.getAttribute('data-tags') || '[]');
 
             console.log(id, name, description, slug, features, brand, categories, tags);
 
@@ -547,32 +560,55 @@
             document.getElementById('features').value = features;
             document.getElementById('brand_id').value = brand;
 
-            // Llenar el select de categorías
-            const categorySelect = document.getElementById('categoria_original_edit');
-            categorySelect.innerHTML = ''; // Limpiar las opciones actuales
+            if (!Array.isArray(categories)) {
+              categories = [categories];
+            }
+            if (!Array.isArray(tags)) {
+              tags = [tags];
+            }
 
+            // Llenar los select de categorias
+            const categoryContainer = document.getElementById('otra_categoria_edit');
+            categoryContainer.innerHTML = ''; // Limpiar los contenedores previos
             categories.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.textContent = category.name;
-                
-                categorySelect.appendChild(option);
-            });
-            // Llenar el select de categorías
-            const tagSelect = document.getElementById('etiqueta_original_edit');
-            tagSelect.innerHTML = ''; // Limpiar las opciones actuales
+                const categorySelect = document.createElement('select');
+                categorySelect.name = "categories[]";
+                categorySelect.className = "form-select";
 
-            tags.forEach(tag => {
-                const option = document.createElement('option');
-                option.value = tag.id;
-                option.textContent = tag.name;
-                
-                tagSelect.appendChild(option);
+                // Copiar las opciones disponibles
+                const originalOptions = document.getElementById('categoria_original_edit').innerHTML;
+                categorySelect.innerHTML = originalOptions;
+
+                // Seleccionar la etiqueta correspondiente
+                categorySelect.value = category.id;
+
+                // Agregar el nuevo select al contenedor
+                categoryContainer.appendChild(categorySelect);
             });
-          });
+
+            // Llenar los select de etiquetas
+            const tagContainer = document.getElementById('otra_etiqueta_edit');
+            tagContainer.innerHTML = ''; // Limpiar los contenedores previos
+            tags.forEach(tag => {
+                const tagSelect = document.createElement('select');
+                tagSelect.name = "tags[]";
+                tagSelect.className = "form-select";
+
+                // Copiar las opciones disponibles
+                const originalOptions = document.getElementById('etiqueta_original_edit').innerHTML;
+                tagSelect.innerHTML = originalOptions;
+
+                // Seleccionar la etiqueta correspondiente
+                tagSelect.value = tag.id;
+
+                // Agregar el nuevo select al contenedor
+                tagContainer.appendChild(tagSelect);
+            });
         });
-      });
+    });
+});
     </script>
+
     <?php 
 
       include "layouts/footer.php";
