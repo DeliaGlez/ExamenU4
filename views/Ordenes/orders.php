@@ -218,13 +218,17 @@
                                         <h5 class="modal-title" id="exampleModalLabel"><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Modificar Orden</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                                         </div>
-                                        <form onsubmit="return validarFormulario()">
+                                        <form onsubmit="">
                                         <div class="modal-body">
                                           <div class="mb-3">
-                                            <label for="is_paid" class="form-label">Estado de Orden</label>
-                                              <select id="is_paid" name="is_paid" class="form-select">
-                                                <option value="1">Completado</option>
-                                                <option value="0">(Rellenar con todos los posibles)</option>
+                                            <label for="status" class="form-label">Estado de Orden</label>
+                                              <select id="status" name="status" class="form-select">
+                                                <option value="1">Pendiente de pago</option>
+                                                <option value="2">Pagada</option>
+                                                <option value="3">Enviada</option>
+                                                <option value="4">Abandonado</option>
+                                                <option value="5">Pendiene de enviar</option>
+                                                <option value="6"Cancelada></option>
                                             </select>
                                           </div>
                                         </div>
