@@ -237,11 +237,11 @@ class ProductController
 
     public function returnToFrontAlert($data, $code){
         if (isset($data['code']) && $data['code'] === intval($code)) { // Envio del mensaje mediante url success
-            header('Location: ' . BASE_PATH . 'products?message=' . urlencode($data['message']));
+            header('Location: ' . BASE_PATH . 'home?message=' . urlencode($data['message']));
         } 
         else{
             $message = isset($data['message']) ? $data['message'] : 'Error desconocido'; 
-            header('Location: ' . BASE_PATH . 'products?error=' . urlencode($message)); 
+            header('Location: ' . BASE_PATH . 'home?error=' . urlencode($message)); 
         }
         exit;
     }
