@@ -56,17 +56,7 @@
                 <h5>Datos De la Orden</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <!-- <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">1</p>
-                                </div>
-                            </div>
-                            </li> -->
+                    <ul class="">
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
@@ -101,57 +91,50 @@
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID del Tipo de Pago</p>
+                                <p class="mb-1 text-muted">Estado</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">1</p>
+                                <p class="mb-0">Enviado</p>
                                 </div>
                             </div>
                             </li>
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID de Cupón</p>
+                                <p class="mb-1 text-muted">Tipo de Pago</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">5</p>
+                                <p class="mb-0">Tarjeta</p>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
+            </div> 
+            
+            <div class="card">
                 <div class="card-header">
                 <h5>Datos Del Cliente</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <!-- <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">4</p>
-                                </div>
-                            </div>
-                            </li> -->
+                    <ul class="">
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
                                 <p class="mb-1 text-muted">Nombre</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">Marshall Parker</p>
+                                <p class="mb-0">pepe</p>
                                 </div>
                             </div>
                             </li>
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Correo Electrónico</p>
+                                <p class="mb-1 text-muted">Correo</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">mapa_46@gmail.com</p>
+                                <p class="mb-0">pepe@gmail.com</p>
                                 </div>
                             </div>
                             </li>
@@ -161,96 +144,89 @@
                                 <p class="mb-1 text-muted">Celular</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">6127384765</p>
+                                <p class="mb-0">6121234567</p>
                                 </div>
                             </div>
                             </li>
+
                             <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Está Suscrito</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Si</p>
-                                </div>
-                            </div>
-                            </li>
-                            <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Nivel de ID</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">1</p>
-                                </div>
-                            </div>
-                        </li> 
-                    </ul>
-                </div>
-                <div class="card-header">
-                <h5>Datos de la Dirección</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <!-- <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">ID</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">4</p>
-                                </div>
-                            </div>
-                        </li> -->
-                        <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Nombre</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Marshall </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Apellido</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Parker </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Calle y Número</p>
-                                </div>
-                                <div class="col-md-6">
-                                <p class="mb-0">Calle articulo 743, 123 </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0 pt-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <p class="mb-1 text-muted">Apartamento</p>
+                                <p class="mb-1 text-muted">Está suscrito</p>
                                 </div>
                                 <div class="col-md-6">
                                 <p class="mb-0">No</p>
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item px-0 pt-0">
+                            </li>
+                            <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Código Postal</p>
+                                <p class="mb-1 text-muted">Nivel</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">21123 </p>
+                                <p class="mb-0">VIP</p>
                                 </div>
                             </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                <h5>Dirección de envío</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="">
+                        <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p class="mb-1 text-muted">Nombre</p>
+                            </div>
+                            <div class="col-md-6">
+                            <p class="mb-0">pepe</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p class="mb-1 text-muted">Apellido</p>
+                            </div>
+                            <div class="col-md-6">
+                            <p class="mb-0">Sech</p>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p class="mb-1 text-muted">Calle y número</p>
+                            </div>
+                            <div class="col-md-6">
+                            <p class="mb-0">chametla #123</p>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p class="mb-1 text-muted">Apartamento</p>
+                            </div>
+                            <div class="col-md-6">
+                            <p class="mb-0">512</p>
+                            </div>
+                        </div>
+                        </li>
+
+                        <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p class="mb-1 text-muted">Código postal</p>
+                            </div>
+                            <div class="col-md-6">
+                            <p class="mb-0">23045</p>
+                            </div>
+                        </div>
                         </li>
                         <li class="list-group-item px-0 pt-0">
                             <div class="row">
@@ -268,17 +244,17 @@
                                 <p class="mb-1 text-muted">Estado</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">Baja California Sur</p>
+                                <p class="mb-0">BCS</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Número de Celular</p>
+                                <p class="mb-1 text-muted">Celular</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">61234567</p>
+                                <p class="mb-0">6121234567</p>
                                 </div>
                             </div>
                         </li>
@@ -294,74 +270,72 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="card">
                 <div class="card-header">
-                <h5>Estado de la Orden</h5>
+                <h5>Cupón Usado (En caso de Usarse)</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0 pt-0">
+                    <ul class="">
+                            <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Pediente de pago</p>
+                                <p class="mb-1 text-muted">Nombre de cupón</p>
+                                </div>
+                                <div class="col-md-6">
+                                <p class="mb-0">10off</p>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-header">
-                <h5>Cupón Utilizado</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0 pt-0">
+                            </li>
+                            <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Nombre del Cupón</p>
+                                <p class="mb-1 text-muted">Código</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">10% off</p>
+                                <p class="mb-0">10off2024</p>
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item px-0 pt-0">
+                            </li>
+                            <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Porcentaje Descontado</p>
+                                <p class="mb-1 text-muted">Porcentaje de descuento</p>
                                 </div>
                                 <div class="col-md-6">
                                 <p class="mb-0">10%</p>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-header">
-                <h5>Método de Pago</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item px-0 pt-0">
+                            </li>
+
+                            <li class="list-group-item px-0 pt-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                <p class="mb-1 text-muted">Tipo de Pago</p>
+                                <p class="mb-1 text-muted">Está suscrito</p>
                                 </div>
                                 <div class="col-md-6">
-                                <p class="mb-0">Efectivo</p>
+                                <p class="mb-0">No</p>
+                                </div>
+                            </div>
+                            </li>
+                            <li class="list-group-item px-0 pt-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                <p class="mb-1 text-muted">Nivel</p>
+                                </div>
+                                <div class="col-md-6">
+                                <p class="mb-0">VIP</p>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>  
-        </div>
-    </div>
+            </div>
 
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow-none">
+            <div class="card">
               <div class="card-header">
-                <h5>Lista de Productos en la Orden</h5>
+                <h5>Productos comprados</h5>
               </div>
               <div class="card-body shadow border-0">
                 <div class="table-responsive">
@@ -369,31 +343,35 @@
                     <thead>
                       <tr>
                         <th class="border-top-0">Imagen</th>
-                        <th class="border-top-0">descripción</th>
+                        <th class="border-top-0">Descripción</th>
                         <th class="border-top-0">Código</th>
-                        <th class="border-top-0">Peso en gramos</th>
-                        <th class="border-top-0">Stock</th>
+                        <th class="border-top-0">Peso</th>
+                        <th class="border-top-0">Estado</th>
                         <th class="border-top-0">Precio</th>
                       </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src="" class="d-block wid-50 rounded" alt="Product images"></td>
-                            <td>desc</td>
-                            <td>Mesa12</td>
-                            <td>500</td>
-                            <td>10</td>
-                            <td>$5,000</td>
-                        </tr>
+                      <tr>
+                        <td>
+                          <img src="<?= BASE_PATH ?>assets/images/gallery-grid/img-grd-gal-11.jpg" alt="imagen" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>Descripción del producto</td>
+                        <td>271204</td>
+                        <td>100 gramos</td>
+                        <td>Disponible</td>
+                        <td>$1,000</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+
+
+    </div>
+</div>
     <!-- [ Main Content ] end -->
 
     <?php 

@@ -334,37 +334,35 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Categoría</label>
-                
+
                 <select name="category[]" id="categoria_original" class="form-select">
                   <option>Sneakers</option>
                   <option>Category 1</option>
                   <option>Category 2</option>
                 </select>
 
-                <div id="otra_categoria">
-                </div>
+                <div id="otra_categoria"></div>
 
                 <button type="button" class="btn btn-primary mb-4" onclick="addCategory()">
                   Añadir otra categoría
                 </button>
               </div>
+
               <div class="mb-3">
                 <label class="form-label">Etiquetas</label>
-                
-                <select name="category[]" id="etiqueta_original" class="form-select">
+
+                <select name="tag[]" id="etiqueta_original" class="form-select">
                   <option>Sneakers</option>
                   <option>Category 1</option>
                   <option>Category 2</option>
                 </select>
 
-                <div id="otra_etiqueta">
-                </div>
+                <div id="otra_etiqueta"></div>
 
                 <button type="button" class="btn btn-primary mb-4" onclick="addTag()">
                   Añadir otra etiqueta
                 </button>
               </div>
-            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
               <button type="submit" class="btn btn-light-primary">Actualizar Producto</button>
@@ -414,41 +412,51 @@
         }
         return true;
       }
-    </script>
+      </script>
 
-    <script type="text/javascript">
-      function addCategory() {
-        
-        let category = document.getElementById('categoria_original').innerHTML
+      <script type="text/javascript">
+        function addCategory() {
+          let categoryOptions = document.getElementById('categoria_original').innerHTML;
 
-         
-        let new_code = '<select name="category[]"  class="form-select">'
-        new_code += category; 
-        new_code += '</select>'
+          // Crear un contenedor para la categoría y el botón de eliminar
+          let newCode = `
+            <div class="d-flex align-items-center mb-2">
+              <select name="category[]" class="form-select me-2">
+                ${categoryOptions}
+              </select>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removeElement(this)">
+                Eliminar
+              </button>
+            </div>
+          `;
 
-        var nuevoElementoHTML = document.getElementById('otra_categoria').innerHTML + new_code ; 
-        
-        document.getElementById("otra_categoria").innerHTML = nuevoElementoHTML;
+          document.getElementById("otra_categoria").innerHTML += newCode;
+        }
 
-      }
-    </script>
+        function addTag() {
+          let tagOptions = document.getElementById('etiqueta_original').innerHTML;
 
-    <script type="text/javascript">
-      function addTag() {
-        
-        let tag = document.getElementById('etiqueta_original').innerHTML
+          // Crear un contenedor para la etiqueta y el botón de eliminar
+          let newCode = `
+            <div class="d-flex align-items-center mb-2">
+              <select name="tag[]" class="form-select me-2">
+                ${tagOptions}
+              </select>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removeElement(this)">
+                Eliminar
+              </button>
+            </div>
+          `;
 
-         
-        let new_code = '<select name="tag[]"  class="form-select">'
-        new_code += tag; 
-        new_code += '</select>'
+          document.getElementById("otra_etiqueta").innerHTML += newCode;
+        }
 
-        var nuevoElementoHTML = document.getElementById('otra_etiqueta').innerHTML + new_code ; 
-        
-        document.getElementById("otra_etiqueta").innerHTML = nuevoElementoHTML;
+        function removeElement(element) {
+          // Elimina el contenedor padre del botón (la fila completa)
+          element.parentElement.remove();
+        }
+      </script>
 
-      }
-    </script>
 
     <?php 
 

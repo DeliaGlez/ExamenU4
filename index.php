@@ -91,7 +91,7 @@
                 </div>
                 <div class="d-flex mt-1 justify-content-between align-items-center">
                   <div class="form-check">
-                    <input class="form-check-input input-primary" type="checkbox" id="remember" required />
+                    <input class="form-check-input input-primary" type="checkbox" id="remember"  />
                     <label class="form-check-label text-muted" for="remember">Recordarme</label>
                   </div>
                   <a href="">

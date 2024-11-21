@@ -49,6 +49,26 @@
         <!-- [ Main Content ] start -->
         <div class="row">
           <div class="col-lg-12">
+          
+              <form action="">
+                <div class="mb-3 row">
+                  <label class="col-form-label col-lg-3 col-sm-12 text-lg-end">Selector de Rango</label>
+                  <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="input-daterange input-group" id="pc-datepicker-5">
+                      <input type="date" class="form-control text-left" placeholder="Start date" name="range-start" />
+                      <span class="input-group-text">a</span>
+                      <input type="date" class="form-control text-end" placeholder="End date" name="range-end" />
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-light-primary m-0 col-form-label col-lg-2 col-sm-12">
+                  Buscar por fecha
+                  </button>
+                  <button type="button" class="btn btn-light-danger m-0 col-form-label col-lg-2 col-sm-12">
+                  Limpiar
+                  </button>
+                </div>
+              </form>
+
             <div class="card shadow-none">
               <div class="card-header">
                 <h5>Ordenes</h5>
@@ -166,10 +186,8 @@
                         <th class="border-top-0">Cliente</th>
                         <th class="border-top-0">Dirección</th>
                         <th class="border-top-0">Estado de la orden</th>
-                        <th class="border-top-0">ID del Tipo de Pago</th>
-                        <th class="border-top-0">ID del Cupón</th>
-                        <th class="border-top-0">ID del Cliente</th>
-                        <th class="border-top-0">Nombre del Cliente</th>
+                        <th class="border-top-0">Tipo de Pago</th>
+                        <th class="border-top-0">Cupón</th>
                         <th class="border-top-0">Acción</th>
                       </tr>
                     </thead>
@@ -178,13 +196,11 @@
                             <td>31824</td>
                             <td>$12,500</td>
                             <td>Si</td>
-                            <td>4</td>
+                            <td>Jose Lopez</td>
                             <td>6</td>
                             <td>Entregado</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>14</td>
-                            <td>Jose Lopez</td>
+                            <td>Tarjeta</td>
+                            <td>10off</td>
                             <td>
                                 <a href="" class="btn btn-sm btn-light-info me-1" data-bs-toggle="modal" 
                                 data-bs-target="#exampleModal1"><i class="feather icon-edit"></i></a>
