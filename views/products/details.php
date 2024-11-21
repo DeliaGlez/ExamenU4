@@ -125,9 +125,9 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <h4 class="my-3">Nombre del Producto: <?= htmlspecialchars($products['name']) ?></h4>
-                    <h5>Marca: <?= htmlspecialchars($products['brand']['name']) ?></h5>
-                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500">Descripción: <?= htmlspecialchars($products['description']) ?></h6>
+                    <h4 class="my-3">Nombre del Producto: <?= htmlspecialchars($products['name']?? 'Sin Nombre') ?></h4>
+                    <h5>Marca: <?= htmlspecialchars($products['brand']['name'] ?? 'Sin Marca') ?></h5>
+                    <h6 class="mt-4 mb-sm-3 mb-2 f-w-500">Descripción: <?= htmlspecialchars($products['description'] ?? 'Sin Descripcion') ?></h6>
                     <div class="mb-3 row">
                       
                     </div>
@@ -184,7 +184,7 @@
                   <div class="tab-pane show active" id="ecomtab-1" role="tabpanel" aria-labelledby="ecomtab-tab-1">
                     <div class="table-responsive">
                       <p class="text-muted">
-                      <?= htmlspecialchars($products['features']) ?>
+                      <?= htmlspecialchars($products['features'] ?? 'Sin Caracteristicas') ?>
                       </p>
                     </div>
                   </div>
@@ -201,11 +201,14 @@
                               </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($products['tags'] as $tags): ?>
+                            <?php 
+                            $tags = $products['tags'] ?? [];
+                            $uniqueTags = array_map("unserialize", array_unique(array_map("serialize", $tags))); 
+                            foreach ($uniqueTags as $tag): ?>
                               <tr>
-                                <td><?= htmlspecialchars($tags['name'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($tags['slug'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($tags['description'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($tag['name'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($tag['slug'] ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($tag['description'] ?? 'N/A') ?></td>
                               </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -225,11 +228,14 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <?php foreach ($products['categories'] as $categories): ?>
+                          <?php 
+                          $categories = $products['categories'] ?? [];
+                          $uniqueCategories = array_map("unserialize", array_unique(array_map("serialize", $categories))); 
+                          foreach ($uniqueCategories as $category): ?>
                             <tr>
-                              <td><?= htmlspecialchars($categories['name'] ?? 'N/A') ?></td>
-                              <td><?= htmlspecialchars($categories['slug'] ?? 'N/A') ?></td>
-                              <td><?= htmlspecialchars($categories['description'] ?? 'N/A') ?></td>
+                              <td><?= htmlspecialchars($category['name'] ?? 'N/A') ?></td>
+                              <td><?= htmlspecialchars($category['slug'] ?? 'N/A') ?></td>
+                              <td><?= htmlspecialchars($category['description'] ?? 'N/A') ?></td>
                             </tr>
                           <?php endforeach; ?>
                         </tbody>
