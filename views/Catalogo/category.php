@@ -34,6 +34,13 @@
     <!-- [Body] Start -->
 
     <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+    <?php if (!empty($error_message)): ?> 
+      <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+          swal("Error", "<?php echo htmlspecialchars($error_message); ?>", "error").then((value) => { window.location.href = '<?= BASE_PATH ?>'; });;
+        });
+      </script> 
+    <?php endif; ?>
     <?php 
       include "../layouts/sidebar.php";
     ?>
