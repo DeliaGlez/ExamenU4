@@ -2,6 +2,9 @@
   include_once "../app/config.php";
   include_once "../app/AuthController.php";
   include_once "../app/ProductController.php";
+  include_once "../app/BrandController.php";
+  include_once "../app/TagController.php";
+  include_once "../app/CategoryController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
@@ -10,10 +13,19 @@
   else{
     $authController = new AuthController();
     $productController = new ProductController();
+    $brandController = new BrandController();
+    $categoryController = new CategoryController();
+    $tagController = new TagController();
 
     $profileData = $authController->getProfile();
     $productData = $productController->getProducts();
+    $brandData = $brandController->getBrands();
+    $categoryData= $categoryController->getCategories();
+    $tagData = $tagController->getTags();
 
+    $tags = $tagData['data'];
+    $categories = $categoryData['data'];
+    $brands = $brandData['data'];
     $products = $productData ['data'];
     $user = $profileData['data'];
     
@@ -74,127 +86,6 @@
           <button type="button" class="btn btn-light-warning m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Crear Producto
           </button>
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"
-                    ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Crear Producto</h5
-                  >
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                </div>
-                <form method="POST" action="client" enctype="multipart/form-data" onsubmit="return validarFormulario()">
-                  <div class="modal-body">
-                    <div class="mb-3">
-                      <label class="form-label">Nombre</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        name="name"
-                        placeholder="Ingresar Nombre"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Slug</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="slug"
-                        name="slug"
-                        placeholder="Ingresar Slug"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Descripción</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="description"
-                        name="description"
-                        placeholder="Ingresar Descripción del Producto"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Características</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="description"
-                        name="description"
-                        placeholder="Ingresar Características del Producto"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Marca</label>
-                      <select id="is_paid" name="is_paid" class="form-select">
-                          <option value="1">Marca 1</option>
-                          <option value="0">(Rellenar con todos los posibles)</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Agregar Imagen</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        name="cover"
-                        id="cover"
-                        accept="image/*"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Categoría</label>
-                      
-                      <select name="category[]" id="categoria_original" class="form-select">
-                        <option>Sneakers</option>
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                      </select>
-
-                      <div id="otra_categoria">
-                      </div>
-
-                      <button type="button" class="btn btn-primary mb-4" onclick="addCategory()">
-                        Añadir otra categoría
-                      </button>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Etiquetas</label>
-                      
-                      <select name="category[]" id="etiqueta_original" class="form-select">
-                        <option>Sneakers</option>
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                      </select>
-
-                      <div id="otra_etiqueta">
-                      </div>
-
-                      <button type="button" class="btn btn-primary mb-4" onclick="addTag()">
-                        Añadir otra etiqueta
-                      </button>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-light-primary">Crear Producto</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
         </div>
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
@@ -206,6 +97,7 @@
                 <div class="row">
                   <?php if (!empty($products)): ?>
                     <?php foreach ($products as $product): ?>
+                      
                     <div class="col-sm-6 col-xl-4">
                       <div class="card product-card">
                         <div class="card-img-top">
@@ -224,16 +116,30 @@
                           </div>
                           <div class="d-flex">
                             <div class="flex-shrink-0">
-                              <a 
-                                href="" 
-                                class="avtar avtar-s btn-link-warning btn-prod-card" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#exampleModal1">
+                            <?php
+                              $product['categories'] = array_map("unserialize", array_unique(array_map("serialize", $product['categories'])));
+                              $product['tags'] = array_map("unserialize", array_unique(array_map("serialize", $product['tags'])));
+                            ?>
+                            <a 
+                              href="#" class="btn btn-sm btn-light-success me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                data-id="<?= htmlspecialchars($product['id']) ?>"
+                                data-name="<?= htmlspecialchars($product['name'] ?? 'N/A') ?>"
+                                data-description="<?= htmlspecialchars($product['description'] ?? 'N/A') ?>"
+                                data-slug="<?= htmlspecialchars($product['slug'] ?? 'N/A') ?>"
+                                data-features="<?= htmlspecialchars($product['features'] ?? 'N/A') ?>"
+                                data-brand="<?= htmlspecialchars($product['brand']['id'] ?? 'N/A') ?>"
+                                data-categories="<?= htmlspecialchars(json_encode(array_map(function($category) {
+                                    return ['id' => $category['id'], 'name' => $category['name']];
+                                }, $product['categories']))) ?>"
+                                data-tags="<?= htmlspecialchars(json_encode(array_map(function($tag) {
+                                    return ['id' => $tag['id'], 'name' => $tag['name']];
+                                }, $product['tags']))) ?>"
+                              >
                                 <i class="ti ti-edit f-18"></i>
                               </a>
                             </div>
                             <div class="flex-shrink-0">
-                              <a href="" class="avtar avtar-s btn-link-danger btn-prod-card" data-bs-toggle="offcanvas">
+                              <a href="" onclick="remove(<?= $product['id'] ?>)" class="avtar avtar-s btn-link-danger btn-prod-card" data-bs-toggle="offcanvas">
                                 <i class="ti ti-trash f-18"></i>
                               </a>
                             </div>
@@ -252,6 +158,7 @@
         <!-- [ Main Content ] end -->
       </div>
     </div>
+    <!-- [  Editar ] end -->
     <div
       class="modal fade"
       id="exampleModal1"
@@ -270,6 +177,126 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form method="POST" action="client" enctype="multipart/form-data" onsubmit="return validarFormulario()">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Slug</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="slug"
+                  name="slug"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Características</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="features"
+                  name="features"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+            <label class="form-label">Marca</label>
+                  <select id="brand_id" name="brand_id" class="form-select">
+                      <?php
+                      foreach ($brands as $brand) {
+                          $selected = ($brand['id'] == $currentBrandId) ? 'selected' : '';
+                          echo "<option value=\"{$brand['id']}\" $selected>{$brand['name']}</option>";
+                      }
+                      ?>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Agregar Imagen</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="cover"
+                  id="cover"
+                  accept="image/*"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Categoría</label>
+                
+                <select name="categories[]" id="categoria_original_edit" class="form-select" multiple></select>
+
+                <div id="otra_categoria_edit">
+                </div>
+
+                <button type="button" class="btn btn-primary mb-4" onclick="addCategoryEdit()">
+                  Añadir otra categoría
+                </button>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Etiquetas</label>
+                
+                <select name="tags[]" id="etiqueta_original_edit" class="form-select" multiple></select>
+
+
+                <div id="otra_etiqueta_edit">
+                </div>
+
+                <button type="button" class="btn btn-primary mb-4" onclick="addTagEdit()">
+                  Añadir otra etiqueta
+                </button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-light-primary">Actualizar Producto</button>
+            </div>
+            <input type="hidden" id="id" name="id" value="<?= $product['id'] ?>" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <form id="delete-form" action="product" method="POST">
+      <input type="hidden" name="action" value="deleteProduct" />
+      <input type="hidden" id="delete-product-id" name="id" />
+      <input type="hidden" name="global_token" value="<?= $_SESSION['global_token'] ?>">
+    </form>
+    <!-- [  Agregar ] end -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"
+              ><i data-feather="user" class="icon-svg-primary wid-20 me-2"></i>Crear Producto</h5
+            >
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+          </div>
+          <form method="POST" action="product" enctype="multipart/form-data" >
             <div class="modal-body">
               <div class="mb-3">
                 <label class="form-label">Nombre</label>
@@ -309,17 +336,20 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="description"
-                  name="description"
+                  id="features"
+                  name="features"
                   placeholder="Ingresar Características del Producto"
                   required
                 />
               </div>
               <div class="mb-3">
                 <label class="form-label">Marca</label>
-                <select id="is_paid" name="is_paid" class="form-select">
-                    <option value="1">Marca 1</option>
-                    <option value="0">(Rellenar con todos los posibles)</option>
+                <select id="brand_id" name="brand_id" class="form-select">
+                    <?php
+                      foreach ($brands as $brand) {
+                        echo "<option value=\"{$brand['id']}\">{$brand['name']}</option>";
+                      }
+                    ?>
                 </select>
               </div>
               <div class="mb-3">
@@ -334,39 +364,47 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Categoría</label>
-
-                <select name="category[]" id="categoria_original" class="form-select">
-                  <option>Sneakers</option>
-                  <option>Category 1</option>
-                  <option>Category 2</option>
+                
+                <select name="categories[]" id="categoria_original" class="form-select">
+                    <?php
+                      foreach ($categories as $category) {
+                        echo "<option value=\"{$category['id']}\">{$category['name']}</option>";
+                      }
+                    ?>
                 </select>
 
-                <div id="otra_categoria"></div>
+                <div id="otra_categoria">
+                </div>
 
                 <button type="button" class="btn btn-primary mb-4" onclick="addCategory()">
                   Añadir otra categoría
                 </button>
               </div>
-
               <div class="mb-3">
                 <label class="form-label">Etiquetas</label>
-
-                <select name="tag[]" id="etiqueta_original" class="form-select">
-                  <option>Sneakers</option>
-                  <option>Category 1</option>
-                  <option>Category 2</option>
+                
+                <select name="tags[]" id="etiqueta_original" class="form-select">
+                    <?php
+                      foreach ($tags as $tag) {
+                        echo "<option value=\"{$tag['id']}\">{$tag['name']}</option>";
+                      }
+                    ?>
                 </select>
 
-                <div id="otra_etiqueta"></div>
+                <div id="otra_etiqueta">
+                </div>
 
                 <button type="button" class="btn btn-primary mb-4" onclick="addTag()">
                   Añadir otra etiqueta
                 </button>
               </div>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light-danger" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-light-primary">Actualizar Producto</button>
+              <button type="submit" class="btn btn-light-primary">Crear Producto</button>
             </div>
+              <input type="hidden" name="action" value="storeProduct">
+              <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']; ?>">
           </form>
         </div>
       </div>
@@ -412,52 +450,129 @@
         }
         return true;
       }
-      </script>
+    </script>
 
-      <script type="text/javascript">
-        function addCategory() {
-          let categoryOptions = document.getElementById('categoria_original').innerHTML;
+    <script type="text/javascript">
+      function addCategory() {
+        
+        let category = document.getElementById('categoria_original').innerHTML
 
-          // Crear un contenedor para la categoría y el botón de eliminar
-          let newCode = `
-            <div class="d-flex align-items-center mb-2">
-              <select name="category[]" class="form-select me-2">
-                ${categoryOptions}
-              </select>
-              <button type="button" class="btn btn-danger btn-sm" onclick="removeElement(this)">
-                Eliminar
-              </button>
-            </div>
-          `;
+         
+        let new_code = '<select name="category[]"  class="form-select">'
+        new_code += category; 
+        new_code += '</select>'
 
-          document.getElementById("otra_categoria").innerHTML += newCode;
-        }
+        var nuevoElementoHTML = document.getElementById('otra_categoria').innerHTML + new_code ; 
+        
+        document.getElementById("otra_categoria").innerHTML = nuevoElementoHTML;
 
-        function addTag() {
-          let tagOptions = document.getElementById('etiqueta_original').innerHTML;
+      }
+    </script>
 
-          // Crear un contenedor para la etiqueta y el botón de eliminar
-          let newCode = `
-            <div class="d-flex align-items-center mb-2">
-              <select name="tag[]" class="form-select me-2">
-                ${tagOptions}
-              </select>
-              <button type="button" class="btn btn-danger btn-sm" onclick="removeElement(this)">
-                Eliminar
-              </button>
-            </div>
-          `;
+    <script type="text/javascript">
+      function addTag() {
+        
+        let tag = document.getElementById('etiqueta_original').innerHTML
 
-          document.getElementById("otra_etiqueta").innerHTML += newCode;
-        }
+         
+        let new_code = '<select name="tag[]"  class="form-select">'
+        new_code += tag; 
+        new_code += '</select>'
 
-        function removeElement(element) {
-          // Elimina el contenedor padre del botón (la fila completa)
-          element.parentElement.remove();
-        }
-      </script>
+        var nuevoElementoHTML = document.getElementById('otra_etiqueta').innerHTML + new_code ; 
+        
+        document.getElementById("otra_etiqueta").innerHTML = nuevoElementoHTML;
+
+      }
+    </script>
 
 
+    <script type="text/javascript">
+      function addCategoryEdit() {
+        
+        let category = document.getElementById('categoria_original_edit').innerHTML
+
+         
+        let new_code = '<select name="category[]"  class="form-select">'
+        new_code += category; 
+        new_code += '</select>'
+
+        var nuevoElementoHTML = document.getElementById('otra_categoria_edit').innerHTML + new_code ; 
+        
+        document.getElementById("otra_categoria_edit").innerHTML = nuevoElementoHTML;
+
+      }
+    </script>
+
+    <script type="text/javascript">
+      function addTagEdit() {
+        
+        let tag = document.getElementById('etiqueta_original_edit').innerHTML
+
+         
+        let new_code = '<select name="tag[]"  class="form-select">'
+        new_code += tag; 
+        new_code += '</select>'
+
+        var nuevoElementoHTML = document.getElementById('otra_etiqueta_edit').innerHTML + new_code ; 
+        
+        document.getElementById("otra_etiqueta_edit").innerHTML = nuevoElementoHTML;
+
+      }
+    </script>
+
+
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.btn-light-success');
+
+        editButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const description = button.getAttribute('data-description');
+            const slug = button.getAttribute('data-slug');
+            const features = button.getAttribute('data-features'); 
+            const brand = button.getAttribute('data-brand');
+            const categories = JSON.parse(button.getAttribute('data-categories') || '[]'); // Parse JSON
+            const tags = JSON.parse(button.getAttribute('data-tags') || '[]'); // Parse JSON
+
+            console.log(id, name, description, slug, features, brand, categories, tags);
+
+            document.getElementById('id').value = id;
+            document.getElementById('name').value = name;
+            document.getElementById('description').value = description;
+            document.getElementById('slug').value = slug;
+            document.getElementById('features').value = features;
+            document.getElementById('brand_id').value = brand;
+
+            // Llenar el select de categorías
+            const categorySelect = document.getElementById('categoria_original_edit');
+            categorySelect.innerHTML = ''; // Limpiar las opciones actuales
+
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                
+                categorySelect.appendChild(option);
+            });
+            // Llenar el select de categorías
+            const tagSelect = document.getElementById('etiqueta_original_edit');
+            tagSelect.innerHTML = ''; // Limpiar las opciones actuales
+
+            tags.forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag.id;
+                option.textContent = tag.name;
+                
+                tagSelect.appendChild(option);
+            });
+          });
+        });
+      });
+    </script>
     <?php 
 
       include "layouts/footer.php";
@@ -485,6 +600,26 @@
         new SimpleBar(tc[t]);
       }
     </script>
+    <script>
+      function remove(productID) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this address!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // Actualiza los valores en el formulario
+                document.getElementById("delete-product-id").value = productID;
+                // Enviar el formulario
+                document.getElementById("delete-form").submit();
+            }
+        });
+    }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
   <!-- [Body] end -->
 </html>
