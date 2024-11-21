@@ -58,9 +58,11 @@ class OrderController
             'address_id' => $address_id,
             'order_status_id' => $order_status_id,
             'payment_type_id' => $payment_type_id,
-            'coupon_id' => $coupon_id,
+            
         ];
-    
+        if (!empty($coupon_id)) { 
+            $postFields['coupon_id'] = $coupon_id;
+        }
         foreach ($presentations as $index => $presentation) {
             $postFields["presentations[$index][id]"] = $presentation['id'];
             $postFields["presentations[$index][quantity]"] = $presentation['quantity'];
