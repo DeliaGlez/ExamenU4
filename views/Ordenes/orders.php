@@ -4,7 +4,6 @@
   include_once "../../app/ProductController.php";
   include_once "../../app/ClientController.php";
   include_once "../../app/CouponController.php";
-  include_once "../../app/AddressController.php";
 
   if(!isset($_SESSION['user_data'])){
     header('Location: ' .BASE_PATH. '?error=Error de autenticación, inicie sesión.');
@@ -23,15 +22,10 @@
     $cuponData = $cuponController->getCoupons();
     $cupons = $cuponData['data'];
 
-    $addressController = new AddressController();
-    $addressData = $addressController->getAddress(8);
-    $address = $addressData['data'];
-
     $productController = new ProductController();
     $producteData = $productController->getproducts();
     $products = $producteData['data'];
   }
-
   $error_message = isset($_GET['error']) ? $_GET['error'] : '';
 
 ?>
@@ -160,17 +154,24 @@
                             <div class="mb-3">
                                 <label for="shipping_address_id" class="form-label">Dirección de Envío</label>
                                 <select id="shipping_address_id" name="shipping_address_id" class="form-select">
-                                    <?php if (!empty($adresss)) : ?>
-                                        <?php foreach ($adresss as $address) : ?>
-                                            <option value="<?= htmlspecialchars($address['id']) ?>">
-                                                <?= htmlspecialchars($address['street_and_use_number'])?>
-                                            </option>
+                                    <?php 
+                                    if (!empty($clients)) : ?>
+                                        <?php foreach ($clients as $client) : ?>
+                                            <?php if (!empty($client['addresses'])) : ?>
+                                                <?php foreach ($client['addresses'] as $address) : ?>
+                                                    <option value="<?= htmlspecialchars($address['id']) ?>">
+                                                        <?= htmlspecialchars($address['street_and_use_number']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php else : ?>
+                                                <option value="">No hay direcciones disponibles para este cliente</option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     <?php else : ?>
-                                        <option value="">No hay direcciones disponibles</option>
+                                        <option value="">No hay clientes disponibles</option>
                                     <?php endif; ?>
                                 </select>
-                            </div><!-- pendiente -->
+                            </div><!-- listo -->
                             <div class="mb-3">
                                 <label for="is_paid" class="form-label">Estado de Orden</label>
                                 <select id="is_paid" name="is_paid" class="form-select">
@@ -255,7 +256,6 @@
                     </thead>
                     <tbody>
                     <?php foreach ($orders as $order): ?>
-                      <pre><?php var_dump($order['order_status_id']); ?></pre>
                         <tr>
                         <td><?= !empty($order['folio']) ? htmlspecialchars($order['folio']) : 'N/A' ?></td>
                         <td><?= isset($order['total']) ? number_format($order['total'], 2) : 'N/A' ?></td>
