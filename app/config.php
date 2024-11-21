@@ -8,7 +8,7 @@
 	}
 
 	if (!defined('BASE_PATH')) {
-      define('BASE_PATH','http://localhost/examenU4/');
+      define('BASE_PATH','https://unidad4examen-ec5712e91c3c.herokuapp.com/');
    	}
 
 ?>
